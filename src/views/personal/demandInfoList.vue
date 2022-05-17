@@ -1,0 +1,218 @@
+<template>
+	<div class="box">
+		<div class="exifBox">
+			<div class="exinTitle">需求列表</div>
+			<div class="abCon"></div>
+			<div class="problemLiBox">
+				<div class="eaiLi">
+					<div class="problemLi">
+						<div class="problemLiLeft">
+							<div>潍坊深圳工业园区即将建成，届时潍坊将有5000万届时潍坊将有5000万潍坊将有5000万</div>
+							<div class="put">查看</div>
+						</div>
+						<div class="problemLiRight">
+							<div>增许江从者要都论对农红合学好圆取命持证根无区提较观题年观验许选达很…</div>
+							<div>2021-05-66</div>
+						</div>
+					</div>
+					<div class="conBox">
+						<div class="conBoxTop">
+							<div class="conBoxLeft">
+								<div class="swiper-container">
+										<div class="swiper-wrapper">
+											<div class="swiper-slide">
+												<img src="../../assets/images/banner.png" >
+											</div>
+											<div class="swiper-slide">
+												<img src="../../assets/images/banner.png" >
+											</div>
+											<div class="swiper-slide">
+												<img src="../../assets/images/banner.png" >
+											</div>
+										</div>
+								</div>
+							</div>
+							<div class="conBoxRight">
+								<div class="abrOne">企业供应优质潍坊萝卜</div>
+								<div class="abrTwo">发布时间：2017年08月10日</div>
+								<div class="abrTwo">需求类别：矿产资源</div>
+								<div class="abrTwo">发布企业：潍坊市广为信息科技有限公司</div>
+								<div class="abrTwo">总浏览量：454654</div>
+							</div>
+						</div>
+						<div class="conBoxbot">
+							<div class="sbbTitle">需求详情：</div>
+							<div class="botcontext">123</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>
+
+<script>
+	import Swiper from 'swiper'
+	export default{
+		data(){
+			return{
+				
+			}
+		},
+		mounted() {
+			new Swiper ('.swiper-container', {
+				loop: true,
+				autoplay:3000,
+			})
+		},
+		methods: {
+			
+		}
+	}
+</script>
+
+<style scoped>
+	.sbbTitle{
+		font-size: 16px;
+		font-weight: 500;
+		color: #333333;
+		margin-bottom: 12px;
+	}
+	.conBoxbot{
+		padding-top: 20px;
+		width: 722px;
+		margin: auto;
+	}
+	.abrTwo{
+		font-size: 16px;
+		font-weight: 500;
+		color: #444444;
+		padding-top: 23px;
+	}
+	.abrOne{
+		font-size: 24px;
+		font-weight: 600;
+		color: #333333;
+		letter-spacing: 2px;
+		margin-bottom: 5px;
+	}
+	.conBoxRight{
+		width: 369px;
+	}
+	.conBoxTop{
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+	.conBoxLeft,.swiper-slide img{
+		width: 314px;
+		height: 214px;
+	}
+	.gyBtn{
+		width: 144px;
+		height: 40px;
+		background: #2298FF;
+		border-radius: 3px;
+		font-size: 16px;
+		font-weight: 400;
+		color: #FFFFFF;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		margin: auto;
+		cursor: pointer;
+	}
+	.problemLiBox{
+		height: 777px;
+		overflow: scroll;
+		margin-bottom: 36px;
+	}
+	.problemLiBox::-webkit-scrollbar,.hyright::-webkit-scrollbar {/*隐藏滚轮*/
+	display: none;
+	}
+	.put{
+		width: 55px;
+		height: 24px;
+		background: #1890FF;
+		border-radius: 2px;
+		font-size: 12px;
+		font-weight: 500;
+		color: #FFFFFF;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+	.problemLiRight div:nth-child(2){
+		font-size: 14px;
+		font-weight: 400;
+		color: #999999;
+	}
+	.problemLiRight div:nth-child(1){
+		width: 500px;
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow:ellipsis;
+		font-size: 14px;
+		font-weight: 400;
+		color: #666666;
+	}
+	.problemLiLeft{
+		margin-bottom: 14px;
+	}
+	/* .problemLiLeft div:nth-child(2){
+		font-size: 14px;
+		font-weight: 400;
+		color: #777777;
+	} */
+	.problemLiLeft div:nth-child(1){
+		width: 420px;
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow:ellipsis;
+		font-size: 16px;
+		font-weight: 600;
+		color: #333333;
+		letter-spacing: 1px;
+	}
+	.problemLiLeft,.problemLiRight{
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+	.eaiLi{
+		width: 722px;
+		border-bottom: 1px solid #E7E7E7;
+		padding: 11px 0;
+		box-sizing: border-box;
+		margin: auto;
+	}
+	.problemLi{
+		width: 722px;
+		height: 84px;
+		padding: 11px 0;
+		box-sizing: border-box;
+		margin: auto;
+	}
+	.abCon{
+		width: 722px;
+		height: 1px;
+		background-color: #1890FF;
+		margin: auto;
+		margin-bottom: 12px;
+	}
+	.exinTitle{
+		font-size: 20px;
+		font-weight: 400;
+		color: #1890FF;
+		margin: 0 0 8px 94px;
+	}
+	.exifBox{
+		width: 895px;
+		height: 912px;
+		background: #FFFFFF;
+		box-shadow: 0px 0px 10px 0px rgba(230, 207, 207, 0.5);
+		border-radius: 4px 4px 0px 0px;
+		padding-top: 24px;
+		box-sizing: border-box;
+	}
+</style>
