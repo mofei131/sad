@@ -10,7 +10,7 @@
 				<div class="vipCard">{{role}}</div>
 				<div class="personalUl">
 					<div :class="liIndex == index?'personalLi2':'personalLi'" v-for="(item,index) in navList" :key="index" 
-					 @click="liIndex = index" >
+					 @click="swichCard(item,index)" >
 						<div class="personalLinFelx">
 							<img :src="item.icon" />
 							<div class="personalLeftTitle">{{item.title}}</div>
@@ -27,7 +27,7 @@
 				<enterprise-Information v-if="sum == 2"></enterprise-Information>
 				<!-- 服务商资料 -->
 				<service-Provider-Information v-if="sum == 3"></service-Provider-Information>
-				<!-- 服务商认证 -->
+				<!-- 服务机构认证 -->
 				<service-Provider-Certification v-if="sum == 4"></service-Provider-Certification>
 				<!-- 企业认证 -->
 				<enterprise-Certification v-if="sum == 5"></enterprise-Certification>
@@ -92,31 +92,31 @@
 					title:'企业资料',
 					icon:require('../../assets/images/personalicon0.png')
 				},{
-					id:2,
+					id:1,
 					title:'个人资料',
 					icon:require('../../assets/images/personalicon0.png')
 				},{
-					id:3,
+					id:2,
 					title:'修改密码',
 					icon:require('../../assets/images/personalicon1.png')
 				},{
-					id:4,
+					id:3,
 					title:'企业认证',
 					icon:require('../../assets/images/personalicon2.png')
 				},{
-					id:5,
+					id:4,
 					title:'服务机构认证',
 					icon:require('../../assets/images/personalicon2.png')
 				},{
-					id:6,
+					id:5,
 					title:'提问列表',
 					icon:require('../../assets/images/personalicon3.png')
 				},{
-					id:7,
+					id:6,
 					title:'需求信息',
 					icon:require('../../assets/images/personalicon4.png')
 				},{
-					id:8,
+					id:7,
 					title:'供应信息',
 					icon:require('../../assets/images/personalicon5.png')
 				}],
@@ -129,15 +129,45 @@
 			this.userInfo = JSON.parse(localStorage.getItem('userInfo'))
 			if(this.userInfo.role == 1){
 				this.role = '专家级会员'
+				this.sum = 1
 				this.navList.splice(this.navList.findIndex(item => item.id == 0), 1)
+				this.navList.splice(this.navList.findIndex(item => item.id == 3), 1)
 				this.navList.splice(this.navList.findIndex(item => item.id == 4), 1)
-				this.navList.splice(this.navList.findIndex(item => item.id == 5), 1)
+				this.navList.splice(this.navList.findIndex(item => item.id == 6), 1)
 				this.navList.splice(this.navList.findIndex(item => item.id == 7), 1)
-				this.navList.splice(this.navList.findIndex(item => item.id == 8), 1)
 			}
 		},
 		methods:{
-			
+			//切换选项卡
+			swichCard(item,index){
+				this.liIndex = index
+				switch(item.id){
+					case 0:
+						this.sum = 2
+						break
+					case 1:
+						this.sum = 1
+						break
+					case 2:
+						this.sum = 0
+						break
+					case 3:
+						this.sum = 5
+						break
+					case 4:
+						this.sum = 4
+						break
+					case 5:
+						this.sum = 8
+						break
+					case 6:
+						this.sum = 11
+						break
+					case 7:
+						this.sum = 10
+						break
+				}
+			}
 		}
 	}
 </script>
