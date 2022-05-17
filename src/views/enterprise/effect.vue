@@ -6,7 +6,7 @@
 		<div class="tradesBox">
 			<div class="tradesStr">企业类型：</div>
 			<div class="tradesList" v-for="(item,index) in tradesList">
-				<div :class="label == index?'tradesLabel':''" @click="label = index">
+				<div :class="label == index?'tradesLabel':''" @click="messUnti(item,index)">
 					{{item.title}}
 				</div>
 			</div>
@@ -28,34 +28,34 @@
 			<div class="center">
 				<div class="cardUl">
 					<div class="cardLi">
-						<div>528家</div>
+						<div>{{total["2"]}}家</div>
 						<div>专心特新</div>
 					</div>
 					<div class="cardLi">
-						<div>528家</div>
+						<div>{{total["3"]}}家</div>
 						<div>小巨人</div>
 					</div>
 					<div class="cardLi">
-						<div>528家</div>
+						<div>{{total["4"]}}家</div>
 						<div>单项冠军</div>
 					</div>
 					<div class="cardLi">
-						<div>528家</div>
+						<div>{{total["5"]}}家</div>
 						<div>隐形冠军</div>
 					</div>
 					<div class="cardLi">
-						<div>528家</div>
+						<div>{{total["6"]}}家</div>
 						<div>瞪羚企业</div>
 					</div>
 					<div class="cardLi">
-						<div>528家</div>
+						<div>{{total["7"]}}家</div>
 						<div>独角兽企业</div>
 					</div>
 				</div>
-				<map-Chart></map-Chart>
+				<map-Chart ref="mapChart"></map-Chart>
 			</div>
 			<div class="right">
-				<bar-Chart></bar-Chart>
+				<bar-Chart ref='barChart'></bar-Chart>
 			</div>
 		</div>
 		</div>
@@ -78,29 +78,61 @@
 		data(){
 			return{
 				tradesList:[{
+					id:1,
 					title:'全部'
 				},{
+					id:2,
 					title:'专新特新企业'
 				},{
+					id:3,
 					title:'小巨人企业'
 				},{
+					id:4,
 					title:'单项冠军企业'
 				},{
+					id:5,
 					title:'隐形冠军企业'
 				},{
+					id:6,
 					title:'瞪羚企业'
 				},{
+					id:7,
 					title:'独角兽企业'
 				}],
 				label:0,//行业分类选中标签
 				// windowWidth: document.documentElement.clientWidth,  //实时屏幕宽度
 				windowHeight: document.documentElement.clientHeight,   //实时屏幕高度
+				total:'',//企业数
+				areaList:'',//地区企业数
 			}
 		},
 		mounted() {
 			 window.addEventListener("keydown", this.KeyDown, true); 
+			 this.messUnti(this.tradesList[0],0)
 		},
 		methods:{
+			messUnti(item,index){
+				this.label = index
+				this.$apiFun.companydata({classify:item.id}).then((res) => {
+					if(res.code == 200){
+						let title = ''
+						if(item.id == 1){
+							title = '全部企业'
+						}else{
+							title = item.title
+						}
+						this.$refs.mapChart.getAreaData(res.data.area,title)
+						this.$refs.barChart.getBarData(res.data.area,title)
+						this.total = res.data.total
+					}else{
+						this.$message({
+								showClose: true,
+								message: res.message,
+								type: 'error'
+							});
+					}
+				})
+			},
 			KeyDown(event) {
 				let that = this
 				// console.log(event.code)

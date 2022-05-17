@@ -8,13 +8,17 @@
 	export default{
 		data(){
 			return{
-				
+				barData:[],
 			}
 		},
 		mounted() {
-			this.barChart()
+			
 		},
 		methods:{
+			getBarData(data){
+				this.barData = data
+				this.barChart()
+			},
 			barChart() {
 				//  地图开始
 				let Chart = this.$echarts.init(document.getElementById('bar_chart'))
@@ -33,15 +37,21 @@
 						left: '15%',
 					},
 					xAxis: {
-						type: 'value'
+						type: 'value',
 					},
 					yAxis: {
 						 type: 'category',
-						 data: ['潍城区', '奎文区', '高新区', '坊子区', '安丘市', '诸城市', '高密市','潍城区', '奎文区', '高新区', '坊子区', '安丘市', '诸城市', '高密市']
+						 data: ['奎文区', '潍城区', '坊子区', '寒亭区', '昌乐县', '寿光市', '昌邑市','高密市', '诸城市', '安丘市', '临朐县', '青州市',]
 					},
+					tooltip: {
+						 valueFormatter: function (value) {
+							 return value + ' 家';
+							 // console.log(value)
+						 }
+					 },
 					series: [
 						{
-							data: [120, 200, 150, 80, 70, 110, 130,120, 200, 150, 80, 70, 110, 130],
+							data:this.barData,
 							type: 'bar',
 							label:{
 								// normal: {
