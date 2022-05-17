@@ -30,7 +30,7 @@
 				</div>
 			</div>
 			<div class="forgetBox">
-				<div class="forget" v-if="mode">忘记密码</div>
+				<div class="forget" v-if="mode" @click="toForget">忘记密码</div>
 				</div>
 				<div class="agreementBox">
 					<img :src="select?images.select:images.selectNo" @click="select = !select">
@@ -68,6 +68,10 @@
 			}
 		},
 		methods:{
+			//忘记密码
+			toForget(){
+				this.$store.state.login = 3
+			},
 			hide(){
 				this.$store.state.login = 0
 			},
@@ -124,6 +128,7 @@
 								this.$router.push('/expertCertification')
 							}
 						}
+						location.reload()
 					}else{
 						this.$message({
 								showClose: true,

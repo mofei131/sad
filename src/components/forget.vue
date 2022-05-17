@@ -39,10 +39,10 @@
 					<div class="toag">跟</div>
 					<div class="toag">《隐私政策》</div>
 				</div>
-				<div class="btn" @click="putForget">保存</div>
+				<div class="btn" @click="putForget">修改</div>
 				<div class="toReg">
 					<div class="ask">已有账号？</div>
-					<div class="register">立即登录</div>
+					<div class="register" @click="toLogin">立即登录</div>
 				</div>
 		</div>
 	</div>
@@ -69,6 +69,9 @@
 			}
 		},
 		methods:{
+			toLogin(){
+				this.$store.state.login = 1
+			},
 			//修改密码
 			putForget(){
 				if(!this.mobile){
@@ -95,11 +98,35 @@
 					alert('请同意服务协议和隐私政策')
 					return
 				}
+				this.$apiFun.forgetPassword({
+					mobile:this.mobile,
+					password:this.password,
+					code:this.code
+				}).then((res) => {
+					if(res.code == 200){
+						this.$message({
+								showClose: true,
+								message: '密码修改成功',
+								type: 'success'
+							});
+							this.$store.state.login = 1
+					}else{
+						this.$message({
+								showClose: true,
+								message: res.message,
+								type: 'error'
+							});
+					}
+				})
 			},
 			//倒计时获取验证码
 			timing(){
 				let that = this
-				let js = 5
+				let js = 60
+				if(!that.mobile){
+					alert('请填写手机号')
+					return
+				}
 				if(!that.disabled){
 					return
 				}
@@ -114,6 +141,15 @@
 						that.countdown = '重新获取'
 					}
 				},1000)
+				this.$apiFun.getVerifyCode({mobile:that.mobile}).then((res) => {
+					if(res.code == -1){
+						this.$message({
+								showClose: true,
+								message: res.message,
+								type: 'error'
+							});
+					}
+					})
 			}
 		},
 		destroyed() {
@@ -197,6 +233,7 @@
 		justify-content: center;
 		letter-spacing: 20px;
 		margin-bottom: 21px;
+		cursor: pointer;
 	}
 	.toag{
 		font-weight: 400;
