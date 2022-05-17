@@ -86,6 +86,14 @@ import https from './request.js';
 	apiFun.cityList = function(params) {
 		return https.get('index/cityList', params)
 	}
+	//企业数量
+	apiFun.companydata = function(params) {
+		return https.get('EchartData/companydata', params)
+	}
+	//饼图数据
+	apiFun.piedata = function(params) {
+		return https.get('EchartData/piedata', params)
+	}
 	
 	//暴露出这个对象
 	export default apiFun;

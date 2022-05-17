@@ -136,7 +136,14 @@
 				this.navList.splice(this.navList.findIndex(item => item.id == 6), 1)
 				this.navList.splice(this.navList.findIndex(item => item.id == 7), 1)
 			}
+			if(this.userInfo.role == 2){
+				this.role = '企业级会员'
+				this.sum = 0
+				this.navList.splice(this.navList.findIndex(item => item.id == 1), 1)
+				this.navList.splice(this.navList.findIndex(item => item.id == 4), 1)
+			}
 			if(this.$route.query.id){
+				console.log(this.$route.query)
 				this.swichCard(this.$route.query,this.$route.query.index)
 			}
 		},
@@ -152,7 +159,7 @@
 				this.liIndex = index
 				if(this.userInfo.role == 1){
 					if(item.id == 0){
-						this.sum == 2
+						this.sum = 2
 					}else if(item.id == 1){
 						this.sum = 1
 					}else if(item.id == 2){
@@ -168,6 +175,24 @@
 					}else if(item.id == 7){
 						this.sum = 10
 					}
+				}else if(this.userInfo.role == 2){
+					if(item.id == 0){
+						this.sum = 2
+					}else if(item.id == 1){
+						this.sum = 1
+					}else if(item.id == 2){
+						this.sum = 0
+					}else if(item.id == 3){
+						this.sum = 5
+					}else if(item.id == 4){
+						this.sum = 4
+					}else if(item.id == 5){
+						this.sum = 6
+					}else if(item.id == 8){
+						this.sum = 11
+					}else if(item.id == 7){
+						this.sum = 10
+					}
 				}
 			}
 		}
@@ -176,7 +201,7 @@
 
 <style scoped>
 	.personalLinFelx div{
-		width: 90px;
+		width: 110px;
 		text-align: start;
 	}
 	.personalLinFelx img{

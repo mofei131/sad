@@ -209,6 +209,10 @@
 					this.drowItem.splice(this.drowItem.findIndex(item => item.id == 6), 1)
 					this.drowItem.splice(this.drowItem.findIndex(item => item.id == 7), 1)
 				}
+				if(this.userInfo.role == 2){
+					this.drowItem.splice(this.drowItem.findIndex(item => item.id == 1), 1)
+					this.drowItem.splice(this.drowItem.findIndex(item => item.id == 4), 1)
+				}
 			}
 		},
 		updated() {
@@ -225,55 +229,46 @@
 			},
 			//去我的页面
 			toMine(item,index){
-				switch(item.id){
-					case 0:
-						this.$router.push({path:'/personal',query: {
-							id:item.id,
-							index:index
-						}})
-						break
-					case 1:
-						this.$router.push({path:'/personal',query: {
-							id:item.id,
-							index:index
-						}})
-						break
-					case 2:
-						this.$router.push({path:'/personal',query: {
-							id:item.id,
-							index:index
-						}})
-						break
-					case 3:
-						this.$router.push({path:'/personal',query: {
-							id:item.id,
-							index:index
-						}})
-						break
-					case 4:
-						this.$router.push({path:'/personal',query: {
-							id:item.id,
-							index:index
-						}})
-						break
-					case 5:
-						this.$router.push({path:'/personal',query: {
-							id:item.id,
-							index:index
-						}})
-						break
-					case 6:
-						this.$router.push({path:'/personal',query: {
-							id:item.id,
-							index:index
-						}})
-						break
-					case 7:
-						this.$router.push({path:'/personal',query: {
-							id:item.id,
-							index:index
-						}})
-						break
+				if(item.id == 0){
+					this.$router.push({path:'/personal',query: {
+						id:item.id,
+						index:index
+					}})
+				}else if(item.id == 1){
+					this.$router.push({path:'/personal',query: {
+						id:item.id,
+						index:index
+					}})
+				}else if(item.id == 2){
+					this.$router.push({path:'/personal',query: {
+						id:item.id,
+						index:index
+					}})
+				}else if(item.id == 3){
+					this.$router.push({path:'/personal',query: {
+						id:item.id,
+						index:index
+					}})
+				}else if(item.id == 4){
+					this.$router.push({path:'/personal',query: {
+						id:item.id,
+						index:index
+					}})
+				}else if(item.id == 5){
+					this.$router.push({path:'/personal',query: {
+						id:item.id,
+						index:index
+					}})
+				}else if(item.id == 6){
+					this.$router.push({path:'/personal',query: {
+						id:item.id,
+						index:index
+					}})
+				}else if(item.id == 7){
+					this.$router.push({path:'/personal',query: {
+						id:item.id,
+						index:index
+					}})
 				}
 			},
 			signOut(){
