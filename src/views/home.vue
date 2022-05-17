@@ -130,7 +130,7 @@
 					<div class="catalogueli" v-for="(item,index) in companyList" :key="index">
 						<div class="clTitle">{{item.name}}</div>
 						<div class="clLabel">
-							<div v-for="(itm, idx) in item.company_tags" :key="idx">{{itm}}</div>
+							<div v-for="(itm, idx) in item.company_tags" :key="idx" :style="'background:' + itm.color">{{itm.name}}</div>
 						</div>
 						<div class="claddress">
 							<img src="../assets/images/address.png">
