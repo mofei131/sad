@@ -136,6 +136,9 @@
 				this.navList.splice(this.navList.findIndex(item => item.id == 6), 1)
 				this.navList.splice(this.navList.findIndex(item => item.id == 7), 1)
 			}
+			if(this.$route.query.id){
+				this.swichCard(this.$route.query,this.$route.query.index)
+			}
 		},
 		methods:{
 			//切换选项卡

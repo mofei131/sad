@@ -33,29 +33,8 @@
 								<el-dropdown-item>
 									<div class="nicksho">{{userInfo.realname?userInfo.realname:'--'}}</div>
 								</el-dropdown-item>
-								<el-dropdown-item>
-									<div class="nickOne">企业资料</div>
-								</el-dropdown-item>
-								<el-dropdown-item>
-									<div class="nickOne">个人资料</div>
-								</el-dropdown-item>
-								<el-dropdown-item>
-									<div class="nickOne">修改密码</div>
-								</el-dropdown-item>
-								<el-dropdown-item>
-									<div class="nickOne">企业认证</div>
-								</el-dropdown-item>
-								<el-dropdown-item>
-									<div class="nickOne">服务机构认证</div>
-								</el-dropdown-item>
-								<el-dropdown-item>
-									<div class="nickOne">提问列表</div>
-								</el-dropdown-item>
-								<el-dropdown-item>
-									<div class="nickOne">需求信息</div>
-								</el-dropdown-item>
-								<el-dropdown-item>
-									<div class="nickOne">供应信息</div>
+								<el-dropdown-item v-for="(item,index) in drowItem" :key="index">
+									<div class="nickOne" @click="toMine(item,index)">{{item.title}}</div>
 								</el-dropdown-item>
 								<el-dropdown-item>
 									<div class="nicksho2" @click="signOut">退出登录</div>
@@ -186,6 +165,31 @@
 				}],
 				selectClassEnd:'供应',//选择内容
 				userInfo:'',
+				drowItem:[{
+					id:0,
+					title:'企业资料'
+				},{
+					id:1,
+					title:'个人资料'
+				},{
+					id:2,
+					title:'修改密码'
+				},{
+					id:3,
+					title:'企业认证'
+				},{
+					id:4,
+					title:'服务机构认证'
+				},{
+					id:5,
+					title:'提问列表'
+				},{
+					id:6,
+					title:'需求信息'
+				},{
+					id:7,
+					title:'供应信息'
+				}]
 			}
 		},
 		mounted() {
@@ -196,11 +200,74 @@
 			}else{
 				this.$store.state.wait = 0
 			}
+			if(this.userInfo){
+				if(this.userInfo.role == 1){
+					this.drowItem.splice(this.drowItem.findIndex(item => item.id == 0), 1)
+					this.drowItem.splice(this.drowItem.findIndex(item => item.id == 3), 1)
+					this.drowItem.splice(this.drowItem.findIndex(item => item.id == 4), 1)
+					this.drowItem.splice(this.drowItem.findIndex(item => item.id == 6), 1)
+					this.drowItem.splice(this.drowItem.findIndex(item => item.id == 7), 1)
+				}
+			}
 		},
 		updated() {
 			this.userInfo = JSON.parse(localStorage.getItem("userInfo"))
+			
 		},
 		methods:{
+			//去我的页面
+			toMine(item,index){
+				switch(item.id){
+					case 0:
+						this.$router.push({path:'/personal',query: {
+							id:item.id,
+							index:index
+						}})
+						break
+					case 1:
+						this.$router.push({path:'/personal',query: {
+							id:item.id,
+							index:index
+						}})
+						break
+					case 2:
+						this.$router.push({path:'/personal',query: {
+							id:item.id,
+							index:index
+						}})
+						break
+					case 3:
+						this.$router.push({path:'/personal',query: {
+							id:item.id,
+							index:index
+						}})
+						break
+					case 4:
+						this.$router.push({path:'/personal',query: {
+							id:item.id,
+							index:index
+						}})
+						break
+					case 5:
+						this.$router.push({path:'/personal',query: {
+							id:item.id,
+							index:index
+						}})
+						break
+					case 6:
+						this.$router.push({path:'/personal',query: {
+							id:item.id,
+							index:index
+						}})
+						break
+					case 7:
+						this.$router.push({path:'/personal',query: {
+							id:item.id,
+							index:index
+						}})
+						break
+				}
+			},
 			signOut(){
 				this.$store.state.wait = 0
 				localStorage.removeItem('userInfo')
