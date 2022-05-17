@@ -5,31 +5,31 @@
 			<div class="detBoxTop">
 				<div class="detBoxLeft">
 					<div class="swiper-container">
-							<div class="swiper-wrapper">
-								<div class="swiper-slide">
-									<img src="../../assets/images/banner.png" >
-								</div>
-								<div class="swiper-slide">
-									<img src="../../assets/images/banner.png" >
-								</div>
-								<div class="swiper-slide">
-									<img src="../../assets/images/banner.png" >
-								</div>
+						<div class="swiper-wrapper">
+							<div class="swiper-slide">
+								<img src="../../assets/images/banner.png">
 							</div>
+							<div class="swiper-slide">
+								<img src="../../assets/images/banner.png">
+							</div>
+							<div class="swiper-slide">
+								<img src="../../assets/images/banner.png">
+							</div>
+						</div>
 					</div>
 				</div>
 				<div class="detBoxRight">
-					<div class="abrOne">企业供应优质潍坊萝卜</div>
-					<div class="abrTwo">发布时间：2017年08月10日</div>
-					<div class="abrTwo">需求类别：矿产资源</div>
-					<div class="abrTwo">发布企业：潍坊市广为信息科技有限公司</div>
-					<div class="abrTwo">总浏览量：454654</div>
+					<div class="abrOne">{{supplyInfo.title}}</div>
+					<div class="abrTwo">发布时间：{{supplyInfo.create_time}}</div>
+					<div class="abrTwo">需求类别：{{supplyInfo.industry_name}}</div>
+					<div class="abrTwo">发布企业：{{supplyInfo.company_name}}</div>
+					<div class="abrTwo">总浏览量：{{supplyInfo.look}}</div>
 					<div class="dbrBtn">询价</div>
 				</div>
 			</div>
 			<div class="detBoxbot">
 				<div class="dbbTit">供应详情：</div>
-				<div class="dbbCon">123</div>
+				<div class="dbbCon" v-html="supplyInfo.detail"></div>
 			</div>
 		</div>
 	</div>
@@ -37,50 +37,73 @@
 
 <script>
 	import Swiper from 'swiper'
-	export default{
-		data(){
-			return{
-				
+	export default {
+		data() {
+			return {
+				supplyInfo: {}
 			}
 		},
 		mounted() {
-			new Swiper ('.swiper-container', {
+			new Swiper('.swiper-container', {
 				loop: true,
-				autoplay:3000,
+				autoplay: 3000,
 			})
+			this.getSupplyInfo()
 		},
 		methods: {
-			
+			//企业中心供应详情
+			getSupplyInfo() {
+				this.$apiFun.mySupplyInfo({
+					id: this.$route.query.id
+				}).then((res) => {
+					if (res.code == 200) {
+						this.supplyInfo = res.data
+						if (this.supplyInfo.length != 0) {
+							this.supplyInfo.detail = this.$globalMethod.showHtml(this.supplyInfo.detail)
+						}
+					} else {
+						this.$message({
+							showClose: true,
+							message: res.message,
+							type: 'error'
+						});
+					}
+				})
+			}
 		}
 	}
 </script>
 
 <style scoped>
-	.dbbCon{
+	.dbbCon {
 		font-size: 14px;
 		font-weight: 400;
 		color: #444444;
 		line-height: 26px;
 	}
-	.dbbTit{
+
+	.dbbTit {
 		font-size: 16px;
 		font-weight: 500;
 		color: #333333;
 		margin-bottom: 12px;
 	}
-	.detBoxbot{
+
+	.detBoxbot {
 		width: 936px;
 		margin: auto;
 		padding-top: 48px;
 	}
-	.detBoxTop{
+
+	.detBoxTop {
 		width: 936px;
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
 		margin: auto;
 	}
-	.dbrBtn{
+
+	.dbrBtn {
 		width: 103px;
 		height: 32px;
 		background: #1890FF;
@@ -94,28 +117,34 @@
 		justify-content: center;
 		cursor: pointer;
 	}
-	.abrTwo{
+
+	.abrTwo {
 		font-size: 16px;
 		font-weight: 400;
 		color: #444444;
 		margin-bottom: 24px;
 	}
-	.abrOne{
+
+	.abrOne {
 		font-size: 24px;
 		font-weight: 600;
 		color: #333333;
 		letter-spacing: 2px;
 		margin-bottom: 28px;
 	}
-	.detBoxRight{
+
+	.detBoxRight {
 		width: 446px;
 	}
-	.detBoxLeft,.swiper-slide img{
+
+	.detBoxLeft,
+	.swiper-slide img {
 		width: 407px;
 		height: 277px;
 		border-radius: 4px;
 	}
-	.detBox{
+
+	.detBox {
 		width: 1200px;
 		background: #FFFFFF;
 		margin: auto;

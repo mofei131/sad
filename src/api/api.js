@@ -50,15 +50,26 @@ import https from './request.js';
 	apiFun.messageInfo = function(params) {
 		return https.post('index/messageInfo', params)
 	}
-	//忘记密码
-	apiFun.forgetPassword = function(params) {
-		return https.post('index/forgetPassword', params)
+	//企业能力列表
+	apiFun.companyList = function(params) {
+		return https.get('index/companyList', params)
 	}
-	//修改密码
-	apiFun.resetPassword = function(params) {
-		return https.post('index/resetPassword', params)
+	//供应列表
+	apiFun.supplyList = function(params) {
+		return https.get('index/supplyList', params)
 	}
-	
+	//企业中心供应详情
+	apiFun.mySupplyInfo = function(params) {
+		return https.get('index/mySupplyInfo', params)
+	}
+	//需求列表
+	apiFun.needList = function(params) {
+		return https.get('index/needList', params)
+	}
+	//企业中心需求详情
+	apiFun.myNeedInfo = function(params) {
+		return https.get('index/myNeedInfo', params)
+	}
 	
 	//暴露出这个对象
 	export default apiFun;
