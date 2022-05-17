@@ -107,18 +107,22 @@
 				</div>
 			</div>
 			<div class="notBot">
-				<div class="ggleft" v-for="(item, index) in supplyList" :key="index" @click="toSupplyList(item)">
-					<div class="sadli">
-						<div>{{item.title}}</div>
-						<div v-html="item.detail"></div>
-						<div>{{item.create_time}}</div>
+				<div class="ggleft">
+					<div class="" v-for="(item, index) in supplyList" :key="index" @click="toSupplyList(item)">
+						<div class="sadli" v-if="item.id">
+							<div>{{item.title}}</div>
+							<div v-html="item.detail"></div>
+							<div>{{item.create_time}}</div>
+						</div>
 					</div>
 				</div>
-				<div class="hyright" v-for="(item, index) in needList" :key="index" @click="toNeedList(item)">
-					<div class="sadli">
-						<div>{{item.title}}</div>
-						<div v-html="item.detail"></div>
-						<div>{{item.create_time}}</div>
+				<div class="hyright">
+					<div v-for="(item, index) in needList" :key="index" @click="toNeedList(item)">
+						<div class="sadli" v-if="item.id">
+							<div>{{item.title}}</div>
+							<div v-html="item.detail"></div>
+							<div>{{item.create_time}}</div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -253,7 +257,10 @@
 						this.supplyList = res.data
 						if (this.supplyList.length != 0) {
 							for (let i in this.supplyList) {
-								this.supplyList[i].detail = this.$globalMethod.showHtml(this.supplyList[i].detail)
+								if (this.supplyList[i].detail) {
+									this.supplyList[i].detail = this.$globalMethod.showHtml(this.supplyList[i]
+										.detail)
+								}
 							}
 						}
 					} else {
@@ -286,7 +293,9 @@
 						this.needList = res.data
 						if (this.needList.length != 0) {
 							for (let i in this.needList) {
-								this.needList[i].detail = this.$globalMethod.showHtml(this.needList[i].detail)
+								if (this.needList[i].detail) {
+									this.needList[i].detail = this.$globalMethod.showHtml(this.needList[i].detail)
+								}
 							}
 						}
 					} else {
@@ -318,7 +327,7 @@
 				})
 			},
 			// 更多
-			more(url){
+			more(url) {
 				this.$router.push({
 					path: url
 				})
@@ -453,6 +462,9 @@
 		overflow: hidden;
 		color: #333333;
 		font-size: 14px;
+		height: 32px;
+		display: flex;
+		align-items: center;
 	}
 
 	.sadli div:nth-child(1) {
@@ -467,12 +479,13 @@
 
 	.sadli {
 		width: 560px;
-		height: 110px;
+		/* height: 110px; */
 		border-bottom: 1px solid #EDEDED;
 		display: flex;
 		flex-direction: column;
 		justify-content: space-around;
 		margin: auto;
+		padding: 13px 0;
 	}
 
 	.hylbot {

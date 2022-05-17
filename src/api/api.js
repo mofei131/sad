@@ -70,6 +70,10 @@ import https from './request.js';
 	apiFun.myNeedInfo = function(params) {
 		return https.get('index/myNeedInfo', params)
 	}
+	//行业分类
+	apiFun.industryCate = function(params) {
+		return https.get('index/industryCate', params)
+	}
 	
 	//暴露出这个对象
 	export default apiFun;
