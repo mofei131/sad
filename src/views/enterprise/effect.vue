@@ -1,7 +1,8 @@
 <template>
-	<div class="box">
-		<div class="stay">您现在所在位置:企业能力<span>培育成效</span></div>
-		<div class="areaBox">
+	<div class="box" :style="{'height':windowHeight+'px'}">
+		<!-- <div class="stay">您现在所在位置:企业能力<span>培育成效</span></div> -->
+		 <!-- :style="{'width':windowWidth+'px','height':windowHeight+'px'}" -->
+		<div class="areaBox"  :style="{'height':windowHeight+'px'}">
 		<div class="tradesBox">
 			<div class="tradesStr">企业类型：</div>
 			<div class="tradesList" v-for="(item,index) in tradesList">
@@ -9,9 +10,10 @@
 					{{item.title}}
 				</div>
 			</div>
+			<div class="backBox" @click="backseen">退出</div>
 		</div>
 		<div class="transverse"></div>
-		<div class="mapBox">
+		<div class="mapBox" >
 			<div class="left">
 				<div class="leftOne">
 					<pie-Chart1></pie-Chart1>
@@ -91,24 +93,66 @@
 					title:'独角兽企业'
 				}],
 				label:0,//行业分类选中标签
+				// windowWidth: document.documentElement.clientWidth,  //实时屏幕宽度
+				windowHeight: document.documentElement.clientHeight,   //实时屏幕高度
 			}
 		},
 		mounted() {
-			
+			 window.addEventListener("keydown", this.KeyDown, true); 
 		},
 		methods:{
-			
+			KeyDown(event) {
+				let that = this
+				// console.log(event.code)
+				if(event.code == 'F11'){
+					that.windowHeight = document.documentElement.clientHeight
+					console.log(document.documentElement.clientHeight)
+				}
+			 },
+			//退出大屏
+			backseen(){
+				localStorage.setItem('screen',0)
+				this.$router.back()
+				location.reload()
+			}
 		}
 	}
 </script>
 
 <style scoped>
+	.backBox{
+		position: absolute;
+		top: 0;
+		right: 0;
+		width: 132px;
+		height: 52px;
+		line-height: 52px;
+		color: #5695fe;
+		background: url(../../assets/images/backIndex.png) no-repeat center;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		cursor: pointer;
+	}
+	.center{
+		display: flex;
+		flex-direction:column;
+		align-items: center;
+		justify-content: center;
+	}
 	.right{
-		width: 320px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+	.right,.left,.center{
+		width: 33%;
 	}
 	.mapBox{
 		display:flex;
 		justify-content: space-between;
+		margin: auto;
+		width: 80%;
 	}
 	.cardLi{
 		width: 106px;
@@ -135,8 +179,12 @@
 		flex-wrap: wrap;
 	}
 	.leftOne{
-		width: 300px;
-		height: 182px;
+		/* width: 300px; */
+		width: 100%;
+		/* height: 182px; */
+		display: flex;
+		align-items: center;
+		justify-content: center;
 	}
 	.transverse{
 		width: 1152px;
@@ -163,14 +211,18 @@
 	}
 	.tradesStr{
 		font-weight: 400;
-		color: #484848;
+		/* color: #484848; */
+		color: #fff;
 		font-size: 16px;
 		margin-right: 20px;
 	}
 	.areaBox{
-		width: 1200px;
+		width: 100%;
+		max-width: 1920px;
+		height: 100%;
 		margin: auto;
-		background: #FFFFFF;
+		/* background: #FFFFFF; */
+		background-color: #111843;
 		box-shadow: 0px 0px 10px 0px rgba(230, 207, 207, 0.5);
 		border-radius: 2px;
 		margin-bottom: 12px;
@@ -180,12 +232,15 @@
 	.tradesBox{
 		width: 1200px;
 		margin: auto;
-		background: #FFFFFF;
+		/* background: #FFFFFF; */
 		display: flex;
 		align-items: center;
 		padding-left: 24px;
 		box-sizing: border-box;
 		margin-bottom: 25px;
+		background-color: #111843;
+		color: #fff;
+		position: relative;
 	}
 	.stay span{
 		color: #1890FF;
@@ -197,5 +252,8 @@
 		margin-bottom: 17px;
 		color: #333333;
 		font-size: 12px;
+	}
+	.box{
+		background-color: #111843;
 	}
 </style>

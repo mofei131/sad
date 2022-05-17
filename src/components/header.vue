@@ -125,7 +125,8 @@
 									<router-link to="/enterpriseList" style="color: #666;">企业列表</router-link>
 								</el-dropdown-item>
 								<el-dropdown-item>
-									<router-link to="/effect" style="color: #666;">培育成效</router-link>
+									<div @click="toScreen">培育成效</div>
+									<!-- <router-link to="/effect" style="color: #666;">培育成效</router-link> -->
 								</el-dropdown-item>
 							</el-dropdown-menu>
 						</template>
@@ -215,6 +216,13 @@
 			
 		},
 		methods:{
+			//展示大屏
+			toScreen(){
+				// this.$store.state.screen = 1
+				localStorage.setItem('screen',1)
+				this.$router.push({path:'/effect'})
+				location.reload()
+			},
 			//去我的页面
 			toMine(item,index){
 				switch(item.id){

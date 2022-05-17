@@ -1,6 +1,6 @@
 <template>
 	<div class="box">
-		<div id="bar_chart" style="width: 320px;height: 600px;"></div>
+		<div id="bar_chart" style="width: 420px;height: 800px;"></div>
 	</div>
 </template>
 
@@ -25,7 +25,8 @@
 						// subtext: 'Fake Data',
 						left: 'center',
 						 textStyle: {
-								fontSize: 16,
+								fontSize: 24,
+								color:'#fff'
 							}
 					},
 					grid: {

@@ -1,4 +1,5 @@
 <template>
+	<div v-if="screen == 0">
 	<my-Header></my-Header>
 	<my-Login v-if="this.$store.state.login == 1"></my-Login>
 	<my-Register v-if="this.$store.state.login == 2"></my-Register>
@@ -8,6 +9,8 @@
 	<div class="qjimgbox">
 	<img class="qjimg" src="./assets/images/cityimg.png" >
 	</div>
+	</div>
+	<effect v-if="screen == 1"></effect>
 </template>
 <script>
 	import myHeader from './components/header.vue'
@@ -15,6 +18,7 @@
 	import myLogin from './components/login.vue'
 	import myRegister from './components/register.vue'
 	import myForget from './components/forget.vue'
+	import effect from './views/enterprise/effect.vue'
 	export default{
 		name:'app',
 		components:{
@@ -22,16 +26,21 @@
 			myFooter,
 			myLogin,
 			myRegister,
-			myForget
+			myForget,
+			effect
 		},
 		data(){
 			return{
 				login:'',
 				register:false,
-				forget:false
+				forget:false,
+				screen:0
 			}
 		},
-		mounted() {
+		mounted(){
+			if(localStorage.getItem('screen')){
+				this.screen = localStorage.getItem('screen')
+			}
 		},
 	}
 </script>

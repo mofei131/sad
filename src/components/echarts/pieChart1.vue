@@ -1,6 +1,6 @@
 <template>
 	<div class="box">
-		<div id="pie_chart1" style="width: 300px;height: 182px;"></div>
+		<div id="pie_chart1" style="width: 350px;height: 250px;"></div>
 	</div>
 </template>
 
@@ -25,7 +25,8 @@
 						// subtext: 'Fake Data',
 						left: 'center',
 						 textStyle: {
-								fontSize: 12,
+								fontSize: 24,
+								color:'#fff'
 							}
 					},
 					tooltip: {
@@ -36,7 +37,8 @@
 						x:'right',
 						y:'center',
 						textStyle:{
-							fontSize:7
+							fontSize:10,
+							color:'#fff'
 						},
 						itemWidth:5,
 						itemHeight:5
