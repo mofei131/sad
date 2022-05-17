@@ -50,6 +50,10 @@ import https from './request.js';
 	apiFun.messageInfo = function(params) {
 		return https.post('index/messageInfo', params)
 	}
+	//忘记密码
+	apiFun.forgetPassword = function(params) {
+		return https.post('index/forgetPassword', params)
+	}
 	
 	
 	//暴露出这个对象

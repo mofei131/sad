@@ -2,7 +2,7 @@
 	<my-Header></my-Header>
 	<my-Login v-if="this.$store.state.login == 1"></my-Login>
 	<my-Register v-if="this.$store.state.login == 2"></my-Register>
-	<my-Forget v-if="forget"></my-Forget>
+	<my-Forget v-if="this.$store.state.login == 3"></my-Forget>
 	<router-view></router-view>
 	<my-Footer></my-Footer>
 	<div class="qjimgbox">
