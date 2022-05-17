@@ -70,18 +70,11 @@ import https from './request.js';
 	apiFun.myNeedInfo = function(params) {
 		return https.get('index/myNeedInfo', params)
 	}
-	//企业数量
-	apiFun.companydata = function(params) {
-		return https.get('EchartData/companydata', params)
-	}
-	//饼图数据
-	apiFun.piedata = function(params) {
-		return https.get('EchartData/piedata', params)
-	}
 	//行业分类
 	apiFun.industryCate = function(params) {
 		return https.get('index/industryCate', params)
 	}
+	
 	//暴露出这个对象
 	export default apiFun;
 
