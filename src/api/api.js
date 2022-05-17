@@ -78,6 +78,10 @@ import https from './request.js';
 	apiFun.cityList = function(params) {
 		return https.get('index/cityList', params)
 	}
+	//城市列表
+	apiFun.serviceList = function(params) {
+		return https.get('index/serviceList', params)
+	}
 	
 	//暴露出这个对象
 	export default apiFun;

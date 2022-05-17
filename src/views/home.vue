@@ -131,18 +131,21 @@
 			<div class="catalogueTitle">企业名录</div>
 			<div class="catalogueul">
 				<div class="catalogueul2">
-					<div class="catalogueli" v-for="(item,index) in companyList" :key="index" @click="toCompanyList(item)">
-						<div class="clTitle">{{item.name}}</div>
-						<div class="clLabel">
-							<div v-for="(itm, idx) in item.company_tags" :key="idx" :style="'background:' + itm.color">
-								{{itm.name}}
+					<div v-for="(item,index) in companyList" :key="index" @click="toCompanyList(item)">
+						<div class="catalogueli" v-if="item.id">
+							<div class="clTitle">{{item.name}}</div>
+							<div class="clLabel">
+								<div v-for="(itm, idx) in item.company_tags" :key="idx"
+									:style="'background:' + itm.color">
+									{{itm.name}}
+								</div>
 							</div>
+							<div class="claddress">
+								<img src="../assets/images/address.png">
+								<div>{{item.address}}</div>
+							</div>
+							<div class="clBtn">查看详情</div>
 						</div>
-						<div class="claddress">
-							<img src="../assets/images/address.png">
-							<div>{{item.address}}</div>
-						</div>
-						<div class="clBtn">查看详情</div>
 					</div>
 				</div>
 			</div>
@@ -327,7 +330,7 @@
 				})
 			},
 			// 跳转企业详情
-			toCompanyList(e){
+			toCompanyList(e) {
 				this.$router.push({
 					path: '/enterpriseDet',
 					query: {

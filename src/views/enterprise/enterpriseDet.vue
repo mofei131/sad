@@ -10,11 +10,11 @@
 			</div>
 			<div class="detflex">
 				<div class="detflexstr">联系人：</div>
-				<div class="detli">{{info.realname}}</div>
+				<div class="detli">{{info.company_contacts}}</div>
 			</div>
 			<div class="detflex">
 				<div class="detflexstr">服务电话：</div>
-				<div class="detli">{{info.phone}}</div>
+				<div class="detli">{{info.company_phone}}</div>
 			</div>
 			<div class="detStart">公司简介：</div>
 			<div class="detCon">{{info.company_introduce}}</div>

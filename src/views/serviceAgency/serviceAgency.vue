@@ -2,144 +2,176 @@
 	<div class="box">
 		<div class="stay">您现在所在位置:<span>服务机构</span></div>
 		<div class="areaBox">
-		<div class="tradesBox">
-			<div class="tradesStr">所属行业：</div>
-			<div class="tradesList" v-for="(item,index) in tradesList">
-				<div :class="label == index?'tradesLabel':''" @click="label = index">
-					{{item.title}}
+			<div class="tradesBox">
+				<div class="tradesStr">所属行业：</div>
+				<div class="tradesLists">
+					<div class="tradesList" :class="label == null?'tradesLabel':''" @click="labelClass(null)">
+						全部
+					</div>
+					<div class="tradesList" v-for="(item,index) in tradesList">
+						<div :class="label == index?'tradesLabel':''" @click="labelClass(index)">
+							{{item.name}}
+						</div>
+					</div>
 				</div>
 			</div>
-		</div>
-		<div class="tradesBox">
-			<div class="tradesStr">所属区域：</div>
-			<div class="tradesList" v-for="(item,index) in areaList">
-				<div :class="area == index?'tradesLabel':''" @click="area = index">
-					{{item.title}}
+			<div class="tradesBox">
+				<div class="tradesStr">所属区域：</div>
+				<div class="tradesLists">
+					<div class="tradesList" :class="area == null?'tradesLabel':''" @click="areaClass(null)">
+						全部
+					</div>
+					<div class="tradesList" v-for="(item,index) in areaList">
+						<div :class="area == index?'tradesLabel':''" @click="areaClass(index)">
+							{{item.name}}
+						</div>
+					</div>
 				</div>
 			</div>
-		</div>
 		</div>
 		<div class="pageBox">
-		<div class="ulBox">
-			<div class="liBox" v-for="(item,index) in unityList" :key="index">
-				<!-- <img :src="item.image" > -->
-				<div class="title">{{item.name}}</div>
-				<!-- <div class="lablefex">
-					<div class="lableOne" v-for="(item2,index2) in item.lable">{{item2.title}}</div>
-				</div> -->
-				<div class="addressBox">
-					<img src="../../assets/images/address.png" >
-					<div class="adress">{{item.address}}</div>
-				</div>
-				<div class="libotFelx">
-					<div class="licontact">联系人：{{item.contact}}</div>
-					<div class="limobile">电话：{{item.mobile}}</div>
+			<div class="ulBox">
+				<div v-for="(item,index) in unityList" :key="index">
+					<div class="liBox" v-if="item.id">
+						<div class="title">{{item.enterprise_name}}</div>
+						<div class="addressBox">
+							<img src="../../assets/images/address.png">
+							<div class="adress">
+								{{item.service_province}}{{item.service_city}}{{item.service_area}}{{item.address}}
+							</div>
+						</div>
+						<div class="libotFelx">
+							<div class="licontact">联系人：{{item.company_contacts}}</div>
+							<div class="limobile">电话：{{item.company_phone}}</div>
+						</div>
+					</div>
 				</div>
 			</div>
-		</div>
-		<div class="pageChange">
-			<el-pagination
-				:currentPage="currentPage"
-				background
-				layout="prev, pager, next"
-				:total="1000"
-				@current-change="handleCurrentChange"
-				/>
-				<div class="except"><span>{{currentPage}}</span>/100 到第</div>
+			<div class="pageChange">
+				<el-pagination :currentPage="currentPage" background layout="prev, pager, next" :total="total"
+					@current-change="handleCurrentChange" />
+				<div class="except"><span>{{currentPage}}</span>/{{totalPage}} 到第</div>
 				<input type="number" class="pageSum" v-model="newPage" />
 				<div class="except">页</div>
 				<div class="pageBtn" @click="pageBtn">确定</div>
-		</div>
+			</div>
 		</div>
 	</div>
 </template>
 
 <script>
-	export default{
-		data(){
-			return{
-				tradesList:[{
-					title:'全部'
-				},{
-					title:'融资担保'
-				},{
-					title:'市场营销'
-				},{
-					title:'人才培育'
-				},{
-					title:'法律维权'
-				},{
-					title:'管理咨询'
-				},{
-					title:'创业辅导'
-				},{
-					title:'技术服务'
-				},{
-					title:'信息服务'
-				},{
-					title:'其他服务'
-				}],
-				label:0,//行业分类选中标签
-				areaList:[{
-					title:'全部'
-				},{
-					title:'潍城区'
-				},{
-					title:'奎文区'
-				},{
-					title:'高新区'
-				},{
-					title:'坊子区'
-				},],
-				area:0,//地区选中标签
-				unityList:[{
-					name:'山东山森数控技术有限公司',
-					address:'潍坊市怀柔区光明街216号',
-					lable:[{
-						title:'人才培养'
-					},{
-						title:'咨询管理'
-					},{
-						title:'融资担保'
-					}],
-					contact:'张三',
-					mobile:'17616134289'
-				}],
-				currentPage:1,//换页初始页数
-				newPage:'',//输入框选择页数
+	export default {
+		data() {
+			return {
+				tradesList: [],
+				label: null, //行业分类选中标签
+				areaList: [],
+				area: null, //地区选中标签
+				unityList: [],
+				total: 0, //总共页数
+				totalPage: 0, //页数
+				currentPage: 1, //换页初始页数
+				newPage: '', //输入框选择页数
 			}
 		},
-		methods:{
+
+		mounted() {
+			this.getIndustryCate()
+			this.getCityList()
+			this.getServiceList()
+		},
+
+		methods: {
 			//改变页数触发事件
-			handleCurrentChange(e){
+			handleCurrentChange(e) {
 				this.currentPage = e
+				this.getServiceList()
 			},
-			pageBtn(){
-				if(this.newPage >= 0 && this.newPage < 101){
+			pageBtn() {
+				if (this.newPage >= 0 && this.newPage < this.totalPage) {
 					this.currentPage = this.newPage
+					this.getServiceList()
 				}
+			},
+
+			// 获取行业分类
+			getIndustryCate() {
+				this.$apiFun.industryCate({}).then(res => {
+					this.tradesList = res.data
+				})
+			},
+			// 城市列表
+			getCityList() {
+				this.$apiFun.cityList({}).then(res => {
+					this.areaList = res.data
+				})
+			},
+			// 获取服务列表
+			getServiceList() {
+				this.$apiFun.serviceList({
+					page: this.currentPage,
+					limit: 8,
+					industry_id: this.label == null ? '' : this.tradesList[this.label].id,
+					service_city: this.area == null ? '' : this.areaList[this.area].id
+				}).then(res => {
+					if (res.code == 200) {
+						this.unityList = res.data
+						this.total = res.data.count
+						this.totalPage = Math.ceil(res.data.count / 8);
+					} else {
+						this.$message({
+							showClose: true,
+							message: res.message,
+							type: 'error'
+						});
+					}
+				})
+			},
+
+			// 切换类型
+			labelClass(index) {
+				if (this.label == index) {
+					this.label = null
+				} else {
+					this.label = index
+				}
+				this.currentPage = 1
+				this.getServiceList()
+			},
+			// 切换区域
+			areaClass(index) {
+				if (this.area == index) {
+					this.area = null
+				} else {
+					this.area = index
+				}
+				this.currentPage = 1
+				this.getServiceList()
 			}
 		}
 	}
 </script>
 
 <style scoped>
-	.adress{
+	.adress {
 		font-weight: 400;
 		color: #51565D;
 		font-size: 16px;
 		margin-left: 3px;
 	}
-	.addressBox img{
+
+	.addressBox img {
 		width: 15px;
 		height: 15px;
 	}
-	.addressBox{
+
+	.addressBox {
 		display: flex;
 		align-items: center;
 		margin-bottom: 18px;
 	}
-	.pageBtn{
+
+	.pageBtn {
 		width: 80px;
 		height: 36px;
 		background: #F0F2F5;
@@ -153,7 +185,8 @@
 		justify-content: center;
 		margin-left: 5px;
 	}
-	.pageSum{
+
+	.pageSum {
 		width: 63px;
 		height: 36px;
 		background: #FFFFFF;
@@ -163,29 +196,34 @@
 		outline: none;
 		text-align: center;
 	}
-	.except span{
+
+	.except span {
 		color: #3D7FFF;
 	}
-	.except{
+
+	.except {
 		font-weight: 400;
 		color: #333333;
 		font-size: 12px;
 	}
-	.pageChange{
+
+	.pageChange {
 		display: flex;
 		align-items: center;
 		margin: auto;
 		width: 1200px;
 		justify-content: center;
 	}
-	.pageBox{
+
+	.pageBox {
 		width: 1200px;
 		margin: auto;
 		background-color: #fff;
 		margin-bottom: 145px;
 		padding-bottom: 38px;
 	}
-	.libotFelx{
+
+	.libotFelx {
 		width: 264px;
 		display: flex;
 		align-items: center;
@@ -195,7 +233,8 @@
 		color: #595D64;
 		font-size: 14px;
 	}
-	.lableOne{
+
+	.lableOne {
 		width: 86px;
 		height: 21px;
 		background: #52C41A;
@@ -206,7 +245,8 @@
 		color: #fff;
 		margin-bottom: 5px;
 	}
-	.lablefex{
+
+	.lablefex {
 		display: flex;
 		align-items: center;
 		justify-content: space-around;
@@ -215,17 +255,19 @@
 		height: 45px;
 		margin-bottom: 13px;
 	}
-	.title{
+
+	.title {
 		font-weight: 500;
 		color: #51565D;
 		font-size: 18px;
 		width: 264px;
 		overflow: hidden;
 		white-space: nowrap;
-		text-overflow:ellipsis;
+		text-overflow: ellipsis;
 		margin: auto;
 		margin-bottom: 20px;
 	}
+
 	/* .liBox img{
 		width: 264px;
 		height: 148px;
@@ -233,16 +275,18 @@
 		display: block;
 		margin-bottom: 10px;
 	} */
-	.liBox{
+	.liBox {
 		padding: 10px;
 		box-sizing: border-box;
 		width: 284px;
 		height: 134px;
 		background: #FFFFFF;
 		box-shadow: 0px 0px 9px 0px rgba(190, 190, 190, 0.57);
+		margin: 0 4.5px;
 		margin-bottom: 11px;
 	}
-	.ulBox{
+
+	.ulBox {
 		width: 1200px;
 		margin: auto;
 		background-color: #FFF;
@@ -252,11 +296,12 @@
 		margin-bottom: 145px;
 		display: flex;
 		align-items: center;
-		justify-content: space-around;
+		/* justify-content: space-around; */
 		flex-flow: wrap;
 		margin-bottom: 20px;
 	}
-	.tradesLabel{
+
+	.tradesLabel {
 		padding: 2px 4px;
 		background: #2298FF;
 		border-radius: 2px;
@@ -266,19 +311,34 @@
 		color: #fff;
 		cursor: pointer;
 	}
-	.tradesList{
+
+	.tradesLists {
+		width: 1030px;
+		display: flex;
+		align-items: center;
+		flex-wrap: wrap;
+	}
+
+	.tradesList {
 		display: flex;
 		align-items: center;
 		margin-right: 20px;
 		cursor: pointer;
+		font-size: 16px;
+		font-family: PingFangSC-Regular, PingFang SC;
+		font-weight: 400;
+		line-height: 22px;
+		margin-bottom: 20px;
 	}
-	.tradesStr{
+
+	.tradesStr {
 		font-weight: 400;
 		color: #484848;
 		font-size: 16px;
 		margin-right: 20px;
 	}
-	.areaBox{
+
+	.areaBox {
 		width: 1200px;
 		margin: auto;
 		background: #FFFFFF;
@@ -288,21 +348,24 @@
 		padding-top: 25px;
 		padding-bottom: 1px;
 	}
-	.tradesBox{
+
+	.tradesBox {
 		width: 1200px;
 		margin: auto;
 		background: #FFFFFF;
 		display: flex;
-		align-items: center;
+		/* align-items: center; */
 		padding-left: 24px;
 		box-sizing: border-box;
 		margin-bottom: 25px;
 	}
-	.stay span{
+
+	.stay span {
 		color: #1890FF;
 		margin-left: 5px;
 	}
-	.stay{
+
+	.stay {
 		width: 1200px;
 		margin: auto;
 		margin-bottom: 17px;
