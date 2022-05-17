@@ -188,6 +188,11 @@
 				}).then((res) => {
 					if(res.code == 200){
 						this.messageList = res.data
+						if(this.messageList.length != 0){
+							for(let i in this.messageList){
+								this.messageList[i].info = this.$globalMethod.showHtml(this.messageList[i].info)
+							}
+						}
 					}else{
 						this.$message({
 								showClose: true,
