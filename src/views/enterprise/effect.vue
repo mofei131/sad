@@ -16,13 +16,13 @@
 		<div class="mapBox" >
 			<div class="left">
 				<div class="leftOne">
-					<pie-Chart1></pie-Chart1>
+					<pie-Chart1 ref="getpieChart1"></pie-Chart1>
 				</div>
 				<div class="leftOne">
-					<pie-Chart2></pie-Chart2>
+					<pie-Chart2 ref="getpieChart2"></pie-Chart2>
 				</div>
 				<div class="leftOne">
-					<pie-Chart3></pie-Chart3>
+					<pie-Chart3 ref="getpieChart3"></pie-Chart3>
 				</div>
 			</div>
 			<div class="center">
@@ -124,6 +124,20 @@
 						this.$refs.mapChart.getAreaData(res.data.area,title)
 						this.$refs.barChart.getBarData(res.data.area,title)
 						this.total = res.data.total
+					}else{
+						this.$message({
+								showClose: true,
+								message: res.message,
+								type: 'error'
+							});
+					}
+				})
+				this.$apiFun.piedata({classify:item.id}).then((res) => {
+					if(res.code == 200){
+						// console.log(res)
+						this.$refs.getpieChart1.getpieData(res.data.pie1)
+						this.$refs.getpieChart2.getpieData(res.data.pie2)
+						this.$refs.getpieChart3.getpieData(res.data.pie3)
 					}else{
 						this.$message({
 								showClose: true,
