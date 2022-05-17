@@ -107,14 +107,14 @@
 				</div>
 			</div>
 			<div class="notBot">
-				<div class="ggleft" v-for="(item, index) in supplyList" :key="index">
+				<div class="ggleft" v-for="(item, index) in supplyList" :key="index" @click="toSupplyList(item)">
 					<div class="sadli">
 						<div>{{item.title}}</div>
 						<div v-html="item.detail"></div>
 						<div>{{item.create_time}}</div>
 					</div>
 				</div>
-				<div class="hyright" v-for="(item, index) in needList" :key="index">
+				<div class="hyright" v-for="(item, index) in needList" :key="index" @click="toNeedList(item)">
 					<div class="sadli">
 						<div>{{item.title}}</div>
 						<div v-html="item.detail"></div>
@@ -130,7 +130,9 @@
 					<div class="catalogueli" v-for="(item,index) in companyList" :key="index">
 						<div class="clTitle">{{item.name}}</div>
 						<div class="clLabel">
-							<div v-for="(itm, idx) in item.company_tags" :key="idx" :style="'background:' + itm.color">{{itm.name}}</div>
+							<div v-for="(itm, idx) in item.company_tags" :key="idx" :style="'background:' + itm.color">
+								{{itm.name}}
+							</div>
 						</div>
 						<div class="claddress">
 							<img src="../assets/images/address.png">
@@ -230,6 +232,15 @@
 					}
 				})
 			},
+			// 供求信息路由跳转
+			toSupplyList(e) {
+				this.$router.push({
+					path: '/supplyDet',
+					query: {
+						id: e.id
+					}
+				})
+			},
 			// 获取供求信息
 			getSupplyList() {
 				this.$apiFun.supplyList({
@@ -251,6 +262,15 @@
 							message: res.message,
 							type: 'error'
 						});
+					}
+				})
+			},
+			// 需求信息路由跳转
+			toNeedList(e) {
+				this.$router.push({
+					path: '/demandDet',
+					query: {
+						id: e.id
 					}
 				})
 			},
