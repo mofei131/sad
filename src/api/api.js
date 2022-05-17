@@ -50,7 +50,10 @@ import https from './request.js';
 	apiFun.messageInfo = function(params) {
 		return https.post('index/messageInfo', params)
 	}
-	
+	//企业能力列表
+	apiFun.companyList = function(params) {
+		return https.get('index/companyList', params)
+	}
 	
 	//暴露出这个对象
 	export default apiFun;

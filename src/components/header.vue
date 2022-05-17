@@ -377,7 +377,7 @@
 	}
 	.left img{
 		width: 329px;
-		height: 56px;
+		/* height: 56px; */
 	}
 	.box{
 		width: 100%;
