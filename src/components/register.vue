@@ -1,6 +1,6 @@
 <template>
-	<div class="box">
-		<div class="loginBox">
+	<div class="box" @click="hide()">
+		<div class="loginBox" @click.stop="hide2()">
 			<img class="login" src="../assets/images/logo2.png" >
 			<div class="mode">
 				<div :class="mode == 1?'modeOne':'modeTwo'" @click="mode = 1">专家注册</div>
@@ -74,6 +74,12 @@
 		mounted() {
 		},
 		methods:{
+			hide(){
+				this.$store.state.login = 0
+			},
+			hide2(){
+				console.log('阻止冒泡')
+			},
 			// 提交注册
 			registerPut(){
 				if(!this.username){

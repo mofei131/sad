@@ -1,6 +1,6 @@
 <template>
-	<div class="box">
-		<div class="loginBox">
+	<div class="box" @click="hide">
+		<div class="loginBox" @click.stop="hide2">
 			<img class="login" src="../assets/images/logo2.png" >
 			<div class="mode">
 				<div :class="mode?'modeOne':'modeTwo'" @click="mode = true">账号登录</div>
@@ -68,6 +68,12 @@
 			}
 		},
 		methods:{
+			hide(){
+				this.$store.state.login = 0
+			},
+			hide2(){
+				console.log('阻止冒泡')
+			},
 			toLogin(){
 				if(this.mode){
 					if(!this.username){
