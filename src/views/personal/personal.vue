@@ -6,7 +6,8 @@
 		<div class="personalBox">
 			<div class="personalBoxLeft">
 				<img class="headerImg" :src="userInfo.avater?userInfo.avater:'../../assets/images/headerImg.png'" >
-				<div class="unit">{{userInfo.realname}}</div>
+				<div class="unit" v-if="userInfo.role == 1">{{userInfo.realname}}</div>
+				<div class="unit" v-else>{{userInfo.enterprise_name}}</div>
 				<div class="vipCard">{{role}}</div>
 				<div class="personalUl">
 					<div :class="liIndex == index?'personalLi2':'personalLi'" v-for="(item,index) in navList" :key="index" 

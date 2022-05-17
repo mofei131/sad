@@ -98,6 +98,10 @@ import https from './request.js';
 	apiFun.serviceList = function(params) {
 		return https.get('index/serviceList', params)
 	}
+	//修改企业资料
+	apiFun.editCompany = function(params) {
+		return https.get('index/editCompany', params)
+	}
 	
 	//暴露出这个对象
 	export default apiFun;

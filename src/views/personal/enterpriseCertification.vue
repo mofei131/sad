@@ -14,11 +14,11 @@
 					<div>:</div>
 					<input type="text" placeholder="空" />
 				</div>
-				<div class="exifLi">
+				<!-- <div class="exifLi">
 					<div class="exifHead"><div class="tc">*</div><div class="lc">法人电话</div></div>
 					<div>:</div>
 					<input type="number" placeholder="空" />
-				</div>
+				</div> -->
 				<div class="exifLi">
 					<div class="exifHead"><div class="tc">*</div><div class="lc">详细地址</div></div>
 					<div>:</div>
@@ -42,11 +42,11 @@
 						<div>仅支持jpg/png格式文件，大小须不超过5MB</div>
 					</div>
 				</div>
-				<div class="exifLi">
+				<!-- <div class="exifLi">
 					<div class="exifHead"><div class="tc">*</div><div class="lc">执照编号</div></div>
 					<div>:</div>
 					<input type="number" placeholder="空" />
-				</div>
+				</div> -->
 				<div class="exifLi">
 					<div class="exifHead"><div class="tc"></div><div class="lc">企业邮箱</div></div>
 					<div>:</div>
@@ -192,6 +192,7 @@
 		align-items: center;
 		justify-content: center;
 		margin: 12px 0 0 296px;
+		cursor: pointer;
 	}
 	.exifLi textarea{
 		width: 275px;
