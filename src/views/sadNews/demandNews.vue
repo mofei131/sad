@@ -27,7 +27,7 @@
 		</div>
 		<div class="pageBox">
 			<div class="ulBox">
-				<div v-for="(item,index) in unityList" :key="index">
+				<div v-for="(item,index) in unityList" :key="index" @click="toNeedList(item)">
 					<div class="liBox" v-if="item.id">
 						<img :src="item.images[0]">
 						<div class="title">{{item.title}}</div>
@@ -115,6 +115,15 @@
 							message: res.message,
 							type: 'error'
 						});
+					}
+				})
+			},
+			// 需求信息路由跳转
+			toNeedList(e) {
+				this.$router.push({
+					path: '/demandDet',
+					query: {
+						id: e.id
 					}
 				})
 			},
