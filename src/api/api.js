@@ -74,6 +74,14 @@ import https from './request.js';
 	apiFun.industryCate = function(params) {
 		return https.get('index/industryCate', params)
 	}
+	//修改专家资料
+	apiFun.editExpert = function(params) {
+		return https.get('index/editExpert', params)
+	}
+	//获取专家问题列表
+	apiFun.expertAskList = function(params) {
+		return https.get('expert/expertAskList', params)
+	}
 	//城市列表
 	apiFun.cityList = function(params) {
 		return https.get('index/cityList', params)
