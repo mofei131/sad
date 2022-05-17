@@ -124,6 +124,7 @@
 								this.$router.push('/expertCertification')
 							}
 						}
+						location.reload()
 					}else{
 						this.$message({
 								showClose: true,
