@@ -1,6 +1,6 @@
 <template>
 	<div class="box">
-		<div id="pie_chart1" style="width: 350px;height: 250px;"></div>
+		<div id="pie_chart1" style="width: 400px;height: 250px;"></div>
 	</div>
 </template>
 
@@ -8,13 +8,17 @@
 	export default{
 		data(){
 			return{
-				
+				pieData:[]
 			}
 		},
 		mounted() {
-			this.pieChart1()
+			
 		},
 		methods:{
+			getpieData(data){
+				this.pieData = data
+				this.pieChart1()
+			},
 			pieChart1() {
 				//  地图开始
 				let Chart = this.$echarts.init(document.getElementById('pie_chart1'))
@@ -48,13 +52,7 @@
 							name: '行业所属分布',
 							type: 'pie',
 							radius: '70%',
-							data: [
-								{ value: 1048, name: '分布属性1' },
-								{ value: 735, name: '分布属性2' },
-								{ value: 580, name: '分布属性3' },
-								{ value: 484, name: '分布属性4' },
-								{ value: 300, name: '分布属性5' }
-							],
+							data: this.pieData,
 							emphasis: {
 								itemStyle: {
 									shadowBlur: 10,

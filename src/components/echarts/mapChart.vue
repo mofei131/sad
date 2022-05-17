@@ -200,8 +200,11 @@
 						coordinateSystem: 'geo',
 						data: convertData(this.geoCoordMap),
 						symbolSize: function (val) {
-								return val[2] / 10;
-								console.log(val)
+								if((val[2] / 10) > 10){
+									return val[2] / 10;
+								}else{
+									return 10
+								}
 							},
 						hoverAnimation: true,
 						rippleEffect: {
