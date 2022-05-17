@@ -5,16 +5,16 @@
 			<div class="abCon"></div>
 			<div class="exifForm">
 				<div class="exifLi">
-					<div class="exifHead"><div class="tc">*</div><div class="lc">专家头像</div></div>
+					<div class="exifHead"><div class="tc"></div><div class="lc">专家头像</div></div>
 					<div>:</div>
 					<div class="headImgBox">
 						<div class="upHead">
 							<el-upload
 							  class="avatar-uploader"
-							  action="https://layer.boyaokj.cn/api/file/upload/"
+							  :http-request="uploadImg"
 							  :show-file-list="false"
-							  :on-success="handleAvatarSuccess"
-							  :before-upload="beforeAvatarUpload">
+							  :before-upload="beforeAvatarUpload"
+								>
 							  <img v-if="imageUrl" :src="imageUrl" class="avatar" />
 							  <el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
 							</el-upload>
@@ -25,35 +25,45 @@
 				<div class="exifLi">
 					<div class="exifHead"><div class="tc">*</div><div class="lc">专家姓名</div></div>
 					<div>:</div>
-					<input type="text" placeholder="空" />
+					<input type="text" placeholder="空" v-model="name" />
 				</div>
 				<div class="exifLi">
 					<div class="exifHead"><div class="tc">*</div><div class="lc">联系电话</div></div>
 					<div>:</div>
-					<input type="number" placeholder="空" />
+					<input type="number" placeholder="空" v-model="mobile" />
 				</div>
 				<div class="exifLi">
 					<div class="exifHead"><div class="tc">*</div><div class="lc">所属行业</div></div>
 					<div>:</div>
-					<input type="text" placeholder="空" />
+					<!-- <input type="text" placeholder="空" /> -->
+					<div class="select">
+						<el-select v-model="value" placeholder="请选择所属行业">
+						    <el-option
+						      v-for="item in options"
+						      :key="item.id"
+						      :label="item.name"
+						      :value="item.id">
+						    </el-option>
+						  </el-select>
+					</div>
 				</div>
-				<div class="exifLi">
+				<!-- <div class="exifLi">
 					<div class="exifHead"><div class="tc">*</div><div class="lc">详细地址</div></div>
 					<div>:</div>
 					<input type="text" placeholder="空" />
-				</div>
+				</div> -->
 				<div class="exifLi">
 					<div class="exifHead"><div class="tc"></div><div class="lc">专家邮箱</div></div>
 					<div>:</div>
-					<input type="text" placeholder="空" />
+					<input type="text" placeholder="空" v-model="emile" />
 				</div>
 				<div class="exifLi">
 					<div class="exifHead"><div class="tc">*</div><div class="lc">专家简介</div></div>
 					<div>:</div>
-					<textarea placeholder="空"></textarea>
+					<textarea placeholder="空" v-model="mark"></textarea>
 				</div>
 			</div>
-			<div class="wxifBtn">保存</div>
+			<div class="wxifBtn" @click="setEditExpert">保存</div>
 		</div>
 	</div>
 </template>
@@ -66,10 +76,108 @@
 		},
 		data(){
 			return{
-				imageUrl: ''
+				imageUrl: '',
+				userInfo:'',
+				options: [],
+				value: '',
+				name:'1232',
+				mobile:'',
+				emile:'',
+				mark:''
 			}
 		},
+		created() {
+			this.getIndustryCate()
+		},
 		methods: {
+			//提交修改资料
+			setEditExpert(){
+				this.$apiFun.editExpert({
+					user_id:this.userInfo.id,
+					avater:this.imageUrl,
+					realname:this.name,
+					phone:this.mobile,
+					industry_id:this.value,
+					email:this.emile,
+					personal_introduce:this.mark
+				}).then((res) => {
+					if(res.code == 200){
+						// console.log(res.data)
+						// this.imageUrl = res.data.url
+						this.$apiFun.userInfo({
+							user_id:this.userInfo.id
+						}).then((red) => {
+							if(red.code == 200){
+								localStorage.setItem('userInfo',JSON.stringify(red.data))
+								this.$message({
+										showClose: true,
+										message: '修改成功',
+										type: 'success'
+									});
+								location.reload()
+							}else{
+								this.$message({
+										showClose: true,
+										message: red.message,
+										type: 'error'
+									});
+							}
+						})
+					}else{
+						this.$message({
+								showClose: true,
+								message: res.message,
+								type: 'error'
+							});
+					}
+				})
+			},
+			//上传头像
+			uploadImg(param){
+				//发送请求的参数格式为FormData
+				const formData = new FormData();
+				formData.append("file", param.file);
+				this.$apiFun.upload(formData).then((res) => {
+					if(res.code == 200){
+						console.log(res.data)
+						this.imageUrl = res.data.url
+					}else{
+						this.$message({
+								showClose: true,
+								message: res.message,
+								type: 'error'
+							});
+					}
+				})
+			},
+			//获取行业分类
+			getIndustryCate(){
+				this.$apiFun.industryCate().then((res) => {
+					if(res.code == 200){
+						// console.log(res)
+						this.options = res.data
+						this.getuserInfo()
+					}else{
+						this.$message({
+								showClose: true,
+								message: res.message,
+								type: 'error'
+							});
+					}
+				})
+			},
+			//获取专家资料
+			getuserInfo(){
+				this.userInfo = JSON.parse(localStorage.getItem('userInfo'))
+				this.name = this.userInfo.realname
+				this.mobile = this.userInfo.mobile
+				this.emile = this.userInfo.email
+				this.mark = this.userInfo.personal_introduce
+				this.imageUrl = this.userInfo.avater
+				if(this.userInfo.industry_id !=0){
+					this.value = this.options[this.options.findIndex(item => item.id == this.userInfo.industry_id)].name
+				}
+			},
 			handleAvatarSuccess(res, file) {
 				// console.log(URL.createObjectURL(file.raw))
 				console.log(res)
@@ -93,6 +201,13 @@
 </script>
 
 <style scoped>
+	.select /deep/ .el-input{
+		width: 275px;
+		height: 25px;
+		background: #FFFFFF;
+		border-radius: 4px;
+		border: 1px solid #D4D4D4;
+	}
 	.tc{
 		width: 12px;
 		color: #FF5023;
@@ -136,6 +251,7 @@
 		align-items: center;
 		justify-content: center;
 		margin: 45px 0 0 296px;
+		cursor: pointer;
 	}
 	.exifLi textarea{
 		width: 275px;

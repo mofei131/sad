@@ -5,8 +5,8 @@
 		</div>
 		<div class="personalBox">
 			<div class="personalBoxLeft">
-				<img class="headerImg" src="../../assets/images/addImg.png" >
-				<div class="unit">潍柴集团股份有限公司</div>
+				<img class="headerImg" :src="userInfo.avater?userInfo.avater:'../../assets/images/headerImg.png'" >
+				<div class="unit">{{userInfo.realname}}</div>
 				<div class="vipCard">{{role}}</div>
 				<div class="personalUl">
 					<div :class="liIndex == index?'personalLi2':'personalLi'" v-for="(item,index) in navList" :key="index" 
@@ -32,7 +32,7 @@
 				<!-- 企业认证 -->
 				<enterprise-Certification v-if="sum == 5"></enterprise-Certification>
 				<!-- 问题回复列表 -->
-				<problem-List v-if="sum == 6"></problem-List>
+				<problem-List @change="protoDet($event)" v-if="sum == 6"></problem-List>
 				<!-- 问题回复详情 -->
 				<problem-Det v-if="sum == 7"></problem-Det>
 				<!-- 问题提问列表 -->
@@ -141,34 +141,33 @@
 			}
 		},
 		methods:{
+			protoDet(value){
+				console.log(value)
+				if(value){
+					this.sum = 7
+				}
+			},
 			//切换选项卡
 			swichCard(item,index){
 				this.liIndex = index
-				switch(item.id){
-					case 0:
-						this.sum = 2
-						break
-					case 1:
+				if(this.userInfo.role == 1){
+					if(item.id == 0){
+						this.sum == 2
+					}else if(item.id == 1){
 						this.sum = 1
-						break
-					case 2:
+					}else if(item.id == 2){
 						this.sum = 0
-						break
-					case 3:
+					}else if(item.id == 3){
 						this.sum = 5
-						break
-					case 4:
+					}else if(item.id == 4){
 						this.sum = 4
-						break
-					case 5:
-						this.sum = 8
-						break
-					case 6:
+					}else if(item.id == 5){
+						this.sum = 6
+					}else if(item.id == 6){
 						this.sum = 11
-						break
-					case 7:
+					}else if(item.id == 7){
 						this.sum = 10
-						break
+					}
 				}
 			}
 		}
