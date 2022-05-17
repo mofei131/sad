@@ -54,13 +54,13 @@ import https from './request.js';
 	apiFun.companyList = function(params) {
 		return https.get('index/companyList', params)
 	}
-	//忘记密码
-	apiFun.forgetPassword = function(params) {
-		return https.post('index/forgetPassword', params)
+	//供应列表
+	apiFun.supplyList = function(params) {
+		return https.get('index/supplyList', params)
 	}
-	//修改密码
-	apiFun.resetPassword = function(params) {
-		return https.post('index/resetPassword', params)
+	//需求列表
+	apiFun.needList = function(params) {
+		return https.get('index/needList', params)
 	}
 	
 	//暴露出这个对象

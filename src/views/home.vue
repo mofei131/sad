@@ -107,28 +107,18 @@
 				</div>
 			</div>
 			<div class="notBot">
-				<div class="ggleft">
+				<div class="ggleft" v-for="(item, index) in supplyList" :key="index">
 					<div class="sadli">
-						<div>刚工作的几年比谁更踏实，再过几年比谁更激情</div>
-						<div>10月22日，首届RCEP区域（山东）进口商品博览会（简称RCEP博览会）圆满（简称RCEP博览会）圆满</div>
-						<div>2021-11-10</div>
-					</div>
-					<div class="sadli">
-						<div>刚工作的几年比谁更踏实，再过几年比谁更激情</div>
-						<div>10月22日，首届RCEP区域（山东）进口商品博览会（简称RCEP博览会）圆满（简称RCEP博览会）圆满</div>
-						<div>2021-11-10</div>
+						<div>{{item.title}}</div>
+						<div v-html="item.detail"></div>
+						<div>{{item.create_time}}</div>
 					</div>
 				</div>
-				<div class="hyright">
+				<div class="hyright" v-for="(item, index) in needList" :key="index">
 					<div class="sadli">
-						<div>刚工作的几年比谁更踏实，再过几年比谁更激情</div>
-						<div>10月22日，首届RCEP区域（山东）进口商品博览会（简称RCEP博览会）圆满（简称RCEP博览会）圆满</div>
-						<div>2021-11-10</div>
-					</div>
-					<div class="sadli">
-						<div>刚工作的几年比谁更踏实，再过几年比谁更激情</div>
-						<div>10月22日，首届RCEP区域（山东）进口商品博览会（简称RCEP博览会）圆满（简称RCEP博览会）圆满</div>
-						<div>2021-11-10</div>
+						<div>{{item.title}}</div>
+						<div v-html="item.detail"></div>
+						<div>{{item.create_time}}</div>
 					</div>
 				</div>
 			</div>
@@ -140,9 +130,7 @@
 					<div class="catalogueli" v-for="(item,index) in companyList" :key="index">
 						<div class="clTitle">{{item.name}}</div>
 						<div class="clLabel">
-							<div>专新特新企业</div>
-							<div>专新特新企业</div>
-							<div>专新特新企业</div>
+							<div v-for="(itm, idx) in item.company_tags" :key="idx">{{itm}}</div>
 						</div>
 						<div class="claddress">
 							<img src="../assets/images/address.png">
@@ -166,6 +154,8 @@
 				limit: 6,
 				noticeList: [], //通知公告列表
 				messageList: [], //行业资讯列表
+				supplyList: [], //供求信息列表
+				needList: [], //需求信息列表
 				companyList: [], //企业名录列表
 			}
 		},
@@ -176,6 +166,8 @@
 			})
 			this.getNoticeList()
 			this.getMessageList()
+			this.getSupplyList()
+			this.getNeedList()
 			this.getCompanyList()
 		},
 		methods: {
@@ -229,6 +221,54 @@
 				}).then((res) => {
 					if (res.code == 200) {
 						this.noticeList = res.data
+					} else {
+						this.$message({
+							showClose: true,
+							message: res.message,
+							type: 'error'
+						});
+					}
+				})
+			},
+			// 获取供求信息
+			getSupplyList() {
+				this.$apiFun.supplyList({
+					page: 1,
+					limit: 4,
+					industry_id: '',
+					keywords: ''
+				}).then(res => {
+					if (res.code == 200) {
+						this.supplyList = res.data
+						if (this.supplyList.length != 0) {
+							for (let i in this.supplyList) {
+								this.supplyList[i].detail = this.$globalMethod.showHtml(this.supplyList[i].detail)
+							}
+						}
+					} else {
+						this.$message({
+							showClose: true,
+							message: res.message,
+							type: 'error'
+						});
+					}
+				})
+			},
+			// 获取需求信息
+			getNeedList() {
+				this.$apiFun.needList({
+					page: 1,
+					limit: 4,
+					industry_id: '',
+					keywords: ''
+				}).then(res => {
+					if (res.code == 200) {
+						this.needList = res.data
+						if (this.needList.length != 0) {
+							for (let i in this.needList) {
+								this.needList[i].detail = this.$globalMethod.showHtml(this.needList[i].detail)
+							}
+						}
 					} else {
 						this.$message({
 							showClose: true,
