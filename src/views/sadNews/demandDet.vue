@@ -19,17 +19,17 @@
 					</div>
 				</div>
 				<div class="detBoxRight">
-					<div class="abrOne">企业供应优质潍坊萝卜</div>
-					<div class="abrTwo">发布时间：2017年08月10日</div>
-					<div class="abrTwo">需求类别：矿产资源</div>
-					<div class="abrTwo">发布企业：潍坊市广为信息科技有限公司</div>
-					<div class="abrTwo">总浏览量：454654</div>
+					<div class="abrOne">{{needInfo.title}}</div>
+					<div class="abrTwo">发布时间：{{needInfo.create_time}}</div>
+					<div class="abrTwo">需求类别：{{needInfo.industry_name}}</div>
+					<div class="abrTwo">发布企业：{{needInfo.company_name}}</div>
+					<div class="abrTwo">总浏览量：{{needInfo.look}}</div>
 					<div class="dbrBtn">询价</div>
 				</div>
 			</div>
 			<div class="detBoxbot">
 				<div class="dbbTit">供应详情：</div>
-				<div class="dbbCon">123</div>
+				<div class="dbbCon" v-html="needInfo.detail"></div>
 			</div>
 		</div>
 	</div>
@@ -40,7 +40,7 @@
 	export default{
 		data(){
 			return{
-				
+				needInfo: {}
 			}
 		},
 		mounted() {
@@ -48,9 +48,28 @@
 				loop: true,
 				autoplay:3000,
 			})
+			this.getNeedInfo()
 		},
 		methods: {
-			
+			//企业中心需求详情
+			getNeedInfo() {
+				this.$apiFun.myNeedInfo({
+					id: this.$route.query.id
+				}).then((res) => {
+					if (res.code == 200) {
+						this.needInfo = res.data
+						if (this.needInfo.length != 0) {
+							this.needInfo.detail = this.$globalMethod.showHtml(this.needInfo.detail)
+						}
+					} else {
+						this.$message({
+							showClose: true,
+							message: res.message,
+							type: 'error'
+						});
+					}
+				})
+			}
 		}
 	}
 </script>

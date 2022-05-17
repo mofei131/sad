@@ -58,9 +58,17 @@ import https from './request.js';
 	apiFun.supplyList = function(params) {
 		return https.get('index/supplyList', params)
 	}
+	//企业中心供应详情
+	apiFun.mySupplyInfo = function(params) {
+		return https.get('index/mySupplyInfo', params)
+	}
 	//需求列表
 	apiFun.needList = function(params) {
 		return https.get('index/needList', params)
+	}
+	//企业中心需求详情
+	apiFun.myNeedInfo = function(params) {
+		return https.get('index/myNeedInfo', params)
 	}
 	
 	//暴露出这个对象
