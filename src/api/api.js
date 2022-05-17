@@ -94,6 +94,10 @@ import https from './request.js';
 	apiFun.piedata = function(params) {
 		return https.get('EchartData/piedata', params)
 	}
+	//城市列表
+	apiFun.serviceList = function(params) {
+		return https.get('index/serviceList', params)
+	}
 	
 	//暴露出这个对象
 	export default apiFun;
