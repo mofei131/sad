@@ -70,14 +70,6 @@ import https from './request.js';
 	apiFun.myNeedInfo = function(params) {
 		return https.get('index/myNeedInfo', params)
 	}
-	//企业数量
-	apiFun.companydata = function(params) {
-		return https.get('EchartData/companydata', params)
-	}
-	//饼图数据
-	apiFun.piedata = function(params) {
-		return https.get('EchartData/piedata', params)
-	}
 	//行业分类
 	apiFun.industryCate = function(params) {
 		return https.get('index/industryCate', params)
@@ -89,6 +81,10 @@ import https from './request.js';
 	//获取专家问题列表
 	apiFun.expertAskList = function(params) {
 		return https.get('expert/expertAskList', params)
+	}
+	//城市列表
+	apiFun.cityList = function(params) {
+		return https.get('index/cityList', params)
 	}
 	
 	//暴露出这个对象

@@ -98,7 +98,7 @@
 					if (res.code == 200) {
 						this.unityList = res.data
 						this.total = res.data.count
-						this.totalPage = Math.round(res.data.count / 8);
+						this.totalPage = Math.ceil(res.data.count / 8);
 						if (this.unityList.length != 0) {
 							for (let i in this.unityList) {
 								if (this.unityList[i].detail) {
