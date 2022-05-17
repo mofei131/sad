@@ -132,6 +132,17 @@
 							});
 					}
 				})
+				this.$apiFun.companydata({classify:item.id}).then((res) => {
+					if(res.code == 200){
+						console.log(res)
+					}else{
+						this.$message({
+								showClose: true,
+								message: res.message,
+								type: 'error'
+							});
+					}
+				})
 			},
 			KeyDown(event) {
 				let that = this
