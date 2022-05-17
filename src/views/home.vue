@@ -23,7 +23,7 @@
 							<img src="../assets/images/star.png">
 							<div>通知公告</div>
 						</div>
-						<div class="notmore">
+						<div class="notmore" @click="more('/inform')">
 							<div>更多</div>
 							<el-icon class="el-icon--right" color="#1890FF">
 								<arrow-right />
@@ -35,7 +35,7 @@
 							<img src="../assets/images/star.png">
 							<div>行业资讯</div>
 						</div>
-						<div class="notmore">
+						<div class="notmore" @click="more('/industryList')">
 							<div>更多</div>
 							<el-icon class="el-icon--right" color="#1890FF">
 								<arrow-right />
@@ -86,7 +86,7 @@
 						<img src="../assets/images/star.png">
 						<div>供求信息</div>
 					</div>
-					<div class="notmore">
+					<div class="notmore" @click="more('/supplyNews')">
 						<div>更多</div>
 						<el-icon class="el-icon--right" color="#1890FF">
 							<arrow-right />
@@ -98,7 +98,7 @@
 						<img src="../assets/images/star.png">
 						<div>需求信息</div>
 					</div>
-					<div class="notmore">
+					<div class="notmore" @click="more('/demandNews')">
 						<div>更多</div>
 						<el-icon class="el-icon--right" color="#1890FF">
 							<arrow-right />
@@ -315,6 +315,12 @@
 							type: 'error'
 						});
 					}
+				})
+			},
+			// 更多
+			more(url){
+				this.$router.push({
+					path: url
 				})
 			}
 		}
