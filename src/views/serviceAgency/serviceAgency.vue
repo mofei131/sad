@@ -3,7 +3,7 @@
 		<div class="stay">您现在所在位置:<span>服务机构</span></div>
 		<div class="areaBox">
 			<div class="tradesBox">
-				<div class="tradesStr">所属行业：</div>
+				<div class="tradesStr">服务领域：</div>
 				<div class="tradesLists">
 					<div class="tradesList" :class="label == null?'tradesLabel':''" @click="labelClass(null)">
 						全部
@@ -72,9 +72,14 @@
 				totalPage: 0, //页数
 				currentPage: 1, //换页初始页数
 				newPage: '', //输入框选择页数
+				keywords:''
 			}
 		},
-
+		created() {
+			if(this.$route.query){
+				this.keywords = this.$route.query.value
+			}
+		},
 		mounted() {
 			this.getIndustryCate()
 			this.getCityList()
@@ -94,9 +99,9 @@
 				}
 			},
 
-			// 获取行业分类
+			// 获取服务领域
 			getIndustryCate() {
-				this.$apiFun.industryCate({}).then(res => {
+				this.$apiFun.servicesList({}).then(res => {
 					this.tradesList = res.data
 				})
 			},
@@ -112,7 +117,8 @@
 					page: this.currentPage,
 					limit: 8,
 					industry_id: this.label == null ? '' : this.tradesList[this.label].id,
-					service_city: this.area == null ? '' : this.areaList[this.area].id
+					service_city: this.area == null ? '' : this.areaList[this.area].id,
+					keywords:this.keywords
 				}).then(res => {
 					if (res.code == 200) {
 						this.unityList = res.data

@@ -7,14 +7,14 @@
 				<div :class="reply?'noreply':'reply'" @click="putReply(1)">已回复</div>
 			</div>
 			<div class="abCon"></div>
-			<div class="problemLi" @click="toDet(1)">
+			<div class="problemLi" @click="toDet(item.id)" v-for="(item,index) in expertAskList" :key="index">
 				<div class="problemLiLeft">
-					<div>潍坊深圳工业园区即将建成，届时潍坊将有5000万届时潍坊将有5000万潍坊将有5000万</div>
-					<div>2021-11-10</div>
+					<div>{{item.ask_title}}</div>
+					<div>{{item.create_time}}</div>
 				</div>
 				<div class="problemLiRight">
-					<div>增许江从者要都论对农红合学好圆取命持证根无区提较观题年观验许选达很…</div>
-					<div>潍柴集团股份有限公司</div>
+					<div>{{item.ask_content}}</div>
+					<div>{{item.company_name}}</div>
 				</div>
 			</div>
 		</div>
@@ -59,6 +59,7 @@
 				}).then((res) => {
 					if(res.code == 200){
 						console.log(res.data)
+						this.expertAskList = res.data
 					}else{
 						this.$message({
 								showClose: true,

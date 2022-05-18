@@ -50,9 +50,14 @@
 				totalPage: 0, //页数
 				currentPage: 1, //换页初始页数
 				newPage: '', //输入框选择页数
+				keywords:''
 			}
 		},
-
+		created() {
+			if(this.$route.query){
+				this.keywords = this.$route.query.value
+			}
+		},
 		mounted() {
 			this.getIndustryCate()
 			this.getActivityList()
@@ -82,7 +87,8 @@
 				this.$apiFun.activityList({
 					page: this.currentPage,
 					limit: 8,
-					industry_id: this.label == null ? '' : this.tradesList[this.label].id
+					industry_id: this.label == null ? '' : this.tradesList[this.label].id,
+					keywords:this.keywords
 				}).then(res => {
 					if (res.code == 200) {
 						this.unityList = res.data

@@ -32,13 +32,13 @@
 				<service-Provider-Certification v-if="sum == 4"></service-Provider-Certification>
 				<!-- 企业认证 -->
 				<enterprise-Certification v-if="sum == 5"></enterprise-Certification>
-				<!-- 问题回复列表 -->
-				<problem-List @change="protoDet($event)" v-if="sum == 6"></problem-List>
-				<!-- 问题回复详情 -->
-				<problem-Det v-if="sum == 7"></problem-Det>
 				<!-- 问题提问列表 -->
-				<question-List v-if="sum == 8"></question-List>
+				<problem-List @change="protoDet($event)" v-if="sum == 6"></problem-List>
 				<!-- 问题提问详情 -->
+				<problem-Det v-if="sum == 7"></problem-Det>
+				<!-- 问题回复列表 -->
+				<question-List v-if="sum == 8"></question-List>
+				<!-- 问题回复详情 -->
 				<put-Question-List v-if="sum == 9"></put-Question-List>
 				<!-- 供应列表 -->
 				<supply-List @change="supplyDet($event)" v-if="sum == 10"></supply-List>
@@ -97,6 +97,10 @@
 					title:'个人资料',
 					icon:require('../../assets/images/personalicon0.png')
 				},{
+					id:8,
+					title:'服务机构资料',
+					icon:require('../../assets/images/personalicon0.png')
+				},{
 					id:2,
 					title:'修改密码',
 					icon:require('../../assets/images/personalicon1.png')
@@ -137,12 +141,24 @@
 				this.navList.splice(this.navList.findIndex(item => item.id == 4), 1)
 				this.navList.splice(this.navList.findIndex(item => item.id == 6), 1)
 				this.navList.splice(this.navList.findIndex(item => item.id == 7), 1)
+				this.navList.splice(this.navList.findIndex(item => item.id == 8), 1)
 			}
 			if(this.userInfo.role == 2){
 				this.role = '企业级会员'
 				this.sum = 0
 				this.navList.splice(this.navList.findIndex(item => item.id == 1), 1)
 				this.navList.splice(this.navList.findIndex(item => item.id == 4), 1)
+				this.navList.splice(this.navList.findIndex(item => item.id == 8), 1)
+			}
+			if(this.userInfo.role == 3){
+				this.role = '服务机构会员'
+				this.sum = 3
+				this.navList.splice(this.navList.findIndex(item => item.id == 0), 1)
+				this.navList.splice(this.navList.findIndex(item => item.id == 1), 1)
+				this.navList.splice(this.navList.findIndex(item => item.id == 3), 1)
+				this.navList.splice(this.navList.findIndex(item => item.id == 5), 1)
+				this.navList.splice(this.navList.findIndex(item => item.id == 6), 1)
+				this.navList.splice(this.navList.findIndex(item => item.id == 7), 1)
 			}
 			if(this.$route.query.id){
 				// console.log(this.$route.query)
@@ -167,7 +183,7 @@
 			},
 			//专家列表切换详情
 			protoDet(value){
-				console.log(value)
+				this.$store.state.problemId = value
 				if(value){
 					this.sum = 7
 				}
@@ -210,6 +226,14 @@
 						this.sum = 11
 					}else if(item.id == 7){
 						this.sum = 10
+					}
+				}else if(this.userInfo.role == 3){
+					if(item.id == 8){
+						this.sum = 3
+					}else if(item.id == 2){
+						this.sum = 0
+					}else if(item.id == 4){
+						this.sum = 4
 					}
 				}
 			}
@@ -258,7 +282,7 @@
 		cursor: pointer;
 	}
 	.vipCard{
-		width: 105px;
+		width: 120px;
 		font-weight: 400;
 		color: #FFFFFF;
 		font-size: 14px;

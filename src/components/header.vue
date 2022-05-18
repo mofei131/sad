@@ -11,7 +11,7 @@
 								{{item.title}}
 						</option>
 					</select>
-					<input type="text" placeholder="请输入您想查询的内容" />
+					<input type="text" v-model="searchValue" placeholder="请输入您想查询的内容" />
 					<div @click="search">搜索</div>
 				</div>
 				<div class="login" @click="toLogin" v-if="this.$store.state.wait == 0">
@@ -194,7 +194,8 @@
 				},{
 					id:7,
 					title:'供应信息'
-				}]
+				}],
+				searchValue:'',//搜索框内容
 			}
 		},
 		mounted() {
@@ -234,6 +235,67 @@
 			
 		},
 		methods:{
+			//搜索跳转
+			search(){
+				if(!this.searchValue){
+					this.$message({
+							showClose: true,
+							message: '请先输入搜索内容',
+							type: 'warning'
+						});
+						return
+				}
+				if(this.selectClassEnd == '供应'){
+					this.$router.push({
+						path:'/supplyNews',
+						query:{
+							value:this.searchValue
+						}
+					})
+				}else if(this.selectClassEnd == '需求'){
+					this.$router.push({
+						path:'/demandNews',
+						query:{
+							value:this.searchValue
+						}
+					})
+				}else if(this.selectClassEnd == '通知公告'){
+					this.$router.push({
+						path:'/inform',
+						query:{
+							value:this.searchValue
+						}
+					})
+				}else if(this.selectClassEnd == '行业资讯'){
+					this.$router.push({
+						path:'/industryList',
+						query:{
+							value:this.searchValue
+						}
+					})
+				}else if(this.selectClassEnd == '服务机构'){
+					this.$router.push({
+						path:'/serviceAgency',
+						query:{
+							value:this.searchValue
+						}
+					})
+				}else if(this.selectClassEnd == '活动动态'){
+					this.$router.push({
+						path:'/dynamic',
+						query:{
+							value:this.searchValue
+						}
+					})
+				}else if(this.selectClassEnd == '企业信息'){
+					this.$router.push({
+						path:'/enterpriseList',
+						query:{
+							value:this.searchValue
+						}
+					})
+				}
+			},
 			//展示大屏
 			toScreen(){
 				// this.$store.state.screen = 1

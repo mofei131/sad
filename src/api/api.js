@@ -167,15 +167,33 @@ import https from './request.js';
 		return https.get('index/commitOffer', params)
 	}
 	//提交报价详情
-	apiFun.myOfferInfo= function(params) {
+	apiFun.myOfferInfo = function(params) {
 		return https.get('index/myOfferInfo', params)
 	}
 	//修改密码
 	apiFun.resetPassword= function(params) {
 		return https.get('index/resetPassword', params)
 	}
-	
-	
+	//服务机构资料修改
+	apiFun.editService = function(params) {
+		return https.get('index/editService', params)
+	}
+	//服务机构认证
+	apiFun.serviceAut = function(params) {
+		return https.get('index/serviceAut', params)
+	}
+	//服务领域列表
+	apiFun.servicesList = function(params) {
+		return https.get('index/servicesList', params)
+	}
+	//问题详情
+	apiFun.expertAskInfo = function(params) {
+		return https.get('expert/expertAskInfo', params)
+	}
+	//专家回复问题
+	apiFun.expertAnswerAsk = function(params) {
+		return https.get('expert/expertAnswerAsk', params)
+	}
 	//暴露出这个对象
 	export default apiFun;
 
