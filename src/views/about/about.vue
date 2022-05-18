@@ -1,22 +1,23 @@
 <template>
 	<div class="box">
 		<div class="banner">
-			 <div class="swiper-container">
+			<div class="swiper-container">
 				<div class="swiper-wrapper">
 					<div class="swiper-slide">
-						<img src="../../assets/images/banner.png" >
+						<img src="../../assets/images/banner.png">
 					</div>
 					<div class="swiper-slide">
-						<img src="../../assets/images/banner.png" >
+						<img src="../../assets/images/banner.png">
 					</div>
 					<div class="swiper-slide">
-						<img src="../../assets/images/banner.png" >
+						<img src="../../assets/images/banner.png">
 					</div>
 				</div>
-		</div>
+			</div>
 		</div>
 		<div class="stay">您现在所在位置:<span>关于我们</span></div>
-		<div class="abCon">
+		<div class="fuwenben" v-html="info"></div>
+		<!-- <div class="abCon">
 			<div class="abcTop">平台历史</div>
 			<div class="abcBom"></div>
 		</div>
@@ -35,28 +36,37 @@
 		<div class="abCon">
 			<div class="abcTop">平台愿景</div>
 			<div class="abcBom"></div>
-		</div>
+		</div> -->
 	</div>
 </template>
 
 <script>
-	export default{
-		data(){
-			return{
-				
+	export default {
+		data() {
+			return {
+				info: ''
 			}
 		},
 		mounted() {
-			new Swiper ('.swiper-container', {
+			new Swiper('.swiper-container', {
 				loop: true,
-				autoplay:3000,
+				autoplay: 3000,
 			})
+			this.getCommonConfig()
+		},
+		methods: {
+			// 获取富文本
+			getCommonConfig() {
+				this.$apiFun.commonConfig({}).then(res => {
+					this.info = this.$globalMethod.showHtml(res.data.about_us)
+				})
+			}
 		}
 	}
 </script>
 
 <style scoped>
-	.abcTop{
+	.abcTop {
 		width: 1200px;
 		height: 73px;
 		background: linear-gradient(90deg, #1890FF 0%, #67F4FF 100%);
@@ -67,34 +77,45 @@
 		align-items: center;
 		justify-content: center;
 	}
-	.abcBom{
+
+	.abcBom {
 		padding: 16px 20px 20px 46px;
 		box-sizing: border-box;
 	}
-	.abCon{
+
+	.abCon {
 		width: 1200px;
 		margin: auto;
 		background-color: #fff;
 	}
-	.stay span{
+
+	.stay span {
 		color: #1890FF;
 		margin-left: 5px;
 	}
-	.stay{
+
+	.stay {
 		width: 1200px;
 		margin: auto;
 		margin-bottom: 17px;
 		color: #333333;
 		font-size: 12px;
 	}
-	.swiper-slide img{
+
+	.swiper-slide img {
 		width: 1200px;
 		height: 428px;
 	}
-	.banner{
+
+	.banner {
 		width: 1200px;
 		height: 428px;
 		margin: auto;
 		margin-bottom: 18px;
+	}
+	
+	.fuwenben{
+		width: 1200px;
+		margin: 0 auto;
 	}
 </style>

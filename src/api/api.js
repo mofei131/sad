@@ -122,6 +122,10 @@ import https from './request.js';
 	apiFun.companyAut = function(params) {
 		return https.get('index/companyAut', params)
 	}
+	//site配置信息
+	apiFun.commonConfig = function(params) {
+		return https.get('index/commonConfig', params)
+	}
 	//发布需求
 	apiFun.releaseNeed = function(params) {
 		return https.get('index/releaseNeed', params)
