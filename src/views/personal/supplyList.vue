@@ -4,15 +4,15 @@
 			<div class="exinTitle">供应列表</div>
 			<div class="abCon"></div>
 			<div class="problemLiBox">
-			<div class="problemLi">
+			<div class="problemLi" v-for="(item,index) in emandList" :key="index" @click="toDet(item.id)">
 				<div class="problemLiLeft">
-					<div>潍坊深圳工业园区即将建成，届时潍坊将有5000万届时潍坊将有5000万潍坊将有5000万</div>
-					<div class="put">上架</div>
-					<div class="off">下架</div>
+					<div>{{item.title}}</div>
+					<div class="put" v-if="item.status == 0" @click="putChangeNeedStatus(item)">上架</div>
+					<div class="off" v-if="item.status == 1" @click="putChangeNeedStatus(item)">下架</div>
 				</div>
 				<div class="problemLiRight">
-					<div>增许江从者要都论对农红合学好圆取命持证根无区提较观题年观验许选达很…</div>
-					<div>收到5条回复</div>
+					<div>{{item.detail}}</div>
+					<div>收到{{item.count}}条回复</div>
 				</div>
 			</div>
 			</div>
@@ -27,14 +27,69 @@
 	export default{
 		data(){
 			return{
-				
+				emandList:[],
+				shelf:true
 			}
 		},
 		mounted() {
-			
+			this.getNeedList()
 		},
 		methods: {
-			
+			//上架下架
+			putChangeNeedStatus(e){
+				this.$apiFun.changeSupplyStatus({
+					user_id:JSON.parse(localStorage.getItem('userInfo')).id,
+					id:e.id,
+					status:e.status == 0?1:0
+				}).then((res) => {
+					if(res.code == 200){
+						if(e.status == 0){
+							this.$message({
+									showClose: true,
+									message: '上架成功',
+									type: 'success'
+								});
+						}else{
+							this.$message({
+									showClose: true,
+									message: '下架成功',
+									type: 'success'
+								});
+						}
+						this.getNeedList()
+					}else{
+						this.$message({
+								showClose: true,
+								message: res.message,
+								type: 'error'
+							});
+					}
+				})
+			},
+			//切换详情
+			toDet(e){
+				this.$emit('change',e);
+			},
+			//获取供应列表
+			getNeedList(){
+				this.$apiFun.mySupplyList({
+					page:1,
+					limit:1000,
+					user_id:JSON.parse(localStorage.getItem('userInfo')).id
+				}).then((res) => {
+					if(res.code == 200){
+						console.log(res.data)
+						this.emandList = res.data
+						// this.tagList = res.data
+					}else{
+						this.$message({
+								showClose: true,
+								message: res.message,
+								type: 'error'
+							});
+					}
+				})
+			}
 		}
 	}
 </script>

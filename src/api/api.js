@@ -138,9 +138,17 @@ import https from './request.js';
 	apiFun.myNeedList = function(params) {
 		return https.get('index/myNeedList', params)
 	}
-	//上架下架
+	//需求上架下架
 	apiFun.changeNeedStatus = function(params) {
 		return https.get('index/changeNeedStatus', params)
+	}
+	//供应列表
+	apiFun.mySupplyList = function(params) {
+		return https.get('index/mySupplyList', params)
+	}
+	//供应上架下架
+	apiFun.changeSupplyStatus = function(params) {
+		return https.get('index/changeSupplyStatus', params)
 	}
 	//暴露出这个对象
 	export default apiFun;
