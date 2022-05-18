@@ -167,6 +167,8 @@
 			new Swiper('.swiper-container', {
 				loop: true,
 				autoplay: 3000,
+				observer: true,
+				observeParents: true,
 			})
 			this.getBannerList()
 			this.getNoticeList()

@@ -35,14 +35,14 @@
 							<div class="botcontext">{{needInfo.detail}}</div>
 						</div>
 					</div>
-					<div class="problemLi">
+					<div class="problemLi" v-for="(item,index) in needInfo.offerList" :key="index">
 						<div class="problemLiLeft">
-							<div>潍坊深圳工业园区即将建成，届时潍坊将有5000万届时潍坊将有5000万潍坊将有5000万</div>
-							<div class="put">查看</div>
+							<div>{{item.title}}</div>
+							<div class="put" @click="todemandDet(item.id)">查看</div>
 						</div>
 						<div class="problemLiRight">
-							<div>增许江从者要都论对农红合学好圆取命持证根无区提较观题年观验许选达很…</div>
-							<div>2021-05-66</div>
+							<div>{{item.content}}</div>
+							<div>{{item.create_time}}</div>
 						</div>
 					</div>
 				</div>
@@ -69,6 +69,15 @@
 			this.getMyNeedInfo()
 		},
 		methods: {
+			//去详情
+			todemandDet(e){
+				this.$router.push({
+					path:'/inquiryDet',
+					query:{
+						id:e
+					},
+				})
+			},
 			//获取需求详情
 			getMyNeedInfo(){
 				this.$apiFun.myNeedInfo({
@@ -165,6 +174,7 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
+		cursor: pointer;
 	}
 	.problemLiRight div:nth-child(2){
 		font-size: 14px;

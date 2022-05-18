@@ -92,7 +92,8 @@
 					</el-dropdown>
 				</div>
 				<div>
-					<el-dropdown>
+					<router-link to="/expertQuestions" style="color: #fff;">专家咨询</router-link>
+					<!-- <el-dropdown>
 						<span class="el-dropdown-link">
 							专家库
 							<el-icon class="el-icon--right" color="#fff">
@@ -109,7 +110,7 @@
 								</el-dropdown-item>
 							</el-dropdown-menu>
 						</template>
-					</el-dropdown>
+					</el-dropdown> -->
 				</div>
 				<div>
 					<el-dropdown>
@@ -173,6 +174,9 @@
 					id:1,
 					title:'个人资料'
 				},{
+					id:8,
+					title:'服务机构资料'
+				},{
 					id:2,
 					title:'修改密码'
 				},{
@@ -208,10 +212,20 @@
 					this.drowItem.splice(this.drowItem.findIndex(item => item.id == 4), 1)
 					this.drowItem.splice(this.drowItem.findIndex(item => item.id == 6), 1)
 					this.drowItem.splice(this.drowItem.findIndex(item => item.id == 7), 1)
+					this.drowItem.splice(this.drowItem.findIndex(item => item.id == 8), 1)
 				}
 				if(this.userInfo.role == 2){
 					this.drowItem.splice(this.drowItem.findIndex(item => item.id == 1), 1)
 					this.drowItem.splice(this.drowItem.findIndex(item => item.id == 4), 1)
+					this.drowItem.splice(this.drowItem.findIndex(item => item.id == 8), 1)
+				}
+				if(this.userInfo.role == 3){
+					this.drowItem.splice(this.drowItem.findIndex(item => item.id == 0), 1)
+					this.drowItem.splice(this.drowItem.findIndex(item => item.id == 1), 1)
+					this.drowItem.splice(this.drowItem.findIndex(item => item.id == 3), 1)
+					this.drowItem.splice(this.drowItem.findIndex(item => item.id == 5), 1)
+					this.drowItem.splice(this.drowItem.findIndex(item => item.id == 6), 1)
+					this.drowItem.splice(this.drowItem.findIndex(item => item.id == 7), 1)
 				}
 			}
 		},
@@ -265,6 +279,11 @@
 						index:index
 					}})
 				}else if(item.id == 7){
+					this.$router.push({path:'/personal',query: {
+						id:item.id,
+						index:index
+					}})
+				}else if(item.id == 8){
 					this.$router.push({path:'/personal',query: {
 						id:item.id,
 						index:index

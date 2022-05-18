@@ -4,8 +4,8 @@
 			<img class="login" src="../assets/images/logo2.png" >
 			<div class="mode">
 				<div :class="mode == 1?'modeOne':'modeTwo'" @click="mode = 1">专家注册</div>
-				<div :class="mode == 2?'modeOne':'modeTwo'" @click="mode = 2">服务机构注册</div>
-				<div :class="mode == 3?'modeOne':'modeTwo'" @click="mode = 3">企业注册</div>
+				<div :class="mode == 2?'modeOne':'modeTwo'" @click="mode = 2">企业注册</div>
+				<div :class="mode == 3?'modeOne':'modeTwo'" @click="mode = 3">服务机构注册</div>
 			</div>
 			<div class="account">
 				<div class="userBox">

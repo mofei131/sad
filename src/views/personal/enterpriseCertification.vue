@@ -32,7 +32,7 @@
 					<input type="text" placeholder="空" v-model="address" />
 				</div>
 				<div class="exifLi">
-					<div class="exifHead"><div class="tc"></div><div class="lc">营业执照</div></div>
+					<div class="exifHead"><div class="tc">*</div><div class="lc">营业执照</div></div>
 					<div>:</div>
 					<div class="headImgBox">
 						<div class="upHead">

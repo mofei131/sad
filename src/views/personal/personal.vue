@@ -5,7 +5,7 @@
 		</div>
 		<div class="personalBox">
 			<div class="personalBoxLeft">
-				<img class="headerImg" :src="userInfo.avater?userInfo.avater:'../../assets/images/headerImg.png'" >
+				<img class="headerImg" :src="userInfo.avater?userInfo.avater:headImg" >
 				<div class="unit" v-if="userInfo.role == 1">{{userInfo.realname}}</div>
 				<div class="unit" v-else>{{userInfo.enterprise_name}}</div>
 				<div class="vipCard">{{role}}</div>
@@ -124,6 +124,7 @@
 				liIndex:0,
 				userInfo:'',
 				role:'会员',//角色
+				headImg:require('../../assets/images/headerImg.png'),//本地默认头像
 			}
 		},
 		mounted() {
