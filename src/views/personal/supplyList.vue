@@ -16,7 +16,9 @@
 				</div>
 			</div>
 			</div>
-			<div class="gyBtn">发布供应</div>
+			<div class="gyBtn">
+				<router-link to="/supplyListForm">发布供应</router-link>
+			</div>
 		</div>
 	</div>
 </template>
