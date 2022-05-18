@@ -1,44 +1,131 @@
 <template>
 	<div class="box">
-		<div class="stay">您现在所在位置:供需信息><span>报价提交</span></div>
+		<div class="stay">您现在所在位置:供需信息><span>报价报价</span></div>
 		<div class="submitBox">
 			<div class="submitTitle">报价提交</div>
 			<div class="inquiryBox">
-				<div class="inquiryTitle"><span>*</span>询价标题</div>
-				<input type="text" placeholder="请输入询价标题" />
+				<div class="inquiryTitle"><span>*</span>报价标题</div>
+				<input type="text" placeholder="请输入报价标题" v-model="title" />
 			</div>
 			<div class="transverse"></div>
 			<div class="inquiryBox">
-				<div class="inquiryTitle"><span>*</span>询价内容</div>
-				<textarea placeholder="请输入您要咨询的内容"></textarea>
+				<div class="inquiryTitle"><span>*</span>报价内容</div>
+				<textarea placeholder="请输入报价内容" v-model="mark"></textarea>
 			</div>
 			<div class="transverse"></div>
 			<div class="otherBox">
 				<div class="otherOne">
 					<div class="inquiryTitle"><span>*</span>您的公司</div>
-					<input type="text" placeholder="请输入您的公司名字" />
+					<input type="text" placeholder="请输入您的公司名字" v-model="company_name" />
 				</div>
 				<div class="otherOne">
 					<div class="inquiryTitle"><span></span>公司邮箱</div>
-					<input type="text" placeholder="请输入您的公司邮箱" />
+					<input type="text" placeholder="请输入您的公司邮箱" v-model="email" />
 				</div>
 			</div>
 			<div class="otherBox">
 				<div class="otherOne">
 					<div class="inquiryTitle"><span>*</span>您的姓名</div>
-					<input type="text" placeholder="请输入您的您的姓名" />
+					<input type="text" placeholder="请输入您的您的姓名" v-model="name" />
 				</div>
 				<div class="otherOne">
 					<div class="inquiryTitle"><span>*</span>联系电话</div>
-					<input type="text" placeholder="请输入您的联系电话" />
+					<input type="text" placeholder="请输入您的联系电话" v-model="mobile" />
 				</div>
 			</div>
-			<div class="inquiryBtn">提交报价</div>
+			<div class="inquiryBtn" @click="putCommitInquiry()">提交报价</div>
 		</div>
 	</div>
 </template>
 
 <script>
+	export default{
+		data() {
+			return{
+				name:'',
+				email:'',
+				mark:'',
+				title:'',
+				mobile:'',
+				company_name:''
+			}
+		},
+		methods:{
+			//提交报价
+			putCommitInquiry(){
+				if(!this.title){
+					this.$message({
+							showClose: true,
+							message: '请填写报价标题',
+							type: 'warning'
+						});
+						return
+				}
+				if(!this.mark){
+					this.$message({
+							showClose: true,
+							message: '请填写报价内容',
+							type: 'warning'
+						});
+						return
+				}
+				if(!this.company_name){
+					this.$message({
+							showClose: true,
+							message: '请填写公司名称',
+							type: 'warning'
+						});
+						return
+				}
+				if(!this.name){
+					this.$message({
+							showClose: true,
+							message: '请填写姓名',
+							type: 'warning'
+						});
+						return
+				}
+				if(!this.mobile){
+					this.$message({
+							showClose: true,
+							message: '请填写联系电话',
+							type: 'warning'
+						});
+						return
+				}
+				this.$apiFun.commitOffer({
+					user_id:JSON.parse(localStorage.getItem('userInfo')).id,
+					need_id:this.$route.query.id,
+					title:this.title,
+					content:this.mark,
+					company_name:this.company_name,
+					company_eamil:this.email,
+					name:this.name,
+					mobile:this.mobile
+				}).then((res) => {
+					if (res.code == 200) {
+						this.$message({
+							showClose: true,
+							message: '提交成功',
+							type: 'success'
+						});
+						this.$router.push({
+							path:'/inquiryDet',
+							query:{
+								id:res.data
+							}
+						})
+					} else {
+						this.$message({
+							showClose: true,
+							message: res.message,
+							type: 'error'
+						});
+					}
+				})
+			}
+		}
+	}
 </script>
 
 <style scoped>

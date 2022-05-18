@@ -21,10 +21,10 @@
 				<div class="detBoxRight">
 					<div class="abrOne">{{supplyInfo.title}}</div>
 					<div class="abrTwo">发布时间：{{supplyInfo.create_time}}</div>
-					<div class="abrTwo">需求类别：{{supplyInfo.industry_name}}</div>
+					<div class="abrTwo">供应类别：{{supplyInfo.industry_name}}</div>
 					<div class="abrTwo">发布企业：{{supplyInfo.company_name}}</div>
 					<div class="abrTwo">总浏览量：{{supplyInfo.look}}</div>
-					<div class="dbrBtn">询价</div>
+					<div class="dbrBtn"  @click="toInquiry(supplyInfo.id)">报价</div>
 				</div>
 			</div>
 			<div class="detBoxbot">
@@ -51,6 +51,15 @@
 			this.getSupplyInfo()
 		},
 		methods: {
+			//去报价
+			toInquiry(e){
+				this.$router.push({
+					path:'/demandInquirySub',
+					query:{
+						id:e
+					}
+				})
+			},
 			//企业中心供应详情
 			getSupplyInfo() {
 				this.$apiFun.mySupplyInfo({

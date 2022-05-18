@@ -154,7 +154,22 @@ import https from './request.js';
 	apiFun.changeSupplyStatus = function(params) {
 		return https.get('index/changeSupplyStatus', params)
 	}
-	
+	//提交询价
+	apiFun.commitInquiry = function(params) {
+		return https.get('index/commitInquiry', params)
+	}
+	//提交询价详情
+	apiFun.myInquiryInfo = function(params) {
+		return https.get('index/myInquiryInfo', params)
+	}
+	//提交报价
+	apiFun.commitOffer = function(params) {
+		return https.get('index/commitOffer', params)
+	}
+	//提交报价详情
+	apiFun.myOfferInfo= function(params) {
+		return https.get('index/myOfferInfo', params)
+	}
 	//暴露出这个对象
 	export default apiFun;
 

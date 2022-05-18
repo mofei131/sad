@@ -5,7 +5,7 @@
 			<div class="submitTitle">询价详情</div>
 			<div class="inquiryBox">
 				<div class="inquiryTitle"><span>*</span>询价标题</div>
-				<input type="text" placeholder="空" />
+				<input type="text" placeholder="空" v-model="title"  />
 			</div>
 			<div class="transverse"></div>
 			<div class="labelBox">
@@ -30,30 +30,30 @@
 			<div class="transverse"></div>
 			<div class="inquiryBox">
 				<div class="inquiryTitle"><span>*</span>询价内容</div>
-				<textarea placeholder="空"></textarea>
+				<textarea placeholder="空" v-model="mark"></textarea>
 			</div>
 			<div class="transverse"></div>
 			<div class="otherBox">
 				<div class="otherOne">
 					<div class="inquiryTitle"><span>*</span>您的公司</div>
-					<input type="text" placeholder="空" />
+					<input type="text" placeholder="空" v-model="company_name"/>
 				</div>
 				<div class="otherOne">
 					<div class="inquiryTitle"><span></span>公司邮箱</div>
-					<input type="text" placeholder="空" />
+					<input type="text" placeholder="空" v-model="email" />
 				</div>
 			</div>
 			<div class="otherBox">
 				<div class="otherOne">
 					<div class="inquiryTitle"><span>*</span>您的姓名</div>
-					<input type="text" placeholder="空" />
+					<input type="text" placeholder="空" v-model="name" />
 				</div>
 				<div class="otherOne">
 					<div class="inquiryTitle"><span>*</span>联系电话</div>
-					<input type="text" placeholder="空" />
+					<input type="text" placeholder="空" v-model="mobile" />
 				</div>
 			</div>
-			<div class="inquiryBtn">提交报价</div>
+			<!-- <div class="inquiryBtn">提交询价</div> -->
 		</div>
 	</div>
 </template>
@@ -62,8 +62,43 @@
 	export default{
 		data(){
 			return{
-				checkList:['价格条款','供货能力']
+				checkList:[],
+				name:'',
+				title:'',
+				mobile:'',
+				email:'',
+				company_name:'',
+				mark:''
 			}
+		},
+		created() {
+			this.getMyInquiryInfo()
+		},
+		methods:{
+			//获取询价详情
+			getMyInquiryInfo(){
+				this.$apiFun.myInquiryInfo({
+					id: this.$route.query.id
+				}).then((res) => {
+					if (res.code == 200) {
+						console.log(res.data)
+						this.name = res.data.name,
+						this.title = res.data.title
+						this.mobile = res.data.mobile
+						this.checkList = res.data.tags.split(',')
+						this.mark = res.data.content
+						this.company_name = res.data.company_name
+						this.email = res.data.company_eamil
+					} else {
+						this.$message({
+							showClose: true,
+							message: res.message,
+							type: 'error'
+						});
+					}
+				})
+			}
+			
 		}
 	}
 </script>
