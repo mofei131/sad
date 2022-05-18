@@ -334,7 +334,7 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		background: #1890FF;
+		/* background: #1890FF; */
 	}
 	.flexhn{
 		display: flex;

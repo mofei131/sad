@@ -142,6 +142,11 @@ import https from './request.js';
 	apiFun.changeNeedStatus = function(params) {
 		return https.get('index/changeNeedStatus', params)
 	}
+	//筛选专家个数并提交问题
+	apiFun.selectExpertCommitQuestion = function(params) {
+		return https.get('expert/selectExpertCommitQuestion', params)
+	}
+	
 	//暴露出这个对象
 	export default apiFun;
 
