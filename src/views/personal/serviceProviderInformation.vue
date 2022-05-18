@@ -1,11 +1,11 @@
 <template>
 	<div class="box">
 		<div class="exifBox">
-			<div class="exinTitle">服务商资料</div>
+			<div class="exinTitle">服务机构资料</div>
 			<div class="abCon"></div>
 			<div class="exifForm">
 				<div class="exifLi">
-					<div class="exifHead"><div class="tc">*</div><div class="lc">服务商主图</div></div>
+					<div class="exifHead"><div class="tc">*</div><div class="lc">服务机构主图</div></div>
 					<div>:</div>
 					<div class="headImgBox">
 						<div class="upHead">
@@ -23,53 +23,143 @@
 					</div>
 				</div>
 				<div class="exifLi">
-					<div class="exifHead"><div class="tc">*</div><div class="lc">服务商名称</div></div>
+					<div class="exifHead"><div class="tc">*</div><div class="lc">服务机构名称</div></div>
 					<div>:</div>
-					<input type="text" placeholder="空" />
+					<input type="text" placeholder="空" v-model="name" />
 				</div>
 				<div class="exifLi">
 					<div class="exifHead"><div class="tc">*</div><div class="lc">联系人</div></div>
 					<div>:</div>
-					<input type="text" placeholder="空" />
+					<input type="text" placeholder="空" v-model="contact" />
 				</div>
 				<div class="exifLi">
 					<div class="exifHead"><div class="tc">*</div><div class="lc">联系电话</div></div>
 					<div>:</div>
-					<input type="number" placeholder="空" />
+					<input type="number" placeholder="空" v-model="mobile" />
+				</div>
+				<div class="exifLi">
+					<div class="exifHead" style="padding-top: 5px;"><div class="tc">*</div><div class="lc">归属地区</div></div>
+					<div style="padding-top: 5px;">:</div>
+					<div class="cascader">
+						<el-cascader
+							size="large"
+							:options="options2"
+							v-model="selectedOptions"
+							@change="handleChange">
+						</el-cascader>
+					</div>
 				</div>
 				<div class="exifLi">
 					<div class="exifHead"><div class="tc">*</div><div class="lc">详细地址</div></div>
 					<div>:</div>
-					<input type="text" placeholder="空" />
+					<input type="text" placeholder="空" v-model="address" />
 				</div>
 				<div class="exifLi">
-					<div class="exifHead"><div class="tc"></div><div class="lc">服务商邮箱</div></div>
+					<div class="exifHead"><div class="tc"></div><div class="lc">服务机构邮箱</div></div>
 					<div>:</div>
-					<input type="text" placeholder="空" />
+					<input type="text" placeholder="空" v-model="email" />
 				</div>
 				<div class="exifLi">
-					<div class="exifHead"><div class="tc">*</div><div class="lc">服务商简介</div></div>
+					<div class="exifHead"><div class="tc">*</div><div class="lc">核心产品</div></div>
 					<div>:</div>
-					<textarea placeholder="空"></textarea>
+					<textarea placeholder="空" v-model="mark"></textarea>
 				</div>
 			</div>
-			<div class="wxifBtn">保存</div>
+			<div class="wxifBtn" @click="putCompanyAut()">保存</div>
 		</div>
 	</div>
 </template>
 
 <script>
 	import { Plus } from '@element-plus/icons-vue'
+	import { regionData,CodeToText } from 'element-china-area-data'
 	export default{
 		components:{
 			Plus
 		},
 		data(){
 			return{
-				imageUrl: ''
+				options2:regionData,//省市区json
+				selectedOptions: [],//选中省市数组
+				imageUrl: '',
+				userInfo:'',
+				name:'',
+				contact:'',
+				mobile:'',
+				address:'',
+				email:'',
+				mark:'',
+				service_province:'',//省
+				service_city:'',//市
+				service_area:'',//区、县
 			}
 		},
+		created() {
+			this.getUserInfo()
+		},
 		methods: {
+			//提交资料修改
+			putCompanyAut(){
+				this.$apiFun.editService({
+					user_id:JSON.parse(localStorage.getItem('userInfo')).id,
+					avater:this.imageUrl,
+					enterprise_name:this.name,
+					company_contacts:this.contact,
+					company_phone:this.mobile,
+					service_province:this.service_province,
+					service_city:this.service_city,
+					service_area:this.service_area,
+					address:this.address,
+					email:this.email,
+					company_introduce:this.mark
+				}).then((res) => {
+					if(res.code == 200){
+						this.$apiFun.userInfo({
+							user_id:JSON.parse(localStorage.getItem('userInfo')).id
+						}).then((red) => {
+							if(red.code == 200){
+								localStorage.setItem('userInfo',JSON.stringify(red.data))
+								this.$message({
+										showClose: true,
+										message: '保存成功',
+										type: 'success'
+									});
+								location.reload()
+							}else{
+								this.$message({
+										showClose: true,
+										message: red.message,
+										type: 'error'
+									});
+							}
+						})
+					}else{
+						this.$message({
+								showClose: true,
+								message: res.message,
+								type: 'error'
+							});
+					}
+				})
+			},
+			//获取用户信息
+			getUserInfo(){
+				this.userInfo = JSON.parse(localStorage.getItem('userInfo'))
+				this.name = this.userInfo.enterprise_name
+				this.contact = this.userInfo.company_contacts
+				this.mobile = this.userInfo.company_phone
+				this.address = this.userInfo.address
+				this.email = this.userInfo.email
+				this.mark = this.userInfo.company_introduce
+				this.imageUrl = this.userInfo.avater
+			},
+			//省市区
+			handleChange (value) {
+				console.log(value)
+				this.service_province = CodeToText[value[0]]
+				this.service_city = CodeToText[value[1]]
+				this.service_area = CodeToText[value[2]]
+			},
 			handleAvatarSuccess(res, file) {
 				// console.log(URL.createObjectURL(file.raw))
 				console.log(res)
@@ -93,6 +183,19 @@
 </script>
 
 <style scoped>
+	.cascader /deep/.el-cascader--large{
+		height: 25px;
+	}
+	.cascader /deep/.el-input__inner{
+		height: 25px;
+	}
+	.cascader /deep/.el-input{
+		width: 275px;
+		height: 25px;
+		background: #FFFFFF;
+		border-radius: 4px;
+		border: 1px solid #D4D4D4;
+	}
 	.tc{
 		width: 12px;
 		color: #FF5023;
@@ -168,11 +271,11 @@
 	}
 	.lc{
 		text-align-last: justify;
-		width: 95px;
+		width: 120px;
 		/* white-space:nowrap; */
 	}
 	.exifHead{
-		width: 110px;
+		width: 130px;
 		font-size: 16px;
 		font-weight: 400;
 		color: #4E4E4E;

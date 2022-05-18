@@ -141,7 +141,7 @@
 					<div class="exifHead"><div class="tc">*</div><div class="lc">专业特长</div></div>
 					<div class="checkbox">
 						<el-checkbox-group v-model="aut.majorList">
-							<el-checkbox v-for="(item,index) in checkList" :key="index" :label="item.id"></el-checkbox>
+							<el-checkbox v-for="(item,index) in checkList" :key="index" :label="item.name"></el-checkbox>
 						</el-checkbox-group>
 					</div>
 				</div>
@@ -177,7 +177,9 @@
 						<div class="toag">《隐私政策》</div>
 						<div class="read">并承诺如实填写材料</div>
 					</div>
-					<div class="putBtn" @click="setExpertAut()">申请提交</div>
+					<div class="putBtn" v-if="userInfo.is_authentication == 0" @click="setExpertAut()">申请提交</div>
+					<div class="putBtn" v-if="userInfo.is_authentication == 1" >审核中</div>
+					<div class="putBtn" v-if="userInfo.is_authentication == 3" @click="setExpertAut()">重新提交提交</div>
 		</div>
 	</div>
 </template>
@@ -380,6 +382,10 @@
 						});
 						return
 				}
+				let taglist = []
+				for(let i in this.aut.majorList){
+					taglist.push(this.checkList[this.checkList.findIndex(item => item.name == this.aut.majorList[i])].id)
+				}
 				this.$apiFun.expertAut({
 					user_id:this.userInfo.id,
 					avater:this.aut.imageUrl,
@@ -399,7 +405,7 @@
 					service_city:this.aut.service_city,
 					service_area:this.aut.service_area,
 					address:this.aut.address,
-					major_ids:this.aut.majorList,
+					major_ids:taglist.join(","),
 					enclosure:this.aut.fileList,
 					personal_introduce:this.aut.personal_introduce
 				}).then((res) => {
@@ -420,7 +426,7 @@
 										message: '认证成功',
 										type: 'success'
 									});
-								this.$router.push({name:'home'})
+								// this.$router.push({name:'home'})
 							}else{
 								this.$message({
 										showClose: true,

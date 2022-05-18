@@ -97,6 +97,10 @@
 					title:'个人资料',
 					icon:require('../../assets/images/personalicon0.png')
 				},{
+					id:8,
+					title:'服务机构资料',
+					icon:require('../../assets/images/personalicon0.png')
+				},{
 					id:2,
 					title:'修改密码',
 					icon:require('../../assets/images/personalicon1.png')
@@ -137,12 +141,24 @@
 				this.navList.splice(this.navList.findIndex(item => item.id == 4), 1)
 				this.navList.splice(this.navList.findIndex(item => item.id == 6), 1)
 				this.navList.splice(this.navList.findIndex(item => item.id == 7), 1)
+				this.navList.splice(this.navList.findIndex(item => item.id == 8), 1)
 			}
 			if(this.userInfo.role == 2){
 				this.role = '企业级会员'
 				this.sum = 0
 				this.navList.splice(this.navList.findIndex(item => item.id == 1), 1)
 				this.navList.splice(this.navList.findIndex(item => item.id == 4), 1)
+				this.navList.splice(this.navList.findIndex(item => item.id == 8), 1)
+			}
+			if(this.userInfo.role == 3){
+				this.role = '服务机构会员'
+				this.sum = 3
+				this.navList.splice(this.navList.findIndex(item => item.id == 0), 1)
+				this.navList.splice(this.navList.findIndex(item => item.id == 1), 1)
+				this.navList.splice(this.navList.findIndex(item => item.id == 3), 1)
+				this.navList.splice(this.navList.findIndex(item => item.id == 5), 1)
+				this.navList.splice(this.navList.findIndex(item => item.id == 6), 1)
+				this.navList.splice(this.navList.findIndex(item => item.id == 7), 1)
 			}
 			if(this.$route.query.id){
 				// console.log(this.$route.query)
@@ -211,6 +227,14 @@
 					}else if(item.id == 7){
 						this.sum = 10
 					}
+				}else if(this.userInfo.role == 3){
+					if(item.id == 8){
+						this.sum = 3
+					}else if(item.id == 2){
+						this.sum = 0
+					}else if(item.id == 4){
+						this.sum = 4
+					}
 				}
 			}
 		}
@@ -258,7 +282,7 @@
 		cursor: pointer;
 	}
 	.vipCard{
-		width: 105px;
+		width: 120px;
 		font-weight: 400;
 		color: #FFFFFF;
 		font-size: 14px;

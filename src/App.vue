@@ -34,8 +34,18 @@
 				login:'',
 				register:false,
 				forget:false,
-				screen:0
+				screen:0,
 			}
+		},
+		created() {
+			if(JSON.parse(localStorage.getItem('userInfo'))){
+				if(JSON.parse(localStorage.getItem('userInfo')).role == 1){
+					if(JSON.parse(localStorage.getItem('userInfo')).is_authentication == 0){
+						this.$router.push('/expertCertification')
+					}
+				}
+			}
+			
 		},
 		mounted(){
 			if(localStorage.getItem('screen')){

@@ -59,6 +59,9 @@
 				needInfo:''
 			}
 		},
+		created() {
+			this.getMyNeedInfo()
+		},
 		mounted() {
 			new Swiper ('.swiper-container', {
 				loop: true,
@@ -66,7 +69,7 @@
 				observer: true,
 				observeParents: true,
 			})
-			this.getMyNeedInfo()
+			
 		},
 		methods: {
 			//去详情

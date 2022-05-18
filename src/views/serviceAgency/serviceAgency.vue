@@ -3,7 +3,7 @@
 		<div class="stay">您现在所在位置:<span>服务机构</span></div>
 		<div class="areaBox">
 			<div class="tradesBox">
-				<div class="tradesStr">所属行业：</div>
+				<div class="tradesStr">服务领域：</div>
 				<div class="tradesLists">
 					<div class="tradesList" :class="label == null?'tradesLabel':''" @click="labelClass(null)">
 						全部
@@ -94,9 +94,9 @@
 				}
 			},
 
-			// 获取行业分类
+			// 获取服务领域
 			getIndustryCate() {
-				this.$apiFun.industryCate({}).then(res => {
+				this.$apiFun.servicesList({}).then(res => {
 					this.tradesList = res.data
 				})
 			},

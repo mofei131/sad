@@ -119,15 +119,10 @@
 								message: '登录成功',
 								type: 'success'
 							});
-						console.log(res.data)
+						console.log(res.data.role)
 						localStorage.setItem('userInfo',JSON.stringify(res.data))
 						this.$store.state.login = 0
 						this.$store.state.wait = 1
-						if(res.data.role == 1){
-							if(res.data.is_authentication == 0){
-								this.$router.push('/expertCertification')
-							}
-						}
 						location.reload()
 					}else{
 						this.$message({
