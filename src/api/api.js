@@ -114,8 +114,15 @@ import https from './request.js';
 	apiFun.bannerList = function(params) {
 		return https.get('index/bannerList', params)
 	}
-	
-	
+	//企业标签列表
+	apiFun.tagList = function(params) {
+		return https.get('index/tagList', params)
+	}
+	//企业认证
+	apiFun.companyAut = function(params) {
+		return https.get('index/companyAut', params)
+	}
+
 	//暴露出这个对象
 	export default apiFun;
 

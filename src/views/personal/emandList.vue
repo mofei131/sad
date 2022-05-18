@@ -16,7 +16,9 @@
 				</div>
 			</div>
 			</div>
-			<div class="gyBtn">发布供应</div>
+			<div class="gyBtn">
+				<router-link to="/demandForm">发布需求</router-link>
+			</div>
 		</div>
 	</div>
 </template>
