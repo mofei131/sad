@@ -1,10 +1,40 @@
 <template>
 	<div class="box">
 		<div class="exifBox">
-			<div class="exinTitle">需求列表</div>
+			<div class="exinTitle">需求信息>报价列表</div>
 			<div class="abCon"></div>
 			<div class="problemLiBox">
 				<div class="eaiLi">
+					<div class="conBox">
+						<div class="conBoxTop">
+							<div class="conBoxLeft">
+								<div class="swiper-container">
+										<div class="swiper-wrapper">
+											<div class="swiper-slide" v-for="(item,index) in needInfo.images" :key="index">
+												<img :src="item" >
+											</div>
+											<!-- <div class="swiper-slide">
+												<img src="../../assets/images/banner.png" >
+											</div>
+											<div class="swiper-slide">
+												<img src="../../assets/images/banner.png" >
+											</div> -->
+										</div>
+								</div>
+							</div>
+							<div class="conBoxRight">
+								<div class="abrOne">{{needInfo.title}}</div>
+								<div class="abrTwo">发布时间：{{needInfo.create_time}}</div>
+								<div class="abrTwo">需求类别：{{needInfo.industry_name}}</div>
+								<div class="abrTwo">发布企业：{{needInfo.company_name}}</div>
+								<div class="abrTwo">总浏览量：{{needInfo.look}}</div>
+							</div>
+						</div>
+						<div class="conBoxbot">
+							<div class="sbbTitle">需求详情：</div>
+							<div class="botcontext">{{needInfo.detail}}</div>
+						</div>
+					</div>
 					<div class="problemLi">
 						<div class="problemLiLeft">
 							<div>潍坊深圳工业园区即将建成，届时潍坊将有5000万届时潍坊将有5000万潍坊将有5000万</div>
@@ -13,36 +43,6 @@
 						<div class="problemLiRight">
 							<div>增许江从者要都论对农红合学好圆取命持证根无区提较观题年观验许选达很…</div>
 							<div>2021-05-66</div>
-						</div>
-					</div>
-					<div class="conBox">
-						<div class="conBoxTop">
-							<div class="conBoxLeft">
-								<div class="swiper-container">
-										<div class="swiper-wrapper">
-											<div class="swiper-slide">
-												<img src="../../assets/images/banner.png" >
-											</div>
-											<div class="swiper-slide">
-												<img src="../../assets/images/banner.png" >
-											</div>
-											<div class="swiper-slide">
-												<img src="../../assets/images/banner.png" >
-											</div>
-										</div>
-								</div>
-							</div>
-							<div class="conBoxRight">
-								<div class="abrOne">企业供应优质潍坊萝卜</div>
-								<div class="abrTwo">发布时间：2017年08月10日</div>
-								<div class="abrTwo">需求类别：矿产资源</div>
-								<div class="abrTwo">发布企业：潍坊市广为信息科技有限公司</div>
-								<div class="abrTwo">总浏览量：454654</div>
-							</div>
-						</div>
-						<div class="conBoxbot">
-							<div class="sbbTitle">需求详情：</div>
-							<div class="botcontext">123</div>
 						</div>
 					</div>
 				</div>
@@ -56,22 +56,46 @@
 	export default{
 		data(){
 			return{
-				
+				needInfo:''
 			}
 		},
 		mounted() {
 			new Swiper ('.swiper-container', {
 				loop: true,
 				autoplay:3000,
+				observer: true,
+				observeParents: true,
 			})
+			this.getMyNeedInfo()
 		},
 		methods: {
-			
+			//获取需求详情
+			getMyNeedInfo(){
+				this.$apiFun.myNeedInfo({
+					id:this.$store.state.emandId
+				}).then((res) => {
+					if(res.code == 200){
+						let info = res.data
+						info.images = info.images.split('|')
+						this.needInfo = info
+					}else{
+						this.$message({
+								showClose: true,
+								message: res.message,
+								type: 'error'
+							});
+					}
+				})
+			}
 		}
 	}
 </script>
 
 <style scoped>
+	.conBox{
+		border-bottom: 1px solid #E7E7E7;
+		padding-bottom: 10px;
+	}
 	.sbbTitle{
 		font-size: 16px;
 		font-weight: 500;

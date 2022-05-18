@@ -43,7 +43,7 @@
 				<!-- 供应列表 -->
 				<supply-List v-if="sum == 10"></supply-List>
 				<!-- 需求列表 -->
-				<emand-List v-if="sum == 11"></emand-List>
+				<emand-List @change="emandtoDet($event)" v-if="sum == 11"></emand-List>
 				<!-- 需求二级列表 -->
 				<demand-Info-List v-if="sum == 12"></demand-Info-List>
 				<!-- 供应二级列表 -->
@@ -149,6 +149,15 @@
 			}
 		},
 		methods:{
+			//需求列表切换详情
+			emandtoDet(value){
+				console.log(value)
+				this.$store.state.emandId = value
+				if(value){
+					this.sum = 12
+				}
+			},
+			//专家列表切换详情
 			protoDet(value){
 				console.log(value)
 				if(value){
