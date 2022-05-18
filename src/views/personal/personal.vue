@@ -32,13 +32,13 @@
 				<service-Provider-Certification v-if="sum == 4"></service-Provider-Certification>
 				<!-- 企业认证 -->
 				<enterprise-Certification v-if="sum == 5"></enterprise-Certification>
-				<!-- 问题回复列表 -->
-				<problem-List @change="protoDet($event)" v-if="sum == 6"></problem-List>
-				<!-- 问题回复详情 -->
-				<problem-Det v-if="sum == 7"></problem-Det>
 				<!-- 问题提问列表 -->
-				<question-List v-if="sum == 8"></question-List>
+				<problem-List @change="protoDet($event)" v-if="sum == 6"></problem-List>
 				<!-- 问题提问详情 -->
+				<problem-Det v-if="sum == 7"></problem-Det>
+				<!-- 问题回复列表 -->
+				<question-List v-if="sum == 8"></question-List>
+				<!-- 问题回复详情 -->
 				<put-Question-List v-if="sum == 9"></put-Question-List>
 				<!-- 供应列表 -->
 				<supply-List @change="supplyDet($event)" v-if="sum == 10"></supply-List>
@@ -183,7 +183,7 @@
 			},
 			//专家列表切换详情
 			protoDet(value){
-				console.log(value)
+				this.$store.state.problemId = value
 				if(value){
 					this.sum = 7
 				}

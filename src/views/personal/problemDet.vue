@@ -5,29 +5,29 @@
 			<div class="abCon"></div>
 			<div class="problemDetTop">
 				<div class="problemLi">
-					<div class="ifonDet"><span>公司名称：</span>潍坊广未汽车有限公司</div>
-					<div class="ifonDet"><span>所属行业：</span>工程设计</div>
+					<div class="ifonDet"><span>公司名称：</span>{{expertAskInfo.user_info.enterprise_name}}</div>
+					<div class="ifonDet"><span>所属行业：</span>{{expertAskInfo.user_info.industry_id}}</div>
 				</div>
 				<div class="problemLi2">
-					<div class="ifonDet"><span>联系人：</span>张三</div>
-					<div class="ifonDet"><span>联系电话：</span>15487487988</div>
-					<div class="ifonDet"><span>电子邮箱：</span>154874879@qq.com</div>
+					<div class="ifonDet"><span>联系人：</span>{{expertAskInfo.user_info.realname}}</div>
+					<div class="ifonDet"><span>联系电话：</span>{{expertAskInfo.user_info.company_phone}}</div>
+					<div class="ifonDet"><span>电子邮箱：</span>{{expertAskInfo.user_info.email}}</div>
 				</div>
 			</div>
 			<div class="themeBox">
 				<div class="themetop">
-					<div>潍坊深圳工业园区即将建成，届时潍坊将有5潍坊深圳工业园区即将建成，届时潍坊将有5</div>
-					<div>2021-02-11</div>
+					<div>{{expertAskInfo.ask_title}}</div>
+					<div>{{expertAskInfo.create_time}}</div>
 				</div>
 				<div class="themeCon">
-					门民领治很等九真求东战响响发求数严任则细就料技员价气段把声意传求相打动安记世求很变十即究国建路识准元斗动需。资色法马各上加走他劳党节住世开文利战你量外马一同把复毛回江我任场照走列采通都单过术此平果通斗证标带造太气力阶量权却全次平备决集计。
+					{{expertAskInfo.ask_content}}
 				</div>
 			</div>
 			<div class="callBack">
 				<div class="callBackTitle">回复</div>
-				<textarea placeholder="请输入回复内容"></textarea>
+				<textarea placeholder="请输入回复内容" v-model="content" ></textarea>
 			</div>
-			<div class="callBackBtn">发送</div>
+			<div class="callBackBtn" @click="getExpertAnswerAsk()">发送</div>
 		</div>
 	</div>
 </template>
@@ -36,11 +36,80 @@
 	export default{
 		data(){
 			return{
-				
+				expertAskInfo:'',
+				options:[],
+				industryCate:'',
+				content:''
 			}
 		},
+		created() {
+			this.getIndustryCate()
+		},
 		methods: {
-			
+			//回答
+			getExpertAnswerAsk(){
+				if(!this.content){
+					this.$message({
+							showClose: true,
+							message: '请输入回答内容',
+							type: 'warning'
+						});
+						return
+				}
+				this.$apiFun.expertAnswerAsk({
+					user_id:JSON.parse(localStorage.getItem('userInfo')).id,
+					id:this.$store.state.problemId,
+					answer_content:this.content
+				}).then((res) => {
+					if(res.code == 200){
+						this.$message({
+								showClose: true,
+								message: '发送成功',
+								type: 'success'
+							});
+							location.reload()
+					}else{
+						this.$message({
+								showClose: true,
+								message: res.message,
+								type: 'error'
+							});
+					}
+				})
+			},
+			//获取所属行业
+			getIndustryCate(){
+				this.$apiFun.industryCate().then((res) => {
+					if(res.code == 200){
+						this.options = res.data
+						this.getExpertAskInfo()
+					}else{
+						this.$message({
+								showClose: true,
+								message: res.message,
+								type: 'error'
+							});
+					}
+				})
+			},
+			//获取问题详情
+			getExpertAskInfo(){
+				this.$apiFun.expertAskInfo({
+					id:this.$store.state.problemId
+				}).then((res) => {
+					if(res.code == 200){
+						console.log(res.data)
+						this.expertAskInfo = res.data
+						this.expertAskInfo.user_info.industry_id = this.options[this.options.findIndex(item => item.id == this.expertAskInfo.user_info.industry_id)].name
+					}else{
+						this.$message({
+								showClose: true,
+								message: res.message,
+								type: 'error'
+							});
+					}
+				})
+			}
 		}
 	}
 </script>

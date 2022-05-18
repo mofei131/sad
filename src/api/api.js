@@ -182,6 +182,14 @@ import https from './request.js';
 	apiFun.servicesList = function(params) {
 		return https.get('index/servicesList', params)
 	}
+	//问题详情
+	apiFun.expertAskInfo = function(params) {
+		return https.get('expert/expertAskInfo', params)
+	}
+	//专家回复问题
+	apiFun.expertAnswerAsk = function(params) {
+		return https.get('expert/expertAnswerAsk', params)
+	}
 	//暴露出这个对象
 	export default apiFun;
 
