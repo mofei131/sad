@@ -41,7 +41,7 @@
 				<!-- 问题提问详情 -->
 				<put-Question-List v-if="sum == 9"></put-Question-List>
 				<!-- 供应列表 -->
-				<supply-List v-if="sum == 10"></supply-List>
+				<supply-List @change="supplyDet($event)" v-if="sum == 10"></supply-List>
 				<!-- 需求列表 -->
 				<emand-List @change="emandtoDet($event)" v-if="sum == 11"></emand-List>
 				<!-- 需求二级列表 -->
@@ -149,6 +149,13 @@
 			}
 		},
 		methods:{
+			//供应列表切换详情
+			supplyDet(value){
+				this.$store.state.supplyId = value
+				if(value){
+					this.sum = 13
+				}
+			},
 			//需求列表切换详情
 			emandtoDet(value){
 				console.log(value)
