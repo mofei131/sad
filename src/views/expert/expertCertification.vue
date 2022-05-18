@@ -178,8 +178,8 @@
 						<div class="read">并承诺如实填写材料</div>
 					</div>
 					<div class="putBtn" v-if="userInfo.is_authentication == 0" @click="setExpertAut()">申请提交</div>
-					<div class="putBtn" v-if="userInfo.is_authentication == 1" >审核中</div>
-					<div class="putBtn" v-if="userInfo.is_authentication == 3" @click="setExpertAut()">重新提交提交</div>
+					<div class="putBtn" v-if="userInfo.is_authentication == 1" >正在审核</div>
+					<div class="putBtn" v-if="userInfo.is_authentication == 3" @click="setExpertAut()">重新提交</div>
 		</div>
 	</div>
 </template>
@@ -283,6 +283,9 @@
 			this.getcheckList()
 			this.getEducationList()
 			this.userInfo = JSON.parse(localStorage.getItem('userInfo'))
+			if(this.userInfo.is_authentication == 2){
+				 this.$router.replace("/")
+			}
 		},
 		methods: {
 			//获取学历列表
@@ -427,6 +430,7 @@
 										type: 'success'
 									});
 								// this.$router.push({name:'home'})
+								location.reload()
 							}else{
 								this.$message({
 										showClose: true,

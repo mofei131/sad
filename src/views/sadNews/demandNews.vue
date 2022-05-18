@@ -65,7 +65,11 @@
 				keywords: '', // 搜索内容
 			}
 		},
-
+		created() {
+			if(this.$route.query){
+				this.keywords = this.$route.query.value
+			}
+		},
 		mounted() {
 			this.getIndustryCate()
 			this.getNeedList()

@@ -124,8 +124,10 @@ router.beforeEach((to, from, next) => {
 	if (from.path == "/expertCertification") {
 		if (localStorage.getItem('userInfo')) {
 			let userInfo = JSON.parse(localStorage.getItem('userInfo'))
-			if (userInfo.role == 1 && userInfo.is_authentication == 0) {
+			if (userInfo.role == 1 && userInfo.is_authentication != 2) {
 				alert('请先进行专家认证')
+			}else{
+				next();
 			}
 		} else {
 			next();

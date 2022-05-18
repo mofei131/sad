@@ -78,7 +78,7 @@
 				</div>
 			</div>
 			<div class="wxifBtn" @click="putCompanyAut()" v-if="userInfo.is_authentication == 0">立即认证</div>
-			<div class="wxifBtn"  v-if="userInfo.is_authentication == 1">认证中</div>
+			<div class="wxifBtn"  v-if="userInfo.is_authentication == 1">正在审核</div>
 			<div class="wxifBtn"  v-if="userInfo.is_authentication == 2">已认证</div>
 			<div class="wxifBtn" @click="putCompanyAut()" v-if="userInfo.is_authentication == 3">重新认证</div>
 		</div>

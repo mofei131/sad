@@ -33,7 +33,13 @@
 			return{
 				infoList:[],
 				page:1,
-				limit:10
+				limit:10,
+				keywords:''
+			}
+		},
+		created() {
+			if(this.$route.query){
+				this.keywords = this.$route.query.value
 			}
 		},
 		mounted() {
@@ -49,7 +55,8 @@
 				this.$apiFun.messageList({
 					page:this.page,
 					limit:this.limit,
-					is_hot:0
+					is_hot:0,
+					keywords:this.keywords
 				}).then((res) => {
 					if(res.code == 200){
 						this.infoList = res.data
