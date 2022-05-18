@@ -79,11 +79,11 @@
 						info.images = info.images.split('|')
 						this.needInfo = info
 					}else{
-						this.$message({
-								showClose: true,
-								message: res.message,
-								type: 'error'
-							});
+						// this.$message({
+						// 		showClose: true,
+						// 		message: res.message,
+						// 		type: 'error'
+						// 	});
 					}
 				})
 			}
