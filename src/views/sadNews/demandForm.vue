@@ -11,36 +11,26 @@
 			<div class="addImgBox">
 				<div class="surn"><span>*</span>需求产品</div>
 				<div class="upLoadBox">
-				<el-upload
-						class="uploadImgBox"
-				    action="http://corp.boyaokj.cn/api/file/upload"
-				    list-type="picture-card"
-				    :on-preview="handlePictureCardPreview"
-				    :on-remove="handleRemove"
-				    :file-list="addImgList"
-						multiple
-						accept="image/*"
-				  >
-				    <el-icon><Plus /></el-icon>
-				  </el-upload>
-				
-				  <el-dialog class="eldialog" v-model="dialogVisible">
-				    <img w-full :src="dialogImageUrl" alt="Preview Image" />
-				  </el-dialog>
-					</div>
+					<el-upload class="uploadImgBox" action="http://corp.boyaokj.cn/api/file/upload"
+						list-type="picture-card" :on-preview="handlePictureCardPreview" :on-remove="handleRemove"
+						:file-list="addImgList" multiple accept="image/*">
+						<el-icon>
+							<Plus />
+						</el-icon>
+					</el-upload>
+
+					<el-dialog class="eldialog" v-model="dialogVisible">
+						<img w-full :src="dialogImageUrl" alt="Preview Image" />
+					</el-dialog>
+				</div>
 			</div>
 			<div class="transverse"></div>
 			<div class="slectBox">
 				<div class="surn"><span>*</span>所属行业</div>
 				<div class="select">
-					 <el-select v-model="value" class="m-2" placeholder="请选择您的行业">
-					    <el-option
-					      v-for="item in options"
-					      :key="item.id"
-					      :label="item.name"
-					      :value="item.id"
-					    />
-					  </el-select>
+					<el-select v-model="value" class="m-2" placeholder="请选择您的行业">
+						<el-option v-for="item in options" :key="item.id" :label="item.name" :value="item.id" />
+					</el-select>
 				</div>
 			</div>
 			<div class="admBox">
@@ -64,127 +54,134 @@
 </template>
 
 <script>
-	import { Plus } from '@element-plus/icons-vue'
-	export default{
-		components:{
+	import {
+		Plus
+	} from '@element-plus/icons-vue'
+	export default {
+		components: {
 			Plus,
 		},
-		data(){
-			return{
-				addImgList:[],//上传图片列表
-				dialogImageUrl:'',//放大展示图片列表
-				dialogVisible:false,//是否显示放大图片列表
-				options:[],
-				value:'',//下拉选中的value
-				title:'',
-				name:'',
-				mobile:'',
-				mark:''
+		data() {
+			return {
+				addImgList: [], //上传图片列表
+				dialogImageUrl: '', //放大展示图片列表
+				dialogVisible: false, //是否显示放大图片列表
+				options: [],
+				value: '', //下拉选中的value
+				title: '',
+				name: '',
+				mobile: '',
+				mark: ''
 			}
 		},
 		created() {
 			this.getIndustryCate()
 		},
-		methods:{
+		methods: {
 			//获取所属行业
-			getIndustryCate(){
+			getIndustryCate() {
 				this.$apiFun.industryCate().then((res) => {
-					if(res.code == 200){
+					if (res.code == 200) {
 						this.options = res.data
-					}else{
+					} else {
 						this.$message({
-								showClose: true,
-								message: res.message,
-								type: 'error'
-							});
+							showClose: true,
+							message: res.message,
+							type: 'error'
+						});
 					}
 				})
 			},
 			//提交需求
-			putReleaseNeed(){
-				if(!this.title){
+			putReleaseNeed() {
+				if (!this.title) {
 					this.$message({
-							showClose: true,
-							message: '请填写需求标题',
-							type: 'warning'
-						});
-						return
+						showClose: true,
+						message: '请填写需求标题',
+						type: 'warning'
+					});
+					return
 				}
-				if(!this.addImgList){
+				if (!this.addImgList) {
 					this.$message({
-							showClose: true,
-							message: '请上传产品图片',
-							type: 'warning'
-						});
-						return
+						showClose: true,
+						message: '请上传产品图片',
+						type: 'warning'
+					});
+					return
 				}
-				if(!this.value){
+				if (!this.value) {
 					this.$message({
-							showClose: true,
-							message: '请选择所属行业',
-							type: 'warning'
-						});
-						return
+						showClose: true,
+						message: '请选择所属行业',
+						type: 'warning'
+					});
+					return
 				}
-				if(!this.name){
+				if (!this.name) {
 					this.$message({
-							showClose: true,
-							message: '请填写姓名',
-							type: 'warning'
-						});
-						return
+						showClose: true,
+						message: '请填写姓名',
+						type: 'warning'
+					});
+					return
 				}
-				if(!this.mobile){
+				if (!this.mobile) {
 					this.$message({
-							showClose: true,
-							message: '请填写联系电话',
-							type: 'warning'
-						});
-						return
+						showClose: true,
+						message: '请填写联系电话',
+						type: 'warning'
+					});
+					return
 				}
-				if(!this.mark){
+				if (!this.mark) {
 					this.$message({
-							showClose: true,
-							message: '请填写需求详情',
-							type: 'warning'
-						});
-						return
+						showClose: true,
+						message: '请填写需求详情',
+						type: 'warning'
+					});
+					return
 				}
 				let list = []
-				for(let i in this.addImgList){
+				for (let i in this.addImgList) {
 					list.push(this.addImgList[0].response.data.url)
 				}
 				this.$apiFun.releaseNeed({
-					user_id:JSON.parse(localStorage.getItem('userInfo')).id,
-					title:this.title,
-					images:list.join("|"),
-					industry_id:this.value,
-					name:this.name,
-					mobile:this.mobile,
-					detail:this.mark
+					user_id: JSON.parse(localStorage.getItem('userInfo')).id,
+					title: this.title,
+					images: list.join("|"),
+					industry_id: this.value,
+					name: this.name,
+					mobile: this.mobile,
+					detail: this.mark
 				}).then((res) => {
-					if(res.code == 200){
+					if (res.code == 200) {
 						this.$message({
-								showClose: true,
-								message: '发布成功',
-								type: 'success'
-							});
-						this.$router.push({path:'/demandDet',query:{id:res.data}})
-					}else{
+							showClose: true,
+							message: '发布成功',
+							type: 'success'
+						});
+						this.$router.push({
+							path: '/demandDet',
+							query: {
+								id: res.data
+							}
+						})
+					} else {
 						this.$message({
-								showClose: true,
-								message: res.message,
-								type: 'error'
-							});
+							showClose: true,
+							message: res.message,
+							type: 'error'
+						});
 					}
 				})
 			},
-			handlePictureCardPreview(file){
+			handlePictureCardPreview(file) {
 				console.log(file.url)
-			 this.dialogImageUrl = file.url
+				this.dialogImageUrl = file.url
 				this.dialogVisible = true
 			},
-			handleRemove(file){
+			handleRemove(file) {
 				console.log(this.addImgList)
 			}
 		}
@@ -192,7 +189,7 @@
 </script>
 
 <style scoped>
-	.fbBtn{
+	.fbBtn {
 		width: 180px;
 		height: 44px;
 		background: #2298FF;
@@ -205,7 +202,8 @@
 		align-items: center;
 		justify-content: center;
 	}
-	.textareaBox textarea{
+
+	.textareaBox textarea {
 		width: 1064px;
 		height: 101px;
 		background: #FFFFFF;
@@ -219,14 +217,16 @@
 		color: #333;
 		font-size: 16px;
 	}
-	.textareaBox{
+
+	.textareaBox {
 		/* padding-left: 13px; */
 		display: flex;
 		align-items: center;
 		padding-top: 14px;
 		margin-bottom: 50px;
 	}
-	.namOne input{
+
+	.namOne input {
 		width: 460px;
 		height: 50px;
 		background: #FFFFFF;
@@ -239,7 +239,8 @@
 		box-sizing: border-box;
 		margin-left: 24px;
 	}
-	.admBox{
+
+	.admBox {
 		display: flex;
 		align-items: center;
 		width: 1163px;
@@ -247,14 +248,17 @@
 		margin-bottom: 18px;
 		/* padding-left: 11px; */
 	}
-	.namOne{
+
+	.namOne {
 		display: flex;
 		align-items: center;
-	}	 
-	.select{
+	}
+
+	.select {
 		padding-left: 24px;
 	}
-	.select /deep/.el-input{
+
+	.select /deep/.el-input {
 		width: 460px;
 		height: 50px;
 		background: #FFFFFF;
@@ -263,33 +267,41 @@
 		line-height: 50px;
 		outline: none;
 	}
-	.slectBox{
+
+	.slectBox {
 		display: flex;
 		padding: 12px 24px 36px 0px;
 		box-sizing: border-box;
 		align-items: center;
 	}
-	.upLoadBox{
+
+	.upLoadBox {
 		padding-left: 24px;
 		width: 1064px;
 	}
-	.el-upload-list{
+
+	.el-upload-list {
 		width: 1064px;
 	}
-	.el-upload-list--picture-card,.el-upload-list__item{ 
+
+	.el-upload-list--picture-card,
+	.el-upload-list__item {
 		width: 80px;
 		height: 80px;
 	}
-	.el-dialog__body img{
+
+	.el-dialog__body img {
 		margin: auto;
 		display: block;
 		max-width: 800px;
 	}
-	.addImgOne img{
+
+	.addImgOne img {
 		width: 80px;
 		height: 80px;
 	}
-	.deleteImg{
+
+	.deleteImg {
 		width: 80px;
 		height: 17px;
 		background: rgba(0, 0, 0, 0.5);
@@ -305,7 +317,8 @@
 		justify-content: center;
 		cursor: pointer;
 	}
-	.addImgOne{
+
+	.addImgOne {
 		width: 80px;
 		height: 80px;
 		display: flex;
@@ -314,33 +327,39 @@
 		position: relative;
 		margin-right: 20px;
 	}
-	.addImgfelx{
+
+	.addImgfelx {
 		display: flex;
 		align-items: center;
 		margin-left: 24px;
 	}
-	.addimg{
+
+	.addimg {
 		width: 80px;
 		height: 80px;
 		margin-left: 24px;
 		cursor: pointer;
-		
+
 	}
-	.addImgBox{
+
+	.addImgBox {
 		display: flex;
 		align-items: center;
 		padding-top: 20px;
 		margin-bottom: 24px;
 	}
-	.box{
+
+	.box {
 		margin-bottom: 185px;
 	}
-	.transverse{
+
+	.transverse {
 		width: 1152px;
 		height: 1px;
 		background-color: #ECECEC;
 	}
-	.demandTitleBox input{
+
+	.demandTitleBox input {
 		width: 1064px;
 		height: 50px;
 		background: #FFFFFF;
@@ -352,28 +371,33 @@
 		font-size: 16px;
 		margin-left: 24px;
 	}
-	.surn span{
+
+	.surn span {
 		color: #FF4D4F;
 	}
-	.surn{
+
+	.surn {
 		font-weight: 500;
 		color: #333333;
 		font-size: 16px;
 		display: flex;
 		align-items: flex-start;
 	}
-	.demandTitleBox{
+
+	.demandTitleBox {
 		display: flex;
 		align-items: center;
 		padding-top: 16px;
 		margin-bottom: 12px;
 	}
-	.formTitle{
+
+	.formTitle {
 		font-weight: 500;
 		color: #3389FF;
 		font-size: 20px;
 	}
-	.formBox{
+
+	.formBox {
 		width: 1200px;
 		background: #FFFFFF;
 		box-shadow: 0px 0px 10px 0px rgba(230, 207, 207, 0.5);
