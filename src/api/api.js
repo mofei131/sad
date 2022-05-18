@@ -102,6 +102,18 @@ import https from './request.js';
 	apiFun.editCompany = function(params) {
 		return https.get('index/editCompany', params)
 	}
+	//活动列表
+	apiFun.activityList = function(params) {
+		return https.get('index/activityList', params)
+	}
+	//活动详情
+	apiFun.activityInfo = function(params) {
+		return https.get('index/activityInfo', params)
+	}
+	//首页轮播图
+	apiFun.bannerList = function(params) {
+		return https.get('index/bannerList', params)
+	}
 	//企业标签列表
 	apiFun.tagList = function(params) {
 		return https.get('index/tagList', params)

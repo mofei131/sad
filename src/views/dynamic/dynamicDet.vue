@@ -2,103 +2,125 @@
 	<div class="box">
 		<div class="stay">您现在所在位置:活动动态><span>活动详情</span></div>
 		<div class="detBox">
-			<div class="detTitle">潍坊管理技术研修中心有限公司</div>
-			<div class="detTime">2021-05-66</div>
+			<div class="detTitle">{{info.company}}</div>
+			<div class="detTime">{{info.create_time}}</div>
 			<div class="detflex">
 				<div class="detflexstr">活动类别：</div>
-				<div class="detli">管理咨询</div>
+				<div class="detli">{{info.industry_name}}</div>
 			</div>
 			<div class="detflex">
 				<div class="detflexstr">授课专家：</div>
-				<div class="detli">张三</div>
+				<div class="detli">{{info.expert}}</div>
 			</div>
 			<div class="detflex">
 				<div class="detflexstr">来访企业：</div>
-				<div class="detli">85</div>
+				<div class="detli">{{info.visit_company}}</div>
 			</div>
 			<div class="detflex">
 				<div class="detflexstr">来访人数：</div>
-				<div class="detli">15</div>
+				<div class="detli">{{info.visit_people}}</div>
 			</div>
 			<div class="detStart">活动情况：</div>
-			<div class="detCon">123</div>
+			<div class="detCon" v-html="info.detail"></div>
 			<div class="detImg">
-				<img src="../../assets/images/banner.png" >
-				<img src="../../assets/images/banner.png" >
+				<img :src="info.pic">
 			</div>
 		</div>
 	</div>
 </template>
 
 <script>
-	export default{
-		data(){
-			return{
-				
+	export default {
+		data() {
+			return {
+				info: {}
+			}
+		},
+		mounted() {
+			this.getActivityInfo()
+		},
+
+		methods: {
+			getActivityInfo() {
+				this.$apiFun.activityInfo({
+					id: this.$route.query.id
+				}).then(res => {
+					this.info = res.data
+					this.info.detail = this.$globalMethod.showHtml(this.info.detail)
+				})
 			}
 		}
 	}
 </script>
 
 <style scoped>
-	.detImg img{
+	.detImg img {
 		width: 265px;
 		height: 190px;
 		border-radius: 4px;
 		margin-right: 32px;
 		margin-bottom: 20px;
 	}
-	.detImg{
+
+	.detImg {
 		width: 1190px;
 		display: flex;
 		align-items: center;
 		flex-flow: wrap;
 	}
-	.detCon{
+
+	.detCon {
 		font-size: 14px;
 		font-weight: 400;
 		color: #444444;
 		line-height: 26px;
 		margin-bottom: 26px;
 	}
-	.detStart{
+
+	.detStart {
 		font-size: 16px;
 		font-weight: 500;
 		color: #444444;
 		margin-bottom: 22px;
 	}
-	.detli{
+
+	.detli {
 		font-size: 16px;
 		font-weight: 400;
 		color: #444444;
 		margin-left: 10px;
 	}
-	.detflexstr{
+
+	.detflexstr {
 		width: 80px;
 		text-align-last: justify;
 		font-size: 16px;
 		font-weight: 500;
 		color: #444444;
 	}
-	.detflex{
+
+	.detflex {
 		display: flex;
 		align-items: center;
 		margin-bottom: 22px;
 	}
-	.detTime{
+
+	.detTime {
 		font-size: 14px;
 		font-weight: 400;
 		color: #777777;
 		margin-bottom: 22px;
 	}
-	.detTitle{
+
+	.detTitle {
 		font-size: 24px;
 		font-weight: 600;
 		color: #333333;
 		letter-spacing: 2px;
 		margin-bottom: 14px;
 	}
-	.detBox{
+
+	.detBox {
 		width: 1200px;
 		background: #FFFFFF;
 		padding: 32px 15px 35px 27px;
