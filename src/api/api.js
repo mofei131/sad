@@ -110,6 +110,10 @@ import https from './request.js';
 	apiFun.companyAut = function(params) {
 		return https.get('index/companyAut', params)
 	}
+	//发布需求
+	apiFun.releaseNeed = function(params) {
+		return https.get('index/releaseNeed', params)
+	}
 	//暴露出这个对象
 	export default apiFun;
 

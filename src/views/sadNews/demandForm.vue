@@ -5,7 +5,7 @@
 			<div class="formTitle">发布需求</div>
 			<div class="demandTitleBox">
 				<div class="surn"><span>*</span>需求标题</div>
-				<input type="text" placeholder="请输入需求标题" />
+				<input type="text" placeholder="请输入需求标题" v-model="title" />
 			</div>
 			<div class="transverse"></div>
 			<div class="addImgBox">
@@ -13,7 +13,7 @@
 				<div class="upLoadBox">
 				<el-upload
 						class="uploadImgBox"
-				    action="https://layer.boyaokj.cn/api/file/upload"
+				    action="http://corp.boyaokj.cn/api/file/upload"
 				    list-type="picture-card"
 				    :on-preview="handlePictureCardPreview"
 				    :on-remove="handleRemove"
@@ -28,17 +28,6 @@
 				    <img w-full :src="dialogImageUrl" alt="Preview Image" />
 				  </el-dialog>
 					</div>
-				
-				 <!-- <el-dialog v-model="dialogVisible">
-				    <img width="100%" :src="dialogImageUrl" alt="" />
-				  </el-dialog> -->
-				<!-- <div v-if="addImgList.length != 0" class="addImgfelx">
-					<div class="addImgOne" v-for="(item,index) in addImgList" :key="index">
-						<img :src="item">
-						<div class="deleteImg">删除</div>
-					</div>
-				</div>
-				<img class="addimg" src="../../assets/images/addImg.png" v-else/> -->
 			</div>
 			<div class="transverse"></div>
 			<div class="slectBox">
@@ -47,9 +36,9 @@
 					 <el-select v-model="value" class="m-2" placeholder="请选择您的行业">
 					    <el-option
 					      v-for="item in options"
-					      :key="item.value"
-					      :label="item.label"
-					      :value="item.value"
+					      :key="item.id"
+					      :label="item.name"
+					      :value="item.id"
 					    />
 					  </el-select>
 				</div>
@@ -57,19 +46,19 @@
 			<div class="admBox">
 				<div class="namOne">
 					<div class="surn"><span>*</span>您的姓名</div>
-					<input type="text" placeholder="请输入您的姓名" />
+					<input type="text" placeholder="请输入您的姓名" v-model="name" />
 				</div>
 				<div class="namOne">
 					<div class="surn"><span>*</span>联系电话</div>
-					<input type="number" placeholder="请输入您的联系电话" />
+					<input type="number" placeholder="请输入您的联系电话" v-model="mobile" />
 				</div>
 			</div>
 			<div class="transverse"></div>
 			<div class="textareaBox">
 				<div class="surn"><span>*</span>需求详情</div>
-				<textarea placeholder="请输入需求详情"></textarea>
+				<textarea placeholder="请输入需求详情" v-model="mark"></textarea>
 			</div>
-			<div class="fbBtn">发布需求</div>
+			<div class="fbBtn" @click="putReleaseNeed()">发布需求</div>
 		</div>
 	</div>
 </template>
@@ -85,26 +74,111 @@
 				addImgList:[],//上传图片列表
 				dialogImageUrl:'',//放大展示图片列表
 				dialogVisible:false,//是否显示放大图片列表
-				options:[{
-					value: '0',
-					label: '信息技术及软件服务业',
-				},{
-					value: '1',
-					label: '电子信息设备',
-				},{
-					value: '2',
-					label: '农业综合',
-				},{
-					value: '3',
-					label: '银行、保险、证券、金融业',
-				},{
-					value: '4',
-					label: '健康医疗、卫生、教育业',
-				},],
+				options:[],
 				value:'',//下拉选中的value
+				title:'',
+				name:'',
+				mobile:'',
+				mark:''
 			}
 		},
+		created() {
+			this.getIndustryCate()
+		},
 		methods:{
+			//获取所属行业
+			getIndustryCate(){
+				this.$apiFun.industryCate().then((res) => {
+					if(res.code == 200){
+						this.options = res.data
+					}else{
+						this.$message({
+								showClose: true,
+								message: res.message,
+								type: 'error'
+							});
+					}
+				})
+			},
+			//提交需求
+			putReleaseNeed(){
+				if(!this.title){
+					this.$message({
+							showClose: true,
+							message: '请填写需求标题',
+							type: 'warning'
+						});
+						return
+				}
+				if(!this.addImgList){
+					this.$message({
+							showClose: true,
+							message: '请上传产品图片',
+							type: 'warning'
+						});
+						return
+				}
+				if(!this.value){
+					this.$message({
+							showClose: true,
+							message: '请选择所属行业',
+							type: 'warning'
+						});
+						return
+				}
+				if(!this.name){
+					this.$message({
+							showClose: true,
+							message: '请填写姓名',
+							type: 'warning'
+						});
+						return
+				}
+				if(!this.mobile){
+					this.$message({
+							showClose: true,
+							message: '请填写联系电话',
+							type: 'warning'
+						});
+						return
+				}
+				if(!this.mark){
+					this.$message({
+							showClose: true,
+							message: '请填写需求详情',
+							type: 'warning'
+						});
+						return
+				}
+				let list = []
+				for(let i in this.addImgList){
+					list.push(this.addImgList[0].response.data.url)
+				}
+				this.$apiFun.releaseNeed({
+					user_id:JSON.parse(localStorage.getItem('userInfo')).id,
+					title:this.title,
+					images:list.join("|"),
+					industry_id:this.value,
+					name:this.name,
+					mobile:this.mobile,
+					detail:this.mark
+				}).then((res) => {
+					if(res.code == 200){
+						this.$message({
+								showClose: true,
+								message: '发布成功',
+								type: 'success'
+							});
+						this.$router.push({path:'/demandDet',query:{id:res.data}})
+					}else{
+						this.$message({
+								showClose: true,
+								message: res.message,
+								type: 'error'
+							});
+					}
+				})
+			},
 			handlePictureCardPreview(file){
 				console.log(file.url)
 			 this.dialogImageUrl = file.url
