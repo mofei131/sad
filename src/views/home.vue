@@ -4,14 +4,8 @@
 			<div class="banner">
 				<div class="swiper-container">
 					<div class="swiper-wrapper">
-						<div class="swiper-slide">
-							<img src="../assets/images/banner.png">
-						</div>
-						<div class="swiper-slide">
-							<img src="../assets/images/banner.png">
-						</div>
-						<div class="swiper-slide">
-							<img src="../assets/images/banner.png">
+						<div class="swiper-slide" v-for="(item,index) in bannerList">
+							<img :src="item.pic">
 						</div>
 					</div>
 				</div>
@@ -159,6 +153,7 @@
 		name: 'home',
 		data() {
 			return {
+				bannerList: [], //轮播图
 				page: 1,
 				limit: 6,
 				noticeList: [], //通知公告列表
@@ -173,6 +168,7 @@
 				loop: true,
 				autoplay: 3000,
 			})
+			this.getBannerList()
 			this.getNoticeList()
 			this.getMessageList()
 			this.getSupplyList()
@@ -180,6 +176,12 @@
 			this.getCompanyList()
 		},
 		methods: {
+			//获取轮播图
+			getBannerList() {
+				this.$apiFun.bannerList({}).then(res => {
+					this.bannerList = res.data
+				})
+			},
 			//跳转行业资讯详情
 			toMessageList(e) {
 				this.$router.push({
@@ -491,7 +493,7 @@
 
 	.sadli {
 		width: 560px;
-		/* height: 110px; */
+		height: 73px;
 		border-bottom: 1px solid #EDEDED;
 		display: flex;
 		flex-direction: column;
