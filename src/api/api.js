@@ -126,7 +126,15 @@ import https from './request.js';
 	apiFun.commonConfig = function(params) {
 		return https.get('index/commonConfig', params)
 	}
-
+	//发布需求
+	apiFun.releaseNeed = function(params) {
+		return https.get('index/releaseNeed', params)
+	}
+	//发布供求
+	apiFun.releaseSupply = function(params) {
+		return https.get('index/releaseSupply', params)
+	}
+	
 	//暴露出这个对象
 	export default apiFun;
 
