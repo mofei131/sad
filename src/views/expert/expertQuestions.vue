@@ -131,6 +131,13 @@
 			},
 			// 提交问题
 			submit() {
+				if(this.data == 0){
+					this.$message({
+						showClose: true,
+						message: '暂无专家 请重新筛选'
+					});
+					return
+				}
 				if (this.title == '') {
 					this.$message({
 						showClose: true,
