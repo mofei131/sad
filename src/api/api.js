@@ -170,6 +170,12 @@ import https from './request.js';
 	apiFun.myOfferInfo= function(params) {
 		return https.get('index/myOfferInfo', params)
 	}
+	//修改密码
+	apiFun.resetPassword= function(params) {
+		return https.get('index/resetPassword', params)
+	}
+	
+	
 	//暴露出这个对象
 	export default apiFun;
 
