@@ -109,7 +109,7 @@
 				this.getActivityList()
 			},
 			// 查看详情
-			toActivityList(e){
+			toActivityList(e) {
 				this.$router.push({
 					path: '/dynamicDet',
 					query: {
@@ -214,7 +214,7 @@
 		white-space: nowrap;
 		text-overflow: ellipsis;
 		margin: auto;
-		margin-bottom: 5px;
+		margin-bottom: 10px;
 	}
 
 	.liBox img {
@@ -311,5 +311,12 @@
 		margin-bottom: 17px;
 		color: #333333;
 		font-size: 12px;
+	}
+
+	.licontact {
+		width: 125px;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
 	}
 </style>
