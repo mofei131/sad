@@ -6,14 +6,8 @@
 				<div class="detBoxLeft">
 					<div class="swiper-container">
 							<div class="swiper-wrapper">
-								<div class="swiper-slide">
-									<img src="../../assets/images/banner.png" >
-								</div>
-								<div class="swiper-slide">
-									<img src="../../assets/images/banner.png" >
-								</div>
-								<div class="swiper-slide">
-									<img src="../../assets/images/banner.png" >
+								<div class="swiper-slide" v-for="(item,index) in needInfo.images" :key="index">
+									<img :src="item">
 								</div>
 							</div>
 					</div>
@@ -47,6 +41,8 @@
 			new Swiper ('.swiper-container', {
 				loop: true,
 				autoplay:3000,
+				observer: true,
+				observeParents: true,
 			})
 			this.getNeedInfo()
 		},
@@ -70,6 +66,7 @@
 						if (this.needInfo.length != 0) {
 							this.needInfo.detail = this.$globalMethod.showHtml(this.needInfo.detail)
 						}
+						this.needInfo.images = this.needInfo.images.split('|')
 					} else {
 						this.$message({
 							showClose: true,

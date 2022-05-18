@@ -3,14 +3,14 @@
 		<div class="exifBox">
 			<div class="exinTitle">提问列表</div>
 			<div class="abCon"></div>
-			<div class="problemLi">
+			<div class="problemLi" v-for="(item,index) in companyAskList" :key="index" @click="toDet(item.id)" >
 				<div class="problemLiLeft">
-					<div>潍坊深圳工业园区即将建成，届时潍坊将有5000万届时潍坊将有5000万潍坊将有5000万</div>
-					<div>2021-11-10</div>
+					<div>{{item.ask_title}}</div>
+					<div>{{item.create_time}}</div>
 				</div>
 				<div class="problemLiRight">
-					<div>增许江从者要都论对农红合学好圆取命持证根无区提较观题年观验许选达很…</div>
-					<div>收到5条回复</div>
+					<div>{{item.ask_content}}</div>
+					<div>收到{{item.count}}条回复</div>
 				</div>
 			</div>
 		</div>
@@ -21,11 +21,36 @@
 	export default{
 		data(){
 			return{
-				
+				companyAskList:[]
 			}
 		},
+		created() {
+			this.getCompanyAskList()
+		},
 		methods: {
-			
+			//切换详情
+			toDet(e){
+				this.$emit('change',e);
+			},
+			//获取提问列表
+			getCompanyAskList(){
+				this.$apiFun.companyAskList({
+					page:1,
+					limit:1000,
+					user_id:JSON.parse(localStorage.getItem('userInfo')).id,
+				}).then((res) => {
+					if(res.code == 200){
+						console.log(res.data)
+						this.companyAskList = res.data
+					}else{
+						this.$message({
+								showClose: true,
+								message: res.message,
+								type: 'error'
+							});
+					}
+				})
+			}
 		}
 	}
 </script>

@@ -16,44 +16,28 @@
 			</div> -->
 			<div class="themeBox">
 				<div class="themetop">
-					<div>潍坊深圳工业园区即将建成，届时潍坊将有5潍坊深圳工业园区即将建成，届时潍坊将有5</div>
-					<div>2021-02-11</div>
+					<div>{{companyAskInfo[0].ask_title}}</div>
+					<div>{{companyAskInfo[0].create_time}}</div>
 				</div>
 				<div class="themeCon">
-					门民领治很等九真求东战响响发求数严任则细就料技员价气段把声意传求相打动安记世求很变十即究国建路识准元斗动需。资色法马各上加走他劳党节住世开文利战你量外马一同把复毛回江我任场照走列采通都单过术此平果通斗证标带造太气力阶量权却全次平备决集计。
+					{{companyAskInfo[0].ask_content}}
 				</div>
 			</div>
 			<div class="callBackOutside">
-				<div class="callBackBox">
+				<div class="callBackBox" v-for="(item,index) in companyAskInfo[1]" :key="index">
 					<div class="problemLi2">
-						<div class="ifonDet"><span>专家姓名：</span>张三</div>
-						<div class="ifonDet"><span>联系电话：</span>15487487988</div>
-						<div class="ifonDet"><span>电子邮箱：</span>154874879@qq.com</div>
+						<div class="ifonDet"><span>专家姓名：</span>{{item.expert_info.realname}}</div>
+						<div class="ifonDet"><span>联系电话：</span>{{item.expert_info.mobile}}</div>
+						<div class="ifonDet"><span>电子邮箱：</span>{{item.expert_info.email}}</div>
 					</div>
 					<div class="problemLi2">
-						<div class="ifonDet"><span>工作单位：</span>潍坊学院</div>
-						<div class="ifonDet"><span>工作职称：</span>15487487988</div>
-						<div class="ifonDet"><span>专业特长：</span>154874879@qq.com</div>
+						<div class="ifonDet"><span>工作单位：</span>{{item.expert_info.company_name}}</div>
+						<div class="ifonDet"><span>工作职称：</span>{{item.expert_info.technical_title}}</div>
+						<div class="ifonDet"></div>
 					</div>
 					<div class="callBack">
 						<div class="callBackTitle">回复内容</div>
-						<textarea placeholder="请输入回复内容"></textarea>
-					</div>
-				</div>
-				<div class="callBackBox">
-					<div class="problemLi2">
-						<div class="ifonDet"><span>专家姓名：</span>张三</div>
-						<div class="ifonDet"><span>联系电话：</span>15487487988</div>
-						<div class="ifonDet"><span>电子邮箱：</span>154874879@qq.com</div>
-					</div>
-					<div class="problemLi2">
-						<div class="ifonDet"><span>工作单位：</span>潍坊学院</div>
-						<div class="ifonDet"><span>工作职称：</span>15487487988</div>
-						<div class="ifonDet"><span>专业特长：</span>154874879@qq.com</div>
-					</div>
-					<div class="callBack">
-						<div class="callBackTitle">回复内容</div>
-						<textarea placeholder="请输入回复内容"></textarea>
+						<textarea :value="item.answer_content"></textarea>
 					</div>
 				</div>
 			</div>
@@ -65,11 +49,31 @@
 	export default{
 		data(){
 			return{
-				
+				companyAskInfo:''
 			}
 		},
+		created() {
+			this.getCompanyAskInfo()
+		},
 		methods: {
-			
+			//获取问题详情
+			getCompanyAskInfo(){
+				this.$apiFun.companyAskInfo({
+					user_id:JSON.parse(localStorage.getItem('userInfo')).id,
+					id:this.$store.state.questionId,
+				}).then((res) => {
+					if(res.code == 200){
+						console.log(res.data)
+						this.companyAskInfo = res.data
+					}else{
+						this.$message({
+								showClose: true,
+								message: res.message,
+								type: 'error'
+							});
+					}
+				})
+			}
 		}
 	}
 </script>

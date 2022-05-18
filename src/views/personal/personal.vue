@@ -37,7 +37,7 @@
 				<!-- 问题提问详情 -->
 				<problem-Det v-if="sum == 7"></problem-Det>
 				<!-- 问题回复列表 -->
-				<question-List v-if="sum == 8"></question-List>
+				<question-List @change="quetoDet($event)" v-if="sum == 8"></question-List>
 				<!-- 问题回复详情 -->
 				<put-Question-List v-if="sum == 9"></put-Question-List>
 				<!-- 供应列表 -->
@@ -186,6 +186,13 @@
 				this.$store.state.problemId = value
 				if(value){
 					this.sum = 7
+				}
+			},
+			//问题列表详情
+			quetoDet(value){
+				this.$store.state.questionId = value
+				if(value){
+					this.sum = 9
 				}
 			},
 			//切换选项卡

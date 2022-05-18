@@ -96,7 +96,7 @@
 				this.getCompanyList()
 			},
 			pageBtn() {
-				if (this.newPage >= 0 && this.newPage < 101) {
+				if (this.newPage >= 0 && this.newPage < this.totalPage+1) {
 					this.currentPage = this.newPage
 					this.getCompanyList()
 				}

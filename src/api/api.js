@@ -190,6 +190,14 @@ import https from './request.js';
 	apiFun.expertAnswerAsk = function(params) {
 		return https.get('expert/expertAnswerAsk', params)
 	}
+	//企业提问列表
+	apiFun.companyAskList = function(params) {
+		return https.get('expert/companyAskList', params)
+	}
+	//企业提问详情
+	apiFun.companyAskInfo = function(params) {
+		return https.get('expert/companyAskInfo', params)
+	}
 	//暴露出这个对象
 	export default apiFun;
 
