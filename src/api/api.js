@@ -142,6 +142,10 @@ import https from './request.js';
 	apiFun.changeNeedStatus = function(params) {
 		return https.get('index/changeNeedStatus', params)
 	}
+	//筛选专家个数并提交问题
+	apiFun.selectExpertCommitQuestion = function(params) {
+		return https.get('expert/selectExpertCommitQuestion', params)
+	}
 	//供应列表
 	apiFun.mySupplyList = function(params) {
 		return https.get('index/mySupplyList', params)
