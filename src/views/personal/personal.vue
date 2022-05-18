@@ -144,7 +144,7 @@
 				this.navList.splice(this.navList.findIndex(item => item.id == 4), 1)
 			}
 			if(this.$route.query.id){
-				console.log(this.$route.query)
+				// console.log(this.$route.query)
 				this.swichCard(this.$route.query,this.$route.query.index)
 			}
 		},
@@ -188,8 +188,8 @@
 					}else if(item.id == 4){
 						this.sum = 4
 					}else if(item.id == 5){
-						this.sum = 6
-					}else if(item.id == 8){
+						this.sum = 8
+					}else if(item.id == 6){
 						this.sum = 11
 					}else if(item.id == 7){
 						this.sum = 10
