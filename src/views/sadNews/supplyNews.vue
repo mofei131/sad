@@ -5,6 +5,9 @@
 			<div class="tradesBox">
 				<div class="tradesStr">所属行业：</div>
 				<div class="tradesLists">
+					<div class="tradesList" :class="label == null?'tradesLabel':''" @click="labelClass(null)">
+						全部
+					</div>
 					<div class="tradesList" v-for="(item,index) in tradesList">
 						<div :class="label == index?'tradesLabel':''" @click="labelClass(index)">
 							{{item.name}}
