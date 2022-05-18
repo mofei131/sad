@@ -25,7 +25,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="toRelease">发布需求信息</div>
+				<div class="toRelease" @click="toDemand">发布需求信息</div>
 			</div>
 		</div>
 		<div class="pageBox">
@@ -76,13 +76,17 @@
 		},
 
 		methods: {
+			//发布需求信息
+			toDemand(){
+				this.$router.push({path:'/demandForm'})
+			},
 			//改变页数触发事件
 			handleCurrentChange(e) {
 				this.currentPage = e
 				this.getNeedList()
 			},
 			pageBtn() {
-				if (this.newPage >= 0 && this.newPage < 101) {
+				if (this.newPage >= 0 && this.newPage < this.totalPage+1) {
 					this.currentPage = this.newPage
 					this.getNeedList()
 				}

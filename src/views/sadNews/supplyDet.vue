@@ -6,15 +6,15 @@
 				<div class="detBoxLeft">
 					<div class="swiper-container">
 						<div class="swiper-wrapper">
-							<div class="swiper-slide">
+							<div class="swiper-slide" v-for="(item,index) in supplyInfo.images" :key="index">
+								<img :src="item">
+							</div>
+							<!-- <div class="swiper-slide">
 								<img src="../../assets/images/banner.png">
 							</div>
 							<div class="swiper-slide">
 								<img src="../../assets/images/banner.png">
-							</div>
-							<div class="swiper-slide">
-								<img src="../../assets/images/banner.png">
-							</div>
+							</div> -->
 						</div>
 					</div>
 				</div>
@@ -47,6 +47,8 @@
 			new Swiper('.swiper-container', {
 				loop: true,
 				autoplay: 3000,
+				observer: true,
+				observeParents: true,
 			})
 			this.getSupplyInfo()
 		},
@@ -70,6 +72,7 @@
 						if (this.supplyInfo.length != 0) {
 							this.supplyInfo.detail = this.$globalMethod.showHtml(this.supplyInfo.detail)
 						}
+						this.supplyInfo.images = this.supplyInfo.images.split('|')
 					} else {
 						this.$message({
 							showClose: true,
