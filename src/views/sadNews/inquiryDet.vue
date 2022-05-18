@@ -4,33 +4,33 @@
 		<div class="submitBox">
 			<div class="submitTitle">报价详情</div>
 			<div class="inquiryBox">
-				<div class="inquiryTitle"><span>*</span>询价标题</div>
-				<input type="text" placeholder="空" />
+				<div class="inquiryTitle"><span>*</span>报价标题</div>
+				<input type="text" placeholder="空" v-model="title" />
 			</div>
 			<div class="transverse"></div>
 			<div class="inquiryBox">
-				<div class="inquiryTitle"><span>*</span>询价内容</div>
-				<textarea placeholder="空"></textarea>
+				<div class="inquiryTitle"><span>*</span>报价内容</div>
+				<textarea placeholder="空" v-model="mark"></textarea>
 			</div>
 			<div class="transverse"></div>
 			<div class="otherBox">
 				<div class="otherOne">
 					<div class="inquiryTitle"><span>*</span>您的公司</div>
-					<input type="text" placeholder="空" />
+					<input type="text" placeholder="空" v-model="company_name"/>
 				</div>
 				<div class="otherOne">
 					<div class="inquiryTitle"><span></span>公司邮箱</div>
-					<input type="text" placeholder="空" />
+					<input type="text" placeholder="空" v-model="email" />
 				</div>
 			</div>
 			<div class="otherBox">
 				<div class="otherOne">
 					<div class="inquiryTitle"><span>*</span>您的姓名</div>
-					<input type="text" placeholder="请输入您的您的姓名" />
+					<input type="text" placeholder="请输入您的您的姓名" v-model="name" />
 				</div>
 				<div class="otherOne">
 					<div class="inquiryTitle"><span>*</span>联系电话</div>
-					<input type="text" placeholder="请输入您的联系电话" />
+					<input type="text" placeholder="请输入您的联系电话" v-model="mobile" />
 				</div>
 			</div>
 			<!-- <div class="inquiryBtn">提交报价</div> -->
@@ -39,6 +39,45 @@
 </template>
 
 <script>
+	export default{
+		data() {
+			return{
+				name:'',
+				email:'',
+				mark:'',
+				title:'',
+				mobile:'',
+				company_name:''
+			}
+		},
+		created() {
+			this.getMyInquiryInfo()
+		},
+		methods:{
+			//获取报价详情
+			getMyInquiryInfo(){
+				this.$apiFun.myOfferInfo({
+					id: this.$route.query.id
+				}).then((res) => {
+					if (res.code == 200) {
+						console.log(res.data)
+						this.name = res.data.name,
+						this.title = res.data.title
+						this.mobile = res.data.mobile
+						this.mark = res.data.content
+						this.company_name = res.data.company_name
+						this.email = res.data.company_eamil
+					} else {
+						this.$message({
+							showClose: true,
+							message: res.message,
+							type: 'error'
+						});
+					}
+				})
+			}
+		}
+	}
 </script>
 
 <style scoped>

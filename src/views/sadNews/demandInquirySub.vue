@@ -5,55 +5,44 @@
 			<div class="submitTitle">询价提交</div>
 			<div class="inquiryBox">
 				<div class="inquiryTitle"><span>*</span>询价标题</div>
-				<input type="text" placeholder="请输入询价标题" />
+				<input type="text" placeholder="请输入询价标题" v-model="title" />
 			</div>
 			<div class="transverse"></div>
 			<div class="labelBox">
-				<div class="inquiryTitle"><span></span>询价标题</div>
+				<div class="inquiryTitle"><span></span>我想了解</div>
 				<div class="checkBox">
 					<el-checkbox-group v-model="checkList" size="large">
-					    <el-checkbox label="单价"></el-checkbox>
-					    <el-checkbox label="产品规格"></el-checkbox>
-					    <el-checkbox label="型号"></el-checkbox>
-							<el-checkbox label="价格条款"></el-checkbox>
-							<el-checkbox label="原产地"></el-checkbox>
-							<el-checkbox label="是否提供样品"></el-checkbox>
-							<el-checkbox label="最小订货量"></el-checkbox>
-							<el-checkbox label="交货期"></el-checkbox>
-							<el-checkbox label="供货能力"></el-checkbox>
-							<el-checkbox label="销售条款及附加条件"></el-checkbox>
-							<el-checkbox label="包装方式"></el-checkbox>
-							<el-checkbox label="质量/安全认证"></el-checkbox>
+					    <el-checkbox v-for="(item,index) in stanList" :key="index" :label="item.title"></el-checkbox>
 					  </el-checkbox-group>
 				</div>
 			</div>
 			<div class="transverse"></div>
 			<div class="inquiryBox">
 				<div class="inquiryTitle"><span>*</span>询价内容</div>
-				<textarea placeholder="请输入您要咨询的内容"></textarea>
+				<textarea placeholder="请输入您要咨询的内容" v-model="mark"></textarea>
 			</div>
 			<div class="transverse"></div>
 			<div class="otherBox">
 				<div class="otherOne">
 					<div class="inquiryTitle"><span>*</span>您的公司</div>
-					<input type="text" placeholder="请输入您的公司名字" />
+					<input type="text" placeholder="请输入您的公司名字" v-model="company_name" />
 				</div>
 				<div class="otherOne">
 					<div class="inquiryTitle"><span></span>公司邮箱</div>
-					<input type="text" placeholder="请输入您的公司邮箱" />
+					<input type="text" placeholder="请输入您的公司邮箱" v-model="email" />
 				</div>
 			</div>
 			<div class="otherBox">
 				<div class="otherOne">
 					<div class="inquiryTitle"><span>*</span>您的姓名</div>
-					<input type="text" placeholder="请输入您的您的姓名" />
+					<input type="text" placeholder="请输入您的您的姓名" v-model="name" />
 				</div>
 				<div class="otherOne">
 					<div class="inquiryTitle"><span>*</span>联系电话</div>
-					<input type="text" placeholder="请输入您的联系电话" />
+					<input type="text" placeholder="请输入您的联系电话" v-model="mobile" />
 				</div>
 			</div>
-			<div class="inquiryBtn">提交报价</div>
+			<div class="inquiryBtn" @click="putCommitInquiry()">提交询价</div>
 		</div>
 	</div>
 </template>
@@ -62,7 +51,131 @@
 	export default{
 		data(){
 			return{
-				checkList:[]
+				checkList:[],
+				stanList:[{
+					id:1,
+					title:'单价'
+				},{
+					id:2,
+					title:'产品规格'
+				},{
+					id:3,
+					title:'型号'
+				},{
+					id:4,
+					title:'价格条款'
+				},{
+					id:5,
+					title:'原产地'
+				},{
+					id:6,
+					title:'是否提供样品'
+				},{
+					id:7,
+					title:'最小订货量'
+				},{
+					id:8,
+					title:'交货期'
+				},{
+					id:9,
+					title:'供货能力'
+				},{
+					id:10,
+					title:'销售条款及附加条件'
+				},{
+					id:11,
+					title:'包装方式'
+				},{
+					id:12,
+					title:'质量/安全认证'
+				}],
+				title:'',
+				email:'',
+				mark:'',
+				mobile:'',
+				name:'',
+				company_name:'',
+				taglist : []
+			}
+		},
+		methods:{
+			//提交询价
+			putCommitInquiry(){
+				if(!this.title){
+					this.$message({
+							showClose: true,
+							message: '请填写询价标题',
+							type: 'warning'
+						});
+						return
+				}
+				if(!this.mark){
+					this.$message({
+							showClose: true,
+							message: '请填写询价内容',
+							type: 'warning'
+						});
+						return
+				}
+				if(!this.company_name){
+					this.$message({
+							showClose: true,
+							message: '请填写公司名称',
+							type: 'warning'
+						});
+						return
+				}
+				if(!this.name){
+					this.$message({
+							showClose: true,
+							message: '请填写姓名',
+							type: 'warning'
+						});
+						return
+				}
+				if(!this.mobile){
+					this.$message({
+							showClose: true,
+							message: '请填写联系电话',
+							type: 'warning'
+						});
+						return
+				}
+				
+				for(let i in this.checkList){
+					this.taglist.push(this.stanList[this.stanList.findIndex(item => item.title == this.checkList[i])].title)
+				}
+				this.$apiFun.commitInquiry({
+					user_id:JSON.parse(localStorage.getItem('userInfo')).id,
+					supply_id:this.$route.query.id,
+					title:this.title,
+					tags:this.taglist.join(','),
+					content:this.mark,
+					company_name:this.company_name,
+					company_eamil:this.email,
+					name:this.name,
+					mobile:this.mobile
+				}).then((res) => {
+					if (res.code == 200) {
+						this.$message({
+							showClose: true,
+							message: '提交成功',
+							type: 'success'
+						});
+						this.$router.push({
+							path:'/demandInquiryDet',
+							query:{
+								id:res.data
+							}
+						})
+					} else {
+						this.$message({
+							showClose: true,
+							message: res.message,
+							type: 'error'
+						});
+					}
+				})
 			}
 		}
 	}

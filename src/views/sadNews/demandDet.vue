@@ -24,11 +24,11 @@
 					<div class="abrTwo">需求类别：{{needInfo.industry_name}}</div>
 					<div class="abrTwo">发布企业：{{needInfo.company_name}}</div>
 					<div class="abrTwo">总浏览量：{{needInfo.look}}</div>
-					<div class="dbrBtn">询价</div>
+					<div class="dbrBtn" @click="toInquiry(needInfo.id)">报价</div>
 				</div>
 			</div>
 			<div class="detBoxbot">
-				<div class="dbbTit">供应详情：</div>
+				<div class="dbbTit">需求详情：</div>
 				<div class="dbbCon" v-html="needInfo.detail"></div>
 			</div>
 		</div>
@@ -51,6 +51,15 @@
 			this.getNeedInfo()
 		},
 		methods: {
+			//去询价
+			toInquiry(e){
+				this.$router.push({
+					path:'/inquirySub',
+					query:{
+						id:e
+					}
+				})
+			},
 			//企业中心需求详情
 			getNeedInfo() {
 				this.$apiFun.myNeedInfo({
