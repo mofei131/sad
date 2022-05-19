@@ -647,7 +647,8 @@
 	.ntone {
 		width: 600px;
 		height: 73px;
-		background: linear-gradient(90deg, #1890FF 0%, #FFFFFF 100%);
+		background: linear-gradient(90deg, #0B6DD9 0%, #FFFFFF 100%);
+		/* background: linear-gradient(90deg, #1890FF 0%, #FFFFFF 100%); */
 		display: flex;
 		align-items: center;
 		justify-content: space-between;

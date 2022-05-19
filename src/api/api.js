@@ -202,6 +202,11 @@ import https from './request.js';
 	apiFun.companyAskInfo = function(params) {
 		return https.get('expert/companyAskInfo', params)
 	}
+	//企业提问详情
+	apiFun.enterprisesList = function(params) {
+		return https.get('enterprises/enterprisesList', params)
+	}
+	
 	//暴露出这个对象
 	export default apiFun;
 

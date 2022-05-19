@@ -113,6 +113,10 @@ const routes = [{ //首页
 	path: '/expertCertification',
 	name: 'expertCertification',
 	component: () => import('../views/expert/expertCertification.vue')
+}, { //专家认证
+	path: '/expertCertification2',
+	name: 'expertCertification2',
+	component: () => import('../views/expert/expertCertification2.vue')
 }]
 
 const router = createRouter({

@@ -2,7 +2,7 @@
 	<div class="box">
 		<div class="top">
 			<div class="left">
-				<img src="../assets/images/logo.png"/>
+				<img src="../assets/images/logo.jpg"/>
 			</div>
 			<div class="right">
 				<div class="search">
@@ -92,8 +92,8 @@
 					</el-dropdown>
 				</div>
 				<div>
-					<router-link to="/expertQuestions" style="color: #fff;">专家咨询</router-link>
-					<!-- <el-dropdown>
+					<!-- <router-link to="/expertQuestions" style="color: #fff;">专家咨询</router-link> -->
+					<el-dropdown>
 						<span class="el-dropdown-link">
 							专家库
 							<el-icon class="el-icon--right" color="#fff">
@@ -103,14 +103,14 @@
 						<template #dropdown>
 							<el-dropdown-menu>
 								<el-dropdown-item>
-									专家入库
+									<router-link to="/expertCertification2" style="color: #666;">专家入库</router-link>
 								</el-dropdown-item>
 								<el-dropdown-item>
 										<router-link to="/expertQuestions" style="color: #666;">专家咨询</router-link>
 								</el-dropdown-item>
 							</el-dropdown-menu>
 						</template>
-					</el-dropdown> -->
+					</el-dropdown>
 				</div>
 				<div>
 					<el-dropdown>
@@ -123,7 +123,7 @@
 						<template #dropdown>
 							<el-dropdown-menu>
 								<el-dropdown-item>
-									<router-link to="/enterpriseList" style="color: #666;">企业列表</router-link>
+									<router-link to="/enterpriseList" style="color: #666;">企业展示</router-link>
 								</el-dropdown-item>
 								<el-dropdown-item>
 									<div @click="toScreen">培育成效</div>
@@ -451,12 +451,12 @@
 		max-width: 1920px;
 		margin: auto;
 		height: 60px;
-		background-color: #1890FF;
+		background-color: #096DD9;
 	}
 	.search div{
 		width: 100px;
 		height: 40px;
-		background:#1890FF;
+		background:#096DD9;
 		border-radius: 0px 5px 5px 0px;
 		font-size: 16px;
 		color: #FFFFFF;
