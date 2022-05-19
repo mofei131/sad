@@ -38,6 +38,18 @@
 					},
 					xAxis: {
 						type: 'value',
+						splitLine :{ //网格线
+							lineStyle:{
+								width:0.2,
+							type:'dashed' //设置网格线类型 dotted：虚线 solid:实线
+							},
+						},
+						axisLine: {
+							show: true, // 是否显示坐标轴轴线
+							lineStyle: {
+							type: 'solid', // 坐标轴线线的类型（'solid'，实线类型；'dashed'，虚线类型；'dotted',点状类型）
+							},
+						},
 					},
 					yAxis: {
 						 type: 'category',
@@ -71,5 +83,11 @@
 </script>
 
 <style scoped>
-	
+	#bar_chart{
+		background-image: url(../../assets/images/idNumBg.png);
+		background-size: 100% 800px;
+		background-repeat: no-repeat;
+		padding-top: 15px;
+		box-sizing: border-box;
+	}
 </style>

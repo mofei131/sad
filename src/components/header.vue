@@ -355,6 +355,7 @@
 			signOut(){
 				this.$store.state.wait = 0
 				localStorage.removeItem('userInfo')
+				this.$router.replace('/')
 			},
 			toLogin(){
 				if(this.$store.state.login == 0){

@@ -279,6 +279,9 @@
 				userInfo:'',//个人信息
 			}
 		},
+		created() {
+			this.getInfo()
+		},
 		mounted() {
 			this.getcheckList()
 			this.getEducationList()
@@ -288,6 +291,48 @@
 			}
 		},
 		methods: {
+			//获取信息
+			getInfo(){
+				this.$apiFun.userInfo({
+					user_id:JSON.parse(localStorage.getItem('userInfo')).id
+				}).then((red) => {
+					if(red.code == 200){
+						localStorage.setItem('userInfo',JSON.stringify(red.data))
+					}else{
+						this.$message({
+								showClose: true,
+								message: red.message,
+								type: 'error'
+							});
+					}
+				})
+			},
+			//获取信息
+			getUserInfo(){
+				let list = []
+				this.userInfo = JSON.parse(localStorage.getItem('userInfo'))
+				this.aut.imageUrl = this.userInfo.avater
+				this.aut.name = this.userInfo.realname
+				this.aut.mobile = this.userInfo.mobile
+				this.aut.sex = JSON.stringify(this.userInfo.sex)
+				this.aut.company_name = this.userInfo.company_name
+				this.aut.email = this.userInfo.email
+				this.aut.comp = this.userInfo.political_outlook
+				this.aut.education = this.userInfo.education
+				this.aut.practice = this.userInfo.job_status
+				this.aut.technical_title = this.userInfo.technical_title
+				this.aut.card = this.userInfo.certificates_type
+				this.aut.id_card = this.userInfo.id_card
+				this.aut.address = this.userInfo.address
+				let tags = this.userInfo.major_ids.split(',').splice(1,this.userInfo.major_ids.split(',').length-2)
+				for(let i in tags){
+					list.push(this.checkList[this.checkList.findIndex(item => item.id == tags[i])].name)
+				}
+				this.aut.majorList = list
+				// this.aut.fileList = this.userInfo.enclosure
+				this.aut.personal_introduce = this.userInfo.personal_introduce
+				this.select = true
+ 			},
 			//获取学历列表
 			getEducationList(){
 				this.$apiFun.educationList().then((res) => {
@@ -424,11 +469,6 @@
 						}).then((red) => {
 							if(red.code == 200){
 								localStorage.setItem('userInfo',JSON.stringify(red.data))
-								this.$message({
-										showClose: true,
-										message: '认证成功',
-										type: 'success'
-									});
 								// this.$router.push({name:'home'})
 								location.reload()
 							}else{
@@ -453,6 +493,9 @@
 				this.$apiFun.majorList().then((res) => {
 					if(res.code == 200){
 						this.checkList = res.data
+						if(JSON.parse(localStorage.getItem('userInfo')).is_authentication == 1){
+							this.getUserInfo()
+						}
 					}else{
 						this.$message({
 								showClose: true,

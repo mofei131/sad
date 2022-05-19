@@ -26,7 +26,7 @@
 				<expert-Information v-if="sum == 1"></expert-Information>
 				<!-- 企业资料 -->
 				<enterprise-Information v-if="sum == 2"></enterprise-Information>
-				<!-- 服务商资料 -->
+				<!-- 服务机构资料 -->
 				<service-Provider-Information v-if="sum == 3"></service-Provider-Information>
 				<!-- 服务机构认证 -->
 				<service-Provider-Certification v-if="sum == 4"></service-Provider-Certification>

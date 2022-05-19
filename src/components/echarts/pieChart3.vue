@@ -85,5 +85,11 @@
 </script>
 
 <style scoped>
-	
+	#pie_chart3{
+		background-image: url(../../assets/images/idNumBg.png);
+		background-size: 100% 800px;
+		background-repeat: no-repeat;
+		padding-top: 15px;
+		box-sizing: border-box;
+	}
 </style>

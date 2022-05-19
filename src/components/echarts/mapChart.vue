@@ -1,6 +1,6 @@
 <template>
 	<div class="box">
-		<div id="map_chart" style="width: 500px;height: 500px;"></div>
+		<div id="map_chart" style="width: 800px;height: 600px;"></div>
 	</div>
 </template>
 
@@ -200,8 +200,12 @@
 						coordinateSystem: 'geo',
 						data: convertData(this.geoCoordMap),
 						symbolSize: function (val) {
-								if((val[2] / 10) > 10){
-									return val[2] / 10;
+								if((val[2] / 5) > 10){
+									if((val[2] / 5) > 40){
+										return 40
+									}else{
+										return val[2] / 5;
+									}
 								}else{
 									return 10
 								}
@@ -226,5 +230,9 @@
 </script>
 
 <style scoped>
-	
+	#map_chart{
+		background-image: url(../../assets/images/idNumBg.png);
+		background-size: 100% 800px;
+		background-repeat: no-repeat;
+	}
 </style>

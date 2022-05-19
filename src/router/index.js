@@ -1,6 +1,7 @@
 import {
 	createRouter,
-	createWebHistory
+	createWebHistory,
+	createWebHashHistory
 } from 'vue-router'
 import header from '../components/header.vue' //头部
 import footer from '../components/footer.vue' //底部
@@ -115,7 +116,8 @@ const routes = [{ //首页
 }]
 
 const router = createRouter({
-	history: createWebHistory(process.env.BASE_URL),
+	// history: createWebHistory(process.env.BASE_URL),
+	history: createWebHashHistory(process.env.BASE_URL),
 	routes
 })
 router.beforeEach((to, from, next) => {
@@ -133,8 +135,19 @@ router.beforeEach((to, from, next) => {
 			next();
 		}
 	} else {
-		next()
+		if(to.path == "/expertQuestions"){
+			if(!localStorage.getItem('userInfo')){
+				console.log('不能跳转')
+				alert('登录后才能进行专家咨询')
+			}else{
+				console.log('可以跳转')
+				next()
+			}
+		}else{
+			next()
+		}
 	}
+	
 	//  if (to.path == "/") {
 	// next();
 	//  } else {

@@ -4,7 +4,7 @@
 		 <!-- :style="{'width':windowWidth+'px','height':windowHeight+'px'}" -->
 		<div class="areaBox"  :style="{'height':windowHeight+'px'}">
 		<div class="tradesBox">
-			<div class="tradesStr">企业类型：</div>
+			<!-- <div class="tradesStr">企业类型：</div> -->
 			<div class="tradesList" v-for="(item,index) in tradesList">
 				<div :class="label == index?'tradesLabel':''" @click="messUnti(item,index)">
 					{{item.title}}
@@ -12,7 +12,7 @@
 			</div>
 			<div class="backBox" @click="backseen">退出</div>
 		</div>
-		<div class="transverse"></div>
+		<!-- <div class="transverse"></div> -->
 		<div class="mapBox" >
 			<div class="left">
 				<div class="leftOne">
@@ -29,7 +29,7 @@
 				<div class="cardUl">
 					<div class="cardLi">
 						<div>{{total["2"]}}家</div>
-						<div>专心特新</div>
+						<div>专精特新</div>
 					</div>
 					<div class="cardLi">
 						<div>{{total["3"]}}家</div>
@@ -58,6 +58,9 @@
 				<bar-Chart ref='barChart'></bar-Chart>
 			</div>
 		</div>
+		<div class="tableBox">
+			<div class="topBox"></div>
+		</div>
 		</div>
 	</div>
 </template>
@@ -82,7 +85,7 @@
 					title:'全部'
 				},{
 					id:2,
-					title:'专新特新企业'
+					title:'专精特新企业'
 				},{
 					id:3,
 					title:'小巨人企业'
@@ -166,9 +169,31 @@
 </script>
 
 <style scoped>
+/* 	.topBox{
+		width: 100%;
+		height: 10%;
+		background-color: #fff;
+	} */
+	/* .tableBox{
+		position: fixed;
+		z-index: 99;
+		width: 90%;
+		height: 90%;
+		left: 5%;
+		top: 5%;
+		background-image: url(../../assets/images/idNumBg.png);
+		background-size: 100%;
+		background-repeat: no-repeat;
+		background-color: #111843;
+		padding: 20px;
+		box-sizing: border-box;
+	} */
+	.leftOne{
+		margin-bottom: 20px;
+	}
 	.backBox{
 		position: absolute;
-		top: 0;
+		top: -12px;
 		right: 0;
 		width: 132px;
 		height: 52px;
@@ -191,18 +216,22 @@
 		align-items: center;
 		justify-content: center;
 	}
-	.right,.left,.center{
-		width: 33%;
+	.right,.left{
+		width: 35%;
 	}
+	/* .center{
+		width: 50%;
+	} */
 	.mapBox{
 		display:flex;
 		justify-content: space-between;
 		margin: auto;
-		width: 80%;
+		/* width: 80%; */
+		padding-top: 20px;
 	}
 	.cardLi{
-		width: 106px;
-		height: 50px;
+		width: 200px;
+		height: 60px;
 		background: rgba(24, 144, 255, 0.6);
 		box-shadow: 0px 0px 9px 0px rgba(190, 190, 190, 0.57);
 		border-radius: 4px;
@@ -215,10 +244,10 @@
 		flex-flow: column;
 		align-items: center;
 		justify-content: space-around;
-		margin-bottom: 12px;
+		margin-bottom: 20px;
 	}
 	.cardUl{
-		width: 388px;
+		width: 800px;
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
@@ -268,12 +297,15 @@
 		height: 100%;
 		margin: auto;
 		/* background: #FFFFFF; */
-		background-color: #111843;
+		/* background-color: #111843; */
 		box-shadow: 0px 0px 10px 0px rgba(230, 207, 207, 0.5);
 		border-radius: 2px;
 		margin-bottom: 12px;
 		padding-top: 25px;
 		padding-bottom: 1px;
+		background-image: url(../../assets/images/bg_outCon.jpg);
+		background-size: 100%;
+		background-repeat: no-repeat;
 	}
 	.tradesBox{
 		width: 1200px;
@@ -284,9 +316,12 @@
 		padding-left: 24px;
 		box-sizing: border-box;
 		margin-bottom: 25px;
-		background-color: #111843;
+		/* background-color: #111843; */
 		color: #fff;
+		font-weight: bold;
+		font-size: 18px;
 		position: relative;
+		padding-left: 160px;
 	}
 	.stay span{
 		color: #1890FF;

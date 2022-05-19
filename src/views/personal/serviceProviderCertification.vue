@@ -14,7 +14,7 @@
 					<div>:</div>
 					<input type="text" placeholder="空" v-model="legal_person" />
 				</div>
-				<div class="exifLi">
+				<div class="exifLi" v-if="userInfo.is_authentication != 1 && userInfo.is_authentication != 2">
 					<div class="exifHead" style="padding-top: 5px;"><div class="tc">*</div><div class="lc">归属地区</div></div>
 					<div style="padding-top: 5px;">:</div>
 					<div class="cascader">
@@ -25,6 +25,11 @@
 							@change="handleChange">
 						</el-cascader>
 					</div>
+				</div>
+				<div class="exifLi" v-else>
+					<div class="exifHead"><div class="tc">*</div><div class="lc">归属区域</div></div>
+					<div>:</div>
+					<input type="text" placeholder="空" v-model="arealist" />
 				</div>
 				<div class="exifLi">
 					<div class="exifHead"><div class="tc">*</div><div class="lc">详细地址</div></div>
@@ -108,26 +113,33 @@
 					legal_person:'',
 					address:'',
 					email:'',
-					userInfo:''
+					userInfo:'',
+					arealist:''
 			}
 		},
 		created() {
 			this.userInfo = JSON.parse(localStorage.getItem('userInfo'))
 			this.getIndustryCate()
 			this.getTagList()
-			this.getUserInfo()
 		},
 		methods: {
 			//获取消息
 			getUserInfo(){
-				if(JSON.parse(localStorage.getItem('userInfo')).is_authentication == 2){
+				let list = []
+				// if(JSON.parse(localStorage.getItem('userInfo')).is_authentication == 2){
 					this.userInfo = JSON.parse(localStorage.getItem('userInfo'))
 					this.name = this.userInfo.enterprise_name,
 					this.email = this.userInfo.email,
 					this.address = this.userInfo.address,
 					this.legal_person = this.userInfo.legal_person,
 					this.imageUrl = this.userInfo.license_pic
-				}
+					let tags = this.userInfo.service_ids.split(',').splice(1,this.userInfo.service_ids.split(',').length-2)
+					for(let i in tags){
+						list.push(this.tagList[this.tagList.findIndex(item => item.id == tags[i])].name)
+					}
+					this.checkList = list
+					this.arealist = this.userInfo.service_province+'/'+this.userInfo.service_city+'/'+this.userInfo.service_area
+				// }
 			},
 			//提交
 			putCompanyAut(){
@@ -208,11 +220,12 @@
 					}
 				})
 			},
-			//获取服务机构标签
+			//获取服务领域
 			getTagList(){
 				this.$apiFun.servicesList().then((res) => {
 					if(res.code == 200){
 						this.tagList = res.data
+						this.getUserInfo()
 					}else{
 						this.$message({
 								showClose: true,
