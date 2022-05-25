@@ -74,7 +74,7 @@
 			}
 		},
 		mounted() {
-			
+		
 		},
 		methods:{
 			getAreaData(data,title){
@@ -187,36 +187,165 @@
 					// 		return e.name
 					// 	}
 					// },
-					series: [{
+					series: [
+					// 	{
+					// 	type: 'scatter',
+					// 	showEffectOn: 'render',
+					// 	zoom: 1.1,
+					// 	symbol: 'circle',
+					// 	itemStyle: {
+					// 		shadowBlur: 10,
+					// 		shadowColor: 'rgba(221,185,38, 0.5)',
+					// 		color: '#ddb926'
+					// 	},
+					// 	coordinateSystem: 'geo',
+					// 	data: convertData(this.geoCoordMap),
+					// 	symbolSize: function (val) {
+					// 			if((val[2] / 5) > 10){
+					// 				if((val[2] / 5) > 40){
+					// 					return 40
+					// 				}else{
+					// 					return val[2] / 5;
+					// 				}
+					// 			}else{
+					// 				return 10
+					// 			}
+					// 		},
+					// 	hoverAnimation: true,
+					// 	rippleEffect: {
+					// 		period: 15,
+					// 		scale: 4,
+					// 		brushType: 'fill'
+					// 	}
+					// },
+					{
+						name: 'pm2.5',
 						type: 'scatter',
-						showEffectOn: 'render',
-						zoom: 1.1,
-						symbol: 'circle',
-						itemStyle: {
-							shadowBlur: 10,
-							shadowColor: 'rgba(221,185,38, 0.5)',
-							color: '#ddb926'
-						},
 						coordinateSystem: 'geo',
 						data: convertData(this.geoCoordMap),
 						symbolSize: function (val) {
+								// return val[2] / 10;
 								if((val[2] / 5) > 10){
-									if((val[2] / 5) > 40){
-										return 40
+									if((val[2] / 5) > 30){
+										if((val[2]/5) > 80){
+											return 50
+										}else{
+											return 30
+										}
 									}else{
 										return val[2] / 5;
 									}
 								}else{
 									return 10
 								}
-							},
-						hoverAnimation: true,
-						rippleEffect: {
-							period: 15,
-							scale: 4,
-							brushType: 'fill'
+						},
+						encode: {
+								value: 2
+						},
+						// label: {
+						// 		formatter: '{b}',
+						// 		position: 'right',
+						// 		show: false
+						// },
+						itemStyle: {
+								// color: '#FDAF59'
+								color:function(params){  //根据不同数据显示不同颜色的标记
+										if (params.data.value[2] >= 0 && params.data.value[2]< 50) {
+												return '#2F54EB';
+										} else if (params.data.value[2] >= 50 && params.data.value[2]< 100) {
+												return '#1890FF';
+										} else if (params.data.value[2] >= 100 && params.data.value[2]< 150) {
+												return '#722ED1';
+										} else if (params.data.value[2] >= 150 && params.data.value[2] < 200) {
+												return '#13C2C2';
+										} else if (params.data.value[2] >= 200 && params.data.value[2] < 250) {
+												return '#52C41A';
+										}else if (params.data.value[2] >= 250 && params.data.value[2] < 300) {
+												return '#A0D911';
+										}else if (params.data.value[2] >= 300 && params.data.value[2] < 350) {
+												return '#FADB14';
+										}else if (params.data.value[2] >= 350 && params.data.value[2] < 400) {
+												return '#FA8C16';
+										}else if (params.data.value[2] >= 400 && params.data.value[2] < 450) {
+												return '#fa541c';
+										} else{
+												return '#F5222D';
+										}
+								},
+						},
+						emphasis: {
+								label: {
+										show: true
+								}
 						}
-					}]
+				},
+				{
+						name: 'Top 5',
+						type: 'effectScatter',
+						coordinateSystem: 'geo',
+						data: convertData(this.geoCoordMap.sort(function (a, b) {
+								return b.value - a.value;
+						}).slice(0, 20)),
+						symbolSize: function (val) {
+								// return val[2] / 10;
+								if((val[2] / 5) > 10){
+									if((val[2] / 5) > 30){
+										if((val[2]/5) > 80){
+											return 50
+										}else{
+											return 30
+										}
+									}else{
+										return val[2] / 5;
+									}
+								}else{
+									return 10
+								}
+						},
+						encode: {
+								value: 2
+						},
+						showEffectOn: 'render',
+						rippleEffect: {
+								brushType: 'stroke'
+						},
+						hoverAnimation: true,
+						// label: {
+						// 		formatter: '{b}',
+						// 		position: 'right',
+						// 		show: true
+						// },
+						itemStyle: {
+								// color: '#FDAF59',
+								color:function(params){  //根据不同数据显示不同颜色的标记
+										if (params.data.value[2] >= 0 && params.data.value[2]< 50) {
+												return '#2F54EB';
+										} else if (params.data.value[2] >= 50 && params.data.value[2]< 100) {
+												return '#1890FF';
+										} else if (params.data.value[2] >= 100 && params.data.value[2]< 150) {
+												return '#722ED1';
+										} else if (params.data.value[2] >= 150 && params.data.value[2] < 200) {
+												return '#13C2C2';
+										} else if (params.data.value[2] >= 200 && params.data.value[2] < 250) {
+												return '#52C41A';
+										}else if (params.data.value[2] >= 250 && params.data.value[2] < 300) {
+												return '#A0D911';
+										}else if (params.data.value[2] >= 300 && params.data.value[2] < 350) {
+												return '#FADB14';
+										}else if (params.data.value[2] >= 350 && params.data.value[2] < 400) {
+												return '#FA8C16';
+										}else if (params.data.value[2] >= 400 && params.data.value[2] < 450) {
+												return '#fa541c';
+										} else {
+												return '#F5222D';
+										}
+								},
+								shadowBlur: 10,
+								shadowColor: '#333'
+						},
+						zlevel: 1
+				}
+					]
 				})
 				// setTimeout(function() {
 				// 	window.onresize = function() {

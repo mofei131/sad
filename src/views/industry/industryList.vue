@@ -4,7 +4,7 @@
 			您现在所在位置:资讯中心><span>行业资讯</span>
 		</div>
 		<div class="infTop">
-			<img src="../../assets/images/star.png" >
+			<img src="../../assets/images/forIcon2.png" >
 			<div>行业资讯</div>
 		</div>
 		<div class="infUl">

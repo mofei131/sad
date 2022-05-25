@@ -31,7 +31,7 @@
 		</div>
 		<div class="pageBox">
 			<div class="ulBox">
-				<div v-for="(item,index) in unityList" :key="index">
+				<div v-for="(item,index) in unityList" :key="index" @click="toDet(item.id)">
 					<div class="liBox" v-if="item.id">
 						<img class="liImg" src="../../assets/images/banner.png">
 						<div class="title">{{item.name}}</div>
@@ -90,6 +90,15 @@
 		},
 
 		methods: {
+			//去详情
+			toDet(e){
+				this.$router.push({
+					path:'/enterpriseDet',
+					query:{
+						id:e
+					}
+				})
+			},
 			//改变页数触发事件
 			handleCurrentChange(e) {
 				this.currentPage = e
@@ -264,11 +273,10 @@
 	.lablefex {
 		display: flex;
 		align-items: center;
-		justify-content: space-around;
 		width: 264px;
 		margin: auto;
-		height: 45px;
-		margin-bottom: 13px;
+		height: 56px;
+		flex-wrap: wrap;
 	}
 
 	.title {
@@ -299,6 +307,7 @@
 		box-shadow: 0px 0px 9px 0px rgba(190, 190, 190, 0.57);
 		margin: 0 4.5px;
 		margin-bottom: 11px;
+		cursor: pointer;
 	}
 
 	.ulBox {

@@ -58,7 +58,7 @@
 			},
 			//企业中心需求详情
 			getNeedInfo() {
-				this.$apiFun.myNeedInfo({
+				this.$apiFun.needInfo({
 					id: this.$route.query.id
 				}).then((res) => {
 					if (res.code == 200) {

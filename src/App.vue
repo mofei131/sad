@@ -10,7 +10,9 @@
 	<img class="qjimg" src="./assets/images/cityimg.png" >
 	</div>
 	</div>
-	<effect v-if="screen == 1"></effect>
+	<!-- <sacle-Box> -->
+		<effect v-if="screen == 1"></effect>
+	<!-- </sacle-Box> -->
 </template>
 <script>
 	import myHeader from './components/header.vue'
@@ -19,6 +21,8 @@
 	import myRegister from './components/register.vue'
 	import myForget from './components/forget.vue'
 	import effect from './views/enterprise/effect.vue'
+	import './assets/font/font.css'
+	import sacleBox from './components/SacleBox.vue'
 	export default{
 		name:'app',
 		components:{
@@ -27,7 +31,8 @@
 			myLogin,
 			myRegister,
 			myForget,
-			effect
+			effect,
+			sacleBox
 		},
 		data(){
 			return{

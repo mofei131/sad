@@ -1,7 +1,7 @@
 <template>
 	<div class="box" @click="hide">
 		<div class="loginBox" @click.stop="hide2">
-			<img class="login" src="../assets/images/logo2.png" >
+			<img class="login" src="../assets/images/logo.png" >
 			<div class="mode">
 				<div :class="mode?'modeOne':'modeTwo'" @click="mode = true">账号登录</div>
 				<div :class="mode?'modeTwo':'modeOne'" @click="mode = false">手机登录</div>
@@ -35,9 +35,13 @@
 				<div class="agreementBox">
 					<img :src="select?images.select:images.selectNo" @click="select = !select">
 					<div class="read">我已阅读并同意备份</div>
-					<div class="toag">《服务协议》</div>
+					<div class="toag" @click="this.$store.state.login = 0">
+						<router-link to="/fuwu">《服务协议》</router-link>
+					</div>
 					<div class="toag">跟</div>
-					<div class="toag">《隐私政策》</div>
+					<div class="toag" @click="this.$store.state.login = 0">
+						<router-link to="/yinsi">《隐私政策》</router-link>
+					</div>
 				</div>
 				<div class="btn" @click="toLogin">登录</div>
 				<div class="toReg">
@@ -252,6 +256,9 @@
 		margin-bottom: 21px;
 		cursor: pointer;
 	}
+	.toag a{
+		color: #2298FF;
+	}
 	.toag{
 		font-weight: 400;
 		color: #2298FF;
@@ -356,7 +363,7 @@
 	.login{
 		margin: auto;
 		display: block;
-		width: 460px;
+		width: 360px;
 		margin: auto;
 	}
 	.loginBox{
@@ -373,7 +380,7 @@
 		position: fixed;
 		top: 0;
 		left: 0;
-		z-index: 9;
+		z-index: 99999;
 		display: flex;
 		align-items: center;
 		justify-content: center;

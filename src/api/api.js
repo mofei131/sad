@@ -50,9 +50,13 @@ import https from './request.js';
 	apiFun.messageInfo = function(params) {
 		return https.post('index/messageInfo', params)
 	}
-	//企业能力列表
+	//注册的公司接口
 	apiFun.companyList = function(params) {
 		return https.get('index/companyList', params)
+	}
+	//公司列表接口
+	apiFun.enterprisesList = function(params) {
+		return https.get('enterprises/enterprisesList', params)
 	}
 	//供应列表
 	apiFun.supplyList = function(params) {
@@ -62,9 +66,17 @@ import https from './request.js';
 	apiFun.mySupplyInfo = function(params) {
 		return https.get('index/mySupplyInfo', params)
 	}
+	//供应详情
+	apiFun.supplyInfo = function(params) {
+		return https.get('index/supplyInfo', params)
+	}
 	//需求列表
 	apiFun.needList = function(params) {
 		return https.get('index/needList', params)
+	}
+	//需求详情
+	apiFun.needInfo = function(params) {
+		return https.get('index/needInfo', params)
 	}
 	//企业中心需求详情
 	apiFun.myNeedInfo = function(params) {

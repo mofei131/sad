@@ -1,8 +1,10 @@
 <template>
-	<div class="box" :style="{'height':windowHeight+'px'}">
+	<div class="box" :style="{'height':this.$store.state.windowHeight+'px'}">
+		<sacle-Box>
+		<!-- :style="{'height':windowHeight+'px'}" -->
 		<!-- <div class="stay">您现在所在位置:企业能力<span>培育成效</span></div> -->
 		 <!-- :style="{'width':windowWidth+'px','height':windowHeight+'px'}" -->
-		<div class="areaBox"  :style="{'height':windowHeight+'px'}" v-if="table">
+		<div class="areaBox"  style="height: 1080px;" v-if="table">
 		<div class="tradesBox">
 			<!-- <div class="tradesStr">企业类型：</div> -->
 			<div class="tradesList" v-for="(item,index) in tradesList">
@@ -28,31 +30,31 @@
 			<div class="center">
 				<div class="cardUl">
 					<div class="cardLi">
-						<div>{{total["2"]}}家</div>
+						<div>{{total["2"]}}</div>
 						<div>专精特新</div>
 					</div>
 					<div class="cardLi">
-						<div>{{total["3"]}}家</div>
+						<div>{{total["3"]}}</div>
 						<div>小巨人</div>
 					</div>
 					<div class="cardLi">
-						<div>{{total["4"]}}家</div>
+						<div>{{total["4"]}}</div>
 						<div>单项冠军</div>
 					</div>
 					<div class="cardLi">
-						<div>{{total["5"]}}家</div>
+						<div>{{total["5"]}}</div>
 						<div>隐形冠军</div>
 					</div>
 					<div class="cardLi">
-						<div>{{total["6"]}}家</div>
+						<div>{{total["6"]}}</div>
 						<div>瞪羚企业</div>
 					</div>
 					<div class="cardLi">
-						<div>{{total["7"]}}家</div>
+						<div>{{total["7"]}}</div>
 						<div>独角兽企业</div>
 					</div>
 				</div>
-				<div class="qymd"  @click="table = false">企业名单>>></div>
+				<div class="qymd"  @click="toTable">企业名单>>></div>
 				<map-Chart ref="mapChart"></map-Chart>
 			</div>
 			<div class="right">
@@ -64,7 +66,7 @@
 			</div>
 		</div> -->
 		</div>
-		<div class="areaBox"  :style="{'height':windowHeight+'px'}" v-if="!table">
+		<div class="areaBox"  style="height: 1080px;" v-if="!table">
 			<div class="backBox2" @click="tableBack" >返回</div>
 			<div class="tablebox">
 				<div class="topBox">
@@ -122,6 +124,7 @@
 				  </div>
 			</div>
 		</div>
+		</sacle-Box>
 	</div>
 </template>
 <script>
@@ -130,13 +133,15 @@
 	import pieChart2 from '../../components/echarts/pieChart2.vue'
 	import pieChart3 from '../../components/echarts/pieChart3.vue'
 	import barChart from '../../components/echarts/barChart.vue'
+	import sacleBox from '../../components/SacleBox.vue'
 	export default{
 		components:{
 			mapChart,
 			pieChart1,
 			pieChart2,
 			pieChart3,
-			barChart
+			barChart,
+			sacleBox
 		},
 		data(){
 			return{
@@ -173,15 +178,49 @@
 				 page:1,
 				 limit:10,
 				 keywords:'',
-				 count:''
+				 count:'',
+				 timer:'',//定时器
+				 timerIndex:0
 			}
 		},
 		mounted() {
+			let that = this
 			 window.addEventListener("keydown", this.KeyDown, true); 
 			 this.messUnti(this.tradesList[0],0)
 			 this.getEnterprisesList()
+			 this.timer = setInterval(function(){
+				 console.log(that.timerIndex)
+				 if(that.timerIndex == 6){
+					 that.messUnti(that.tradesList[that.timerIndex],that.timerIndex)
+					 that.timerIndex = 0
+				 }else{
+					 that.messUnti(that.tradesList[that.timerIndex],that.timerIndex)
+					 that.timerIndex++
+				 }
+			 },15000)
+			 // that.timer = setInterval(function(){
+				//  let index = 0
+				//  if(index > 8){
+				// 	 index = 0
+				// 	 that.messUnti(that.tradesList[index],index)
+				//  }else{
+				// 	 that.messUnti(that.tradesList[index],index)
+				// 	 index++
+				// 	 that.label = index
+				//  }
+				// // if(that.table){
+					 
+				// // }else{
+				// // 	clearTimeout(that.timer)
+				// // }
+			 // },3000)
 		},
 		methods:{
+			//
+			toTable(){
+				this.table = false
+				clearTimeout(this.timer)
+			},
 			//搜索
 			toSeace(){
 				this.page = 1
@@ -461,13 +500,16 @@
 		/* width: 80%; */
 		padding-top: 20px;
 	}
+	.cardLi div:nth-child(1){
+		font-size: 24px;
+	}
 	.cardLi{
 		width: 200px;
 		height: 60px;
-		background: rgba(24, 144, 255, 0.6);
-		box-shadow: 0px 0px 9px 0px rgba(190, 190, 190, 0.57);
+		background: rgba(16,28,107, 1);
+		box-shadow: 0px 0px 9px 0px rgba(47, 43, 66, 1);
 		border-radius: 4px;
-		border: 4px solid #1890FF;
+		border: 4px solid #270DB3;
 		font-size: 16px;
 		font-weight: 500;
 		color: #FFFFFF;
@@ -477,6 +519,7 @@
 		align-items: center;
 		justify-content: space-around;
 		margin-bottom: 20px;
+		font-family: std;
 	}
 	.cardUl{
 		width: 800px;
@@ -569,5 +612,7 @@
 	}
 	.box{
 		background-color: #111843;
+	/* 	width: 1920px;
+		height: 1080px; */
 	}
 </style>

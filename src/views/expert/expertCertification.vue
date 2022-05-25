@@ -172,9 +172,13 @@
 					<div class="agreementBox">
 						<img :src="select?images.select:images.selectNo" @click="select = !select">
 						<div class="read">我已阅读并同意备份</div>
-						<div class="toag">《服务协议》</div>
+						<div class="toag" @click="this.$store.state.login = 0">
+							<router-link to="/fuwu">《服务协议》</router-link>
+						</div>
 						<div class="toag">跟</div>
-						<div class="toag">《隐私政策》</div>
+						<div class="toag" @click="this.$store.state.login = 0">
+							<router-link to="/yinsi">《隐私政策》</router-link>
+						</div>
 						<div class="read">并承诺如实填写材料</div>
 					</div>
 					<div class="putBtn" v-if="userInfo.is_authentication == 0" @click="setExpertAut()">申请提交</div>
@@ -628,6 +632,9 @@
 		width: 20px;
 		height: 20px;
 		cursor: pointer;
+	}
+	.toag a{
+		color: #2298FF;
 	}
 	.agreementBox{
 		/* width: 360px; */

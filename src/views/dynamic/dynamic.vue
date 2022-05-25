@@ -240,6 +240,7 @@
 		margin: 0 4.5px;
 		margin-bottom: 11px;
 		box-sizing: border-box;
+		cursor: pointer;
 	}
 
 	.ulBox {

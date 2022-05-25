@@ -64,7 +64,7 @@
 			},
 			//企业中心供应详情
 			getSupplyInfo() {
-				this.$apiFun.mySupplyInfo({
+				this.$apiFun.supplyInfo({
 					id: this.$route.query.id
 				}).then((res) => {
 					if (res.code == 200) {

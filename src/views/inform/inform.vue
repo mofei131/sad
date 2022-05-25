@@ -4,19 +4,22 @@
 			您现在所在位置:资讯中心><span>通知公告</span>
 		</div>
 		<div class="infTop">
-			<img src="../../assets/images/star.png" >
+			<img src="../../assets/images/forIcon1.png" >
 			<div>通知公告</div>
 		</div>
 		<div class="infUl">
 			<div class="infLi" v-for="(item,index) in infoList" :key="index" @click="toNoticeList(item)">
 				<div class="infNav">
-					<div class="infLeft" v-if="item.pic">
+					<!-- <div class="infLeft" v-if="item.pic">
 						<img :src="item.pic" >
-					</div>
+					</div> -->
 					<div class="infRight" :style="{'width':item.pic?'1005px':'1170px'}">
 						<div class="infrTop">
-							<div>{{item.name}}</div>
-							<div>{{item.create_time}}</div>
+							<div class="nameflex">
+									<div :style="{color:item.color}">[{{item.type}}]</div>
+								<div class="cartitle">{{item.name}}</div>
+							</div>
+							<div class="inftime">{{item.create_time}}</div>
 						</div>
 						<div class="infrcon" v-html="item.info"></div>
 					</div>
@@ -71,7 +74,7 @@
 			getNoticeList(){
 				this.$apiFun.noticeList({
 					page:this.page,
-					limit:this.limit,
+					limit:10000,
 					is_hot:0,
 					keywords:this.keywords
 				}).then((res) => {
@@ -108,6 +111,7 @@
 <style scoped>
 	.infRight{
 		width: 1005px;
+		height: 155px;
 	}
 	.infrcon{
 		font-weight: 400;
@@ -121,19 +125,24 @@
 		-webkit-box-orient: vertical;
 		-webkit-line-clamp: 3;
 	}
-	.infrTop div:nth-child(2){
+	.inftime{
 		color: #777777;
 		font-weight: 400;
 		font-size: 14px;
 	}
-	.infrTop div:nth-child(1){
-		width: 600px;
+	.nameflex{
+		display: flex;
+		align-items: center;
+	}
+	.cartitle{
+		width: 400px;
 		font-weight: 600;
 		color: #333333;
 		font-size: 16px;
 		text-overflow: ellipsis;
 		white-space: nowrap;
 		overflow: hidden;
+		margin-left: 10px;
 	}
 	.infrTop{
 		display: flex;

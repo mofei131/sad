@@ -8,6 +8,7 @@ import footer from '../components/footer.vue' //底部
 import login from '../components/login.vue' //登录
 import register from '../components/register.vue' //注册
 import forget from '../components/forget.vue' //忘记密码/修改密码
+import store from '../store/index.js'
 
 const routes = [{ //首页
 	path: '/',
@@ -25,11 +26,11 @@ const routes = [{ //首页
 	path: '/informDet',
 	name: 'informDet',
 	component: () => import('../views/inform/informDet.vue')
-}, { //通知公告
+}, { //行业资讯
 	path: '/industryList',
 	name: 'industryList',
 	component: () => import('../views/industry/industryList.vue')
-}, { //通知公告详情
+}, { //行业资讯详情
 	path: '/industryDet',
 	name: 'industryDet',
 	component: () => import('../views/industry/industryDet.vue')
@@ -117,6 +118,18 @@ const routes = [{ //首页
 	path: '/expertCertification2',
 	name: 'expertCertification2',
 	component: () => import('../views/expert/expertCertification2.vue')
+},{ //隐私协议
+	path: '/yinsi',
+	name: 'yinsi',
+	component: () => import('../views/inform/yinsi.vue')
+},{ //服务声明
+	path: '/fuwu',
+	name: 'fuwu',
+	component: () => import('../views/inform/fuwu.vue')
+},{ //法律声明
+	path: '/falv',
+	name: 'falv',
+	component: () => import('../views/inform/falv.vue')
 }]
 
 const router = createRouter({
@@ -139,10 +152,10 @@ router.beforeEach((to, from, next) => {
 			next();
 		}
 	} else {
-		if(to.path == "/expertQuestions"){
+		if(to.path == "/expertQuestions" || to.path == "/expertCertification2"){
 			if(!localStorage.getItem('userInfo')){
 				console.log('不能跳转')
-				alert('登录后才能进行专家咨询')
+				store.state.login = 1
 			}else{
 				console.log('可以跳转')
 				next()

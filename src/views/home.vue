@@ -14,11 +14,14 @@
 				<div class="notTop">
 					<div class="ntone">
 						<div class="nottit">
-							<img src="../assets/images/star.png">
+							<img src="../assets/images/forIcon1.png">
 							<div>通知公告</div>
 						</div>
-						<div class="notmore" @click="more('/inform')">
+						<div class="notmore">
+							<!-- @click="more('/inform')" -->
+							<router-link target="_blank" to="/inform">
 							<div>更多</div>
+							</router-link>
 							<el-icon class="el-icon--right" color="#1890FF">
 								<arrow-right />
 							</el-icon>
@@ -26,11 +29,14 @@
 					</div>
 					<div class="ntone">
 						<div class="nottit">
-							<img src="../assets/images/star.png">
+							<img src="../assets/images/forIcon2.png">
 							<div>行业资讯</div>
 						</div>
-						<div class="notmore" @click="more('/industryList')">
+						<div class="notmore">
+							<!-- @click="more('/industryList') -->
+							<router-link target="_blank" to="/industryList">
 							<div>更多</div>
+							</router-link>
 							<el-icon class="el-icon--right" color="#1890FF">
 								<arrow-right />
 							</el-icon>
@@ -39,19 +45,26 @@
 				</div>
 				<div class="notBot">
 					<div class="ggleft">
-						<div class="ggli" v-for="(item,index) in noticeList" :key="index" @click="toNoticeList(item)">
-							<div>{{item.name}}</div>
-							<div>{{item.create_time}}</div>
+						<div class="ggli" v-for="(item,index) in noticeList" :key="index">
+							<!-- @click="toNoticeList(item)" -->
+							<div class="gglione" :style="{color:item.color}">[{{item.type}}]</div>
+							<router-link target="_blank" :to="{path:'/informDet',query:{id:item.id}}">
+							<div class="gglitwo">{{item.name}}</div>
+							</router-link>
+							<div class="gglithree">{{item.create_time}}</div>
 						</div>
 					</div>
 					<div class="hyright">
-						<div class="hyli" v-for="(item,index) in messageList" :key="index" @click="toMessageList(item)">
+						<!-- @click="toMessageList(item)" -->
+						<div class="hyli" v-for="(item,index) in messageList" :key="index">
 							<div class="hylleft">
 								<img :src="item.pic">
 							</div>
 							<div class="hylright">
 								<div class="hyltop">
+									<router-link target="_blank" :to="{path:'/industryDet',query:{id:item.id}}">
 									<div>{{item.name}}</div>
+									</router-link>
 									<div>{{item.create_time}}</div>
 								</div>
 								<div class="hylbot" v-html="item.info"></div>
@@ -73,15 +86,27 @@
 				</div>
 			</div>
 		</div>
+		<div class="cenBanner">
+			<div class="swiper-container centerbanner">
+				<div class="swiper-wrapper">
+					<div class="swiper-slide" v-for="(item,index) in bannerList2">
+						<img :src="item.pic">
+					</div>
+				</div>
+			</div>
+		</div>
 		<div class="notice gqnotice">
 			<div class="notTop">
 				<div class="ntone">
 					<div class="nottit">
-						<img src="../assets/images/star.png">
-						<div>供求信息</div>
+						<img src="../assets/images/forIcon3.png">
+						<div>供应信息</div>
 					</div>
-					<div class="notmore" @click="more('/supplyNews')">
+					<div class="notmore" >
+						<!-- @click="more('/supplyNews')" -->
+						<router-link target="_blank" to="/supplyNews">
 						<div>更多</div>
+						</router-link>
 						<el-icon class="el-icon--right" color="#1890FF">
 							<arrow-right />
 						</el-icon>
@@ -89,11 +114,14 @@
 				</div>
 				<div class="ntone">
 					<div class="nottit">
-						<img src="../assets/images/star.png">
+						<img src="../assets/images/forIcon4.png">
 						<div>需求信息</div>
 					</div>
-					<div class="notmore" @click="more('/demandNews')">
+					<div class="notmore" >
+						<!-- @click="more('/demandNews')" -->
+						<router-link target="_blank" to="/demandNews">
 						<div>更多</div>
+						</router-link>
 						<el-icon class="el-icon--right" color="#1890FF">
 							<arrow-right />
 						</el-icon>
@@ -102,20 +130,38 @@
 			</div>
 			<div class="notBot">
 				<div class="ggleft">
-					<div class="" v-for="(item, index) in supplyList" :key="index" @click="toSupplyList(item)">
+					<div class="" v-for="(item, index) in supplyList" :key="index">
+						 <!-- @click="toSupplyList(item)" -->
 						<div class="sadli" v-if="item.id">
-							<div>{{item.title}}</div>
-							<div v-html="item.detail"></div>
-							<div>{{item.create_time}}</div>
+							<div class="ccw">
+								<div class="ccwdiv">「{{item.industry_name}}」</div>
+								<router-link target="_blank" :to="{path:'/supplyDet',query:{id:item.id}}">
+								<div class="ccwfont">{{item.title}}</div>
+								</router-link>								
+							</div>
+							<div class="ccl" v-html="item.detail"></div>
+							<div class="timcom">
+								<div>{{item.create_time}}</div>
+								<div>{{item.company_name}}</div>
+							</div>
 						</div>
 					</div>
 				</div>
 				<div class="hyright">
-					<div v-for="(item, index) in needList" :key="index" @click="toNeedList(item)">
+					<div v-for="(item, index) in needList" :key="index">
+						<!-- @click="toNeedList(item)" -->
 						<div class="sadli" v-if="item.id">
-							<div>{{item.title}}</div>
-							<div v-html="item.detail"></div>
-							<div>{{item.create_time}}</div>
+							<div class="ccw">
+								<div class="ccwdiv">「{{item.industry_name}}」</div>
+								<router-link target="_blank" :to="{path:'/demandDet',query:{id:item.id}}">
+								<div class="ccwfont">{{item.title}}</div>
+								</router-link>	
+							</div>
+							<div class="ccl" v-html="item.detail"></div>
+							<div class="timcom">
+								<div>{{item.create_time}}</div>
+								<div>{{item.company_name}}</div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -125,7 +171,8 @@
 			<div class="catalogueTitle">企业名录</div>
 			<div class="catalogueul">
 				<div class="catalogueul2">
-					<div v-for="(item,index) in companyList" :key="index" @click="toCompanyList(item)">
+					<div v-for="(item,index) in companyList" :key="index">
+						<!-- @click="toCompanyList(item)" -->
 						<div class="catalogueli" v-if="item.id">
 							<div class="clTitle">{{item.name}}</div>
 							<div class="clLabel">
@@ -138,7 +185,9 @@
 								<img src="../assets/images/address.png">
 								<div>{{item.address}}</div>
 							</div>
-							<div class="clBtn">查看详情</div>
+							<div class="clBtn">
+								<router-link target="_blank" :to="{path:'/enterpriseDet',query:{id:item.id}}">查看详情</router-link>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -154,23 +203,41 @@
 		data() {
 			return {
 				bannerList: [], //轮播图
+				bannerList2: [], //轮播图
 				page: 1,
 				limit: 6,
 				noticeList: [], //通知公告列表
 				messageList: [], //行业资讯列表
-				supplyList: [], //供求信息列表
+				supplyList: [], //供应信息列表
 				needList: [], //需求信息列表
 				companyList: [], //企业名录列表
 			}
 		},
 		mounted() {
-			new Swiper('.swiper-container', {
-				loop: true,
-				autoplay: 3000,
-				observer: true,
-				observeParents: true,
-			})
+			setTimeout(function(){
+				new Swiper('.swiper-container', {
+					loop: true,
+					autoplay:3000,
+					// slidesPerGroup: 1, //定义1张图片为一组
+					// freeMode: true, // 设置为true则变为free模式
+					// speed:6000, // 匀速时间
+					observer: true,
+					observeParents: true,
+					// autoplay: {
+					// 		delay: 0,
+					// 		disableOnInteraction: false,
+					// 		pauseOnMouseEnter: true,
+					// },
+				})
+				new Swiper('.centerbanner', {
+						loop: true,
+						autoplay:3000,
+						observer: true,
+						observeParents: true,
+					})
+			},300)
 			this.getBannerList()
+			this.getBannerList2()
 			this.getNoticeList()
 			this.getMessageList()
 			this.getSupplyList()
@@ -180,8 +247,18 @@
 		methods: {
 			//获取轮播图
 			getBannerList() {
-				this.$apiFun.bannerList({}).then(res => {
+				this.$apiFun.bannerList({
+					type:1
+				}).then(res => {
 					this.bannerList = res.data
+				})
+			},
+			getBannerList2() {
+				this.$apiFun.bannerList({
+					type:2
+				}).then(res => {
+					this.bannerList2 = res.data
+					// console.log()
 				})
 			},
 			//跳转行业资讯详情
@@ -217,19 +294,19 @@
 				})
 			},
 			//通知公告路由跳转
-			toNoticeList(e) {
-				this.$router.push({
-					path: '/informDet',
-					query: {
-						id: e.id
-					}
-				})
-			},
+			// toNoticeList(e) {
+			// 	this.$router.push({
+			// 		path: '/informDet',
+			// 		query: {
+			// 			id: e.id
+			// 		}
+			// 	})
+			// },
 			//获取通知公告列表
 			getNoticeList() {
 				this.$apiFun.noticeList({
 					page: this.page,
-					limit: this.limit,
+					limit: 10,
 					is_hot: 1
 				}).then((res) => {
 					if (res.code == 200) {
@@ -243,7 +320,7 @@
 					}
 				})
 			},
-			// 供求信息路由跳转
+			// 供应信息路由跳转
 			toSupplyList(e) {
 				this.$router.push({
 					path: '/supplyDet',
@@ -252,7 +329,7 @@
 					}
 				})
 			},
-			// 获取供求信息
+			// 获取供应信息
 			getSupplyList() {
 				this.$apiFun.supplyList({
 					page: 1,
@@ -334,17 +411,17 @@
 				})
 			},
 			// 跳转企业详情
-			toCompanyList(e) {
-				this.$router.push({
-					path: '/enterpriseDet',
-					query: {
-						id: e.id
-					}
-				})
-			},
+			// toCompanyList(e) {
+			// 	let toUrl = this.$router.resolve({
+			// 		path: '/enterpriseDet',
+			// 		query: {
+			// 			id: e.id
+			// 		}
+			// 	})
+			// },
 			// 更多
 			more(url) {
-				this.$router.push({
+				let toUrl = this.$router.push({
 					path: url
 				})
 			}
@@ -353,6 +430,19 @@
 </script>
 
 <style scoped>
+	.cenBanner{
+		padding-top: 40px;
+		padding-bottom: 40px;
+		background-color: #fff;
+	}
+	.cenBanner img,.cenBanner{
+		width: 1200px;
+		height: 120px!important;
+		margin: auto;
+	}
+	.swiper-wrapper{
+	    transition-timing-function: linear;
+	}
 	.clBtn {
 		font-weight: 500;
 		color: #3389FF;
@@ -360,7 +450,9 @@
 		text-align: center;
 		cursor: pointer;
 	}
-
+.clBtn a{
+	color: #3389FF;
+}
 	.claddress div {
 		font-weight: 400;
 		color: #51565D;
@@ -376,7 +468,7 @@
 	.claddress {
 		display: flex;
 		align-items: center;
-		margin-bottom: 15px;
+		margin-bottom: 10px;
 	}
 
 	.clLabel div {
@@ -390,15 +482,15 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
+		margin-right: 4px;
 	}
 
 	.clLabel {
-		width: 264px;
+		width: 270px;
+		height: 56px;
 		display: flex;
 		align-items: center;
-		justify-content: space-between;
-		margin-bottom: 5px;
-		height: 45px;
+		flex-wrap: wrap;
 	}
 
 	.clTitle {
@@ -465,13 +557,18 @@
 	.gqnotice {
 		padding-bottom: 40px;
 	}
-
-	.sadli div:nth-child(3) {
+	.timcom{
+		width: 560px;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+	.timcom div{
 		color: #777777;
 		font-size: 14px;
 	}
 
-	.sadli div:nth-child(2) {
+	.ccl {
 		width: 560px;
 		text-overflow: ellipsis;
 		white-space: nowrap;
@@ -481,16 +578,32 @@
 		height: 32px;
 		display: flex;
 		align-items: center;
+		/* padding-left: 8px; */
+		box-sizing: border-box;
 	}
-
-	.sadli div:nth-child(1) {
+	.ccw{
+		display: flex;
+		align-items: center;
+		width: 560px;
+		margin-left: -10px;
+	}
+	.ccwdiv{
+		color: #1574DA;
+		font-size: 18px;
+	}
+	.sadli:hover .ccwfont{
+		text-decoration:underline;
+		color: #1574DA;
+	}
+	.ccwfont {
 		font-weight: 600;
 		color: #333333;
 		font-size: 18px;
-		width: 560px;
+		/* width: 500px; */
 		text-overflow: ellipsis;
 		white-space: nowrap;
 		overflow: hidden;
+		/* margin-left: 10px; */
 	}
 
 	.sadli {
@@ -502,6 +615,7 @@
 		justify-content: space-around;
 		margin: auto;
 		padding: 13px 0;
+		cursor: pointer;
 	}
 
 	.hylbot {
@@ -515,7 +629,7 @@
 		width: 460px;
 	}
 
-	.hyltop div:nth-child(2) {
+	.hyltop div:nth-child(2){
 		color: #777777;
 		font-size: 14px;
 		width: 160px;
@@ -537,7 +651,9 @@
 		justify-content: space-between;
 		margin-bottom: 8px;
 	}
-
+	.hyli:hover .hyltop div,.hyli:hover{
+		color: #096DD9!important;
+	}
 	.hyli {
 		width: 554px;
 		height: 95px;
@@ -549,17 +665,26 @@
 		cursor: pointer;
 	}
 
-	.ggli div:nth-child(2) {
+	.gglithree {
 		color: #777777;
 		font-size: 14px;
 		width: 160px;
 	}
-
-	.ggli div:nth-child(1) {
-		width: 390px;
+	.gglitwo:hover{
+		text-decoration:underline;
+		color: #096DD9;
+	}
+	.gglitwo {
+		width: 340px;
 		text-overflow: ellipsis;
 		white-space: nowrap;
 		overflow: hidden;
+		color: #333;
+	}
+	.gglione {
+		width: 50px;
+		font-size: 16px;
+		color: #91ABC2;
 	}
 
 	.ggli {
@@ -569,7 +694,7 @@
 		width: 554px;
 		margin: auto;
 		border-bottom: 1px solid #EDEDED;
-		height: 62px;
+		height: 40px;
 		cursor: pointer;
 	}
 
@@ -602,8 +727,8 @@
 		width: 100%;
 		max-width: 1920px;
 		margin: auto;
-		padding-bottom: 40px;
-		margin-bottom: 42px;
+		/* padding-bottom: 40px; */
+		/* margin-bottom: 42px; */
 	}
 
 	.notBot {

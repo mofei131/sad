@@ -5,6 +5,7 @@
 </template>
 
 <script>
+	// import echarts from "echarts"
 	export default{
 		data(){
 			return{
@@ -65,6 +66,7 @@
 						{
 							data:this.barData,
 							type: 'bar',
+							barWidth : 10,
 							label:{
 								// normal: {
 								// 	position:'center',
@@ -73,6 +75,23 @@
 								// }
 								show: true,
 							},
+							itemStyle:{
+								normal:{
+									barBorderRadius:[0, 10, 10, 0],
+										//柱体的颜色
+										//右，下，左，上（1，0，0，0）表示从正右开始向左渐变
+										color: new this.$echarts.graphic.LinearGradient(1,0,0,0,[
+												{
+														offset:0,
+														color:"#589FC4"
+												},
+												{
+														offset:1,
+														color:"#1E4C6E"
+												}
+												],false)
+										}
+								},
 						}
 					]
 				};

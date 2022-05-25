@@ -9,6 +9,7 @@ export default createStore({
 		emandId:0,//需求列表id
 		supplyId:0,//供应列表id
 		questionId:0,//企业提问列表
+		windowHeight:'',//大屏页面高度
   },
   getters: {
   },
