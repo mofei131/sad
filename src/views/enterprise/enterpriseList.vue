@@ -31,13 +31,25 @@
 		</div>
 		<div class="pageBox">
 			<div class="ulBox">
-				<div v-for="(item,index) in unityList" :key="index" @click="toDet(item.id)">
+				<div v-for="(item,index) in unityList" :key="index" @click="toDet(item.id)" @mouseover="destroyTime">
 					<div class="liBox" v-if="item.id">
 						<img class="liImg" src="../../assets/images/banner.png">
 						<div class="title">{{item.name}}</div>
+						<div class="hqBox">
+							<div class="hqleft">
+								<div>所属行业：</div>
+								<div class="hqOne">{{item.industry_name}}</div>
+							</div>
+							<div class="hqright">
+								<div>所属区域：</div>
+								<div class="hqOne">{{item.service_city}}</div>
+							</div>
+						</div>
 						<div class="lablefex">
 							<div class="lableOne" v-for="(item2,index2) in item.company_tags"
-								:style="'background:' + item2.color">{{item2.name}}</div>
+								:style="'background:' + item2.color">
+								<p>{{item2.name}}</p>
+								</div>
 						</div>
 						<div class="addressBox">
 							<img src="../../assets/images/address.png">
@@ -51,7 +63,7 @@
 				</div>
 			</div>
 			<div class="pageChange">
-				<el-pagination :currentPage="currentPage" background layout="prev, pager, next" :total="total"
+				<el-pagination :currentPage="currentPage" :page-size="8" background layout="prev, pager, next" :total="total"
 					@current-change="handleCurrentChange" />
 				<div class="except"><span>{{currentPage}}</span>/{{totalPage}} 到第</div>
 				<input type="number" class="pageSum" v-model="newPage" />
@@ -71,11 +83,13 @@
 				areaList: [],
 				area: null, //地区选中标签
 				unityList: [],
-				total: 0, //总共页数
+				total:'', //总共页数
 				totalPage: 0, //页数
 				currentPage: 1, //换页初始页数
 				newPage: '', //输入框选择页数
-				keywords:''
+				keywords:'',
+				timer:'',
+				detim:true,//是否再执行计时器
 			}
 		},
 		created() {
@@ -88,8 +102,14 @@
 			this.getCityList()
 			this.getCompanyList()
 		},
-
+		beforeDestroy() {
+			clearInterval(this.timer)
+		},
 		methods: {
+			//销毁计时器
+			destroyTime(){
+				clearInterval(this.timer)
+			},
 			//去详情
 			toDet(e){
 				this.$router.push({
@@ -101,6 +121,7 @@
 			},
 			//改变页数触发事件
 			handleCurrentChange(e) {
+				clearInterval(this.timer)
 				this.currentPage = e
 				this.getCompanyList()
 			},
@@ -125,6 +146,7 @@
 			},
 			// 获取企业列表
 			getCompanyList() {
+				let that = this
 				this.$apiFun.companyList({
 					page: this.currentPage,
 					limit: 8,
@@ -136,6 +158,20 @@
 						this.unityList = res.data
 						this.total = res.data.count
 						this.totalPage = Math.ceil(res.data.count / 8);
+						if(this.detim){
+							if(this.totalPage > 1){
+								that.timer = setInterval(function(){
+									that.detim =false
+									if(that.currentPage < that.totalPage){
+										that.currentPage ++
+										that.getCompanyList()
+									}else{
+										that.currentPage = 1
+										that.getCompanyList()
+									}
+								},5000)
+							}
+						}
 					} else {
 						this.$message({
 							showClose: true,
@@ -171,6 +207,35 @@
 </script>
 
 <style scoped>
+	.hqOne{
+		width: 70px;
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow:ellipsis;
+		color: #3389FF;
+	}
+	.hqright{
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
+	}
+	.hqleft{
+		border-right: 1px solid #e8e8e8;
+		/* padding-left: 6px; */
+	}
+	.hqleft,.hqright{
+		width: 140px;
+		display: flex;
+		align-items: center;
+		font-size: 12px;
+		margin-bottom: 8px;
+	}
+	.hqBox{
+		width: 270px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
 	.liImg {
 		width: 264px;
 		height: 148px;
@@ -256,10 +321,13 @@
 		color: #595D64;
 		font-size: 14px;
 	}
-
+	.lableOne P{
+		transform: scale(0.8);
+		white-space:nowrap;
+	}
 	.lableOne {
-		width: 86px;
-		height: 21px;
+		width: 66px;
+		height: 20px;
 		background: #52C41A;
 		border-radius: 12px;
 		display: flex;
@@ -275,8 +343,7 @@
 		align-items: center;
 		width: 264px;
 		margin: auto;
-		height: 56px;
-		flex-wrap: wrap;
+		height: 20px;
 	}
 
 	.title {
@@ -289,6 +356,9 @@
 		text-overflow: ellipsis;
 		margin: auto;
 		margin-bottom: 10px;
+		text-align: center;
+		border-bottom: 1px solid #e8e8e8;
+		padding-bottom: 10px;
 	}
 
 	/* .liBox img{

@@ -218,6 +218,10 @@ import https from './request.js';
 	apiFun.enterprisesList = function(params) {
 		return https.get('enterprises/enterprisesList', params)
 	}
+	//外链列表
+	apiFun.linkList = function(params) {
+		return https.get('index/linkList', params)
+	}
 	
 	//暴露出这个对象
 	export default apiFun;

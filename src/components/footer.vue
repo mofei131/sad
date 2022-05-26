@@ -11,12 +11,23 @@
 					<!-- <div class="lcenter"></div> -->
 					<div class="lright">
 						<div class="footuel">
-							<div>友情链接:</div>
-							<a target="_blank" href="http://sme-service.miit.gov.cn/">中小企业公共服务一体化平台</a>
+							<div style="margin-right: 15px;">友情链接:</div>
+							<div class="linkftop">
+							<div class="linkFoot">
+							<!-- <a target="_blank" href="http://sme-service.miit.gov.cn/">中小企业公共服务一体化平台</a>
 							<a target="_blank" href="http://smesd.com.cn/">山东省中小企业公共服务平台</a>
-							<a target="_blank" href="http://ienyuan.com/">源链云公共服务平台</a>
+							<a target="_blank" href="http://ienyuan.com/">源链云公共服务平台</a> -->
+								<div class="swiper-container urlSwiper">
+									<div class="swiper-wrapper">
+										<div class="swiper-slide" v-for="(item,index) in linkList">
+											<a target="_blank" :href="item.url">{{item.name}}</a>
+										</div>
+									</div>
+								</div>
+							</div>
+							</div>
 						</div>
-						<div class="footone">潍坊市中小企业公共服务中心</div>
+						<div class="footone">潍坊市中小企业公共服务平台</div>
 						<div class="foottwo">—— 国家级中小企业公共服务示范平台 ——</div>
 						<!-- <div>潍坊市中小企业公共服务中心</div>
 						<div>中国山东省潍坊市胜利东街1558号</div> -->
@@ -93,19 +104,58 @@
 	export default{
 		data(){
 			return{
-				
+				linkList:''
 			}
+		},
+		mounted() {
+			this.getLinkList()
+			setTimeout(function(){
+				new Swiper('.urlSwiper', {
+					slidesPerView:3,
+					observer: true,
+					observeParents: true,
+				})
+			},300)
+		},
+		methods:{
+			//获取外链
+			getLinkList(){
+				this.$apiFun.linkList({type:2}).then((res) => {
+					this.linkList = res.data
+					// console.log(res)
+					})
+			},
 		}
 	}
 </script>
 
 <style scoped>
+	.footcenter{
+		width: 160px;
+	}
+	.linkFoot{
+		width: 500px;
+	}
+	/* .linkftop::-webkit-scrollbar {
+		display: none;
+	}
+	.linkftop{
+		width: 500px;
+		overflow: scroll;
+	}
+	.linkFoot{
+		display: flex;
+		align-items: center;
+		width: max-content;
+	} */
 	.foottwo{
 		font-size: 12px;
+		text-align: center;
 	}
 	.footone{
 		font-size: 16px;
 		letter-spacing: 2px;
+		text-align: center;
 	}
 	/* .lright div::selection {
 	background:rgba(0,0,0,0);
@@ -139,13 +189,17 @@
 	.lright a{
 		cursor: pointer;
 	}
+	.footuel a:hover{
+		color: #3389FF;
+		/* font-size: 13px; */
+	}
 	.footuel a{
 		cursor: pointer;
-		margin-left: 15px;
+		/* margin-left: 15px; */
 	}
 	.footuel{
 		display: flex;
-		align-items: center;
+		align-items: flex-start;
 		justify-content: center;
 	}
 	.footcenter img{

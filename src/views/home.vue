@@ -2,7 +2,7 @@
 	<div class="box">
 		<div class="ancolor">
 			<div class="banner">
-				<div class="swiper-container">
+				<div class="swiper-container bannerSwiper">
 					<div class="swiper-wrapper">
 						<div class="swiper-slide" v-for="(item,index) in bannerList">
 							<img :src="item.pic">
@@ -175,10 +175,20 @@
 						<!-- @click="toCompanyList(item)" -->
 						<div class="catalogueli" v-if="item.id">
 							<div class="clTitle">{{item.name}}</div>
+							<div class="hqBox">
+								<div class="hqleft">
+									<div>所属行业：</div>
+									<div class="hqOne">{{item.industry_name}}</div>
+								</div>
+								<div class="hqright">
+									<div>所属区域：</div>
+									<div class="hqOne">{{item.service_city}}</div>
+								</div>
+							</div>
 							<div class="clLabel">
 								<div v-for="(itm, idx) in item.company_tags" :key="idx"
 									:style="'background:' + itm.color">
-									{{itm.name}}
+									<p>{{itm.name}}</p>
 								</div>
 							</div>
 							<div class="claddress">
@@ -215,7 +225,7 @@
 		},
 		mounted() {
 			setTimeout(function(){
-				new Swiper('.swiper-container', {
+				new Swiper('.bannerSwiper', {
 					loop: true,
 					autoplay:3000,
 					// slidesPerGroup: 1, //定义1张图片为一组
@@ -430,9 +440,36 @@
 </script>
 
 <style scoped>
+	.hqOne{
+		width: 70px;
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow:ellipsis;
+		color: #3389FF;
+	}
+	.hqright{
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
+	}
+	.hqleft{
+		border-right: 1px solid #e8e8e8;
+		padding-left: 6px;
+	}
+	.hqleft,.hqright{
+		width: 140px;
+		display: flex;
+		align-items: center;
+		font-size: 12px;
+		margin-bottom: 8px;
+	}
+	.hqBox{
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
 	.cenBanner{
-		padding-top: 40px;
-		padding-bottom: 40px;
+		padding-bottom: 20px;
 		background-color: #fff;
 	}
 	.cenBanner img,.cenBanner{
@@ -470,11 +507,10 @@
 		align-items: center;
 		margin-bottom: 10px;
 	}
-
+	.clLabel div p{
+		transform: scale(0.8);
+	}
 	.clLabel div {
-		width: 86px;
-		height: 21px;
-		background: #52C41A;
 		border-radius: 12px;
 		font-weight: 500;
 		color: #FFFFFF;
@@ -482,22 +518,34 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		margin-right: 4px;
+		margin-right: 0px;
+		white-space: nowrap;
+		width: 58px;
+		padding: 0px 5px;
+		height: 16px;
 	}
 
 	.clLabel {
 		width: 270px;
-		height: 56px;
+		height: 20px;
 		display: flex;
 		align-items: center;
-		flex-wrap: wrap;
+		/* flex-wrap: wrap; */
+		/* justify-content: space-between; */
+		margin-bottom: 6px;
 	}
 
 	.clTitle {
-		font-weight: 500;
+		width: 268px;
+		margin: auto;
+		border-bottom: 1px solid #e8e8e8;
+		font-weight: bold;
 		color: #51565D;
 		font-size: 18px;
 		margin-bottom: 5px;
+		text-align: center;
+		padding-bottom: 13px;
+		margin-bottom: 7px;
 	}
 
 	.catalogueli {
@@ -505,7 +553,7 @@
 		height: 168px;
 		background: #FFFFFF;
 		box-shadow: 0px 0px 9px 0px rgba(190, 190, 190, 0.57);
-		padding: 22px 0 0 10px;
+		padding: 15px 0 0 4px;
 		box-sizing: border-box;
 		margin: 0 6px;
 		margin-bottom: 16px;
@@ -604,6 +652,7 @@
 		white-space: nowrap;
 		overflow: hidden;
 		/* margin-left: 10px; */
+		cursor: pointer;
 	}
 
 	.sadli {
@@ -615,7 +664,7 @@
 		justify-content: space-around;
 		margin: auto;
 		padding: 13px 0;
-		cursor: pointer;
+		/* cursor: pointer; */
 	}
 
 	.hylbot {
@@ -632,7 +681,7 @@
 	.hyltop div:nth-child(2){
 		color: #777777;
 		font-size: 14px;
-		width: 160px;
+		width: 80px;
 	}
 
 	.hyltop div:nth-child(1) {
@@ -643,6 +692,7 @@
 		font-size: 16px;
 		font-weight: 600;
 		color: #333333;
+		cursor: pointer;
 	}
 
 	.hyltop {
@@ -651,7 +701,8 @@
 		justify-content: space-between;
 		margin-bottom: 8px;
 	}
-	.hyli:hover .hyltop div,.hyli:hover{
+	.hyltop div:nth-child(1):hover{
+		text-decoration:underline;
 		color: #096DD9!important;
 	}
 	.hyli {
@@ -662,20 +713,19 @@
 		align-items: center;
 		justify-content: space-between;
 		margin: auto;
-		cursor: pointer;
 	}
 
 	.gglithree {
 		color: #777777;
 		font-size: 14px;
-		width: 160px;
+		width: 80px;
 	}
 	.gglitwo:hover{
 		text-decoration:underline;
 		color: #096DD9;
 	}
 	.gglitwo {
-		width: 340px;
+		width: 420px;
 		text-overflow: ellipsis;
 		white-space: nowrap;
 		overflow: hidden;

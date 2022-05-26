@@ -149,13 +149,19 @@
 				:ellipsis='false'
 				:collapse="false"
 		  >
-		    <el-menu-item  index="/">首页</el-menu-item>
+		    <el-menu-item>
+					<router-link target="_blank" to="/">首页</router-link>
+				</el-menu-item>
 				<div class="shuline"></div>
 		    <el-sub-menu index="2" :popper-offset='0' popper-class="clbun">
 		      <template #title>资讯中心</template>
-		      <el-menu-item index="/inform" class="gx">通知公告</el-menu-item>
+		      <el-menu-item class="gx">
+						<router-link target="_blank" to="/inform">通知公告</router-link>
+					</el-menu-item>
 					<div class="wieth"></div>
-		      <el-menu-item index="/industryList" class="gx">行业资讯</el-menu-item>
+		      <el-menu-item class="gx">
+						<router-link target="_blank" to="/industryList">行业资讯</router-link>
+					</el-menu-item>
 		    </el-sub-menu>
 				<div class="shuline"></div>
 		    <!-- <el-menu-item>
@@ -163,24 +169,30 @@
 				</el-menu-item> -->
 				<el-sub-menu index="3" :popper-offset='0'>
 				  <template #title>政策服务</template>
+					<div class="linkList" v-for="(item,index) in linkList" :key="index">
+						<div class="wieth" v-if="index != 0"></div>
 				  <el-menu-item class="gx">
-						<a target="_blank" href="http://www.sdqypy.cn/ZhengCeFuWu/policyConsult.html">政策库</a>
+						<a target="_blank" :href="item.url">{{item.name}}</a>
 					</el-menu-item>
-					<div class="wieth"></div>
-					<el-menu-item class="gx">
+					<!-- <el-menu-item class="gx">
 						<a target="_blank" href="http://enterprise.gxt.shandong.gov.cn/index.html">政策匹配</a>
 					</el-menu-item>
 					<div class="wieth"></div>
 					<el-menu-item class="gx">
 						<a target="_blank" href="http://www.sdqypy.com/special/ZhuanJingTeXin.html">专精特新</a>
-					</el-menu-item>
+					</el-menu-item> -->
+					</div>
 				</el-sub-menu>
 				<div class="shuline"></div>
 		    <el-sub-menu index="4" :popper-offset='0'>
 		      <template #title>供需信息</template>
-		      <el-menu-item index="/supplyNews" class="gx">供应信息</el-menu-item>
+		      <el-menu-item class="gx">
+						<router-link target="_blank" to="/supplyNews">供应信息</router-link>
+					</el-menu-item>
 					<div class="wieth"></div>
-		      <el-menu-item index="/demandNews" class="gx">需求信息</el-menu-item>
+		      <el-menu-item class="gx">
+						<router-link target="_blank" to="/demandNews">需求信息</router-link>
+					</el-menu-item>
 		    </el-sub-menu>
 				<div class="shuline"></div>
 				<el-sub-menu index="5" :popper-offset='0'>
@@ -192,18 +204,26 @@
 				<div class="shuline"></div>
 				<el-sub-menu index="6" :popper-offset='0'>
 				  <template #title>企业能力</template>
-				  <el-menu-item index="/enterpriseList" class="gx">企业展示</el-menu-item>
+				  <el-menu-item class="gx">
+						<router-link target="_blank" to="/enterpriseList">企业展示</router-link>
+					</el-menu-item>
 					<div class="wieth"></div>
 				  <el-menu-item class="gx">
 						<div @click="toScreen">培育成效</div>
 					</el-menu-item>
 				</el-sub-menu>
 				<div class="shuline"></div>
-				<el-menu-item index="/serviceAgency">服务机构</el-menu-item>
+				<el-menu-item>
+					<router-link target="_blank" to="/serviceAgency">服务机构</router-link>
+				</el-menu-item>
 				<div class="shuline"></div>
-				<el-menu-item index="/dynamic">活动动态</el-menu-item>
+				<el-menu-item>
+					<router-link target="_blank" to="/dynamic">活动动态</router-link>
+				</el-menu-item>
 				<div class="shuline"></div>
-				<el-menu-item index="/about">关于我们</el-menu-item>
+				<el-menu-item>
+					<router-link target="_blank" to="/about">关于我们</router-link>
+				</el-menu-item>
 		  </el-menu>
 	</div>
 </template>
@@ -258,6 +278,7 @@
 					title:'供应信息'
 				}],
 				searchValue:'',//搜索框内容
+				linkList:'',
 			}
 		},
 		mounted() {
@@ -293,13 +314,20 @@
 			}
 		},
 		created() {
-			
+			this.getLinkList()
 		},
 		updated() {
 			this.userInfo = JSON.parse(localStorage.getItem("userInfo"))
 			
 		},
 		methods:{
+			//获取外链
+			getLinkList(){
+				this.$apiFun.linkList({type:1}).then((res) => {
+					this.linkList = res.data
+					// console.log(res)
+					})
+			},
 			//搜索跳转
 			search(){
 				if(!this.searchValue){

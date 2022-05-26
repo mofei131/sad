@@ -3,10 +3,10 @@
 		<div class="stay">
 			您现在所在位置:资讯中心><span>行业资讯</span>
 		</div>
-		<div class="infTop">
+		<!-- <div class="infTop">
 			<img src="../../assets/images/forIcon2.png" >
 			<div>行业资讯</div>
-		</div>
+		</div> -->
 		<div class="infUl">
 			<div class="infLi" v-for="(item,index) in infoList" :key="index" @click="toMessageList(item)">
 				<div class="infNav">
@@ -15,7 +15,7 @@
 					</div>
 					<div class="infRight" :style="{'width':item.pic?'1005px':'1170px'}">
 						<div class="infrTop">
-							<div>{{item.name}}</div>
+							<div class="infotiiname">{{item.name}}</div>
 							<div>{{item.create_time}}</div>
 						</div>
 						<div class="infrcon" v-html="item.info"></div>
@@ -79,6 +79,10 @@
 </script>
 
 <style scoped>
+	.infotiiname:hover{
+		text-decoration:underline;
+		color: #3389ff!important;
+	}
 	.infRight{
 		width: 1005px;
 	}
@@ -130,7 +134,7 @@
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		height: 155px;
+		height: 125px;
 		padding-top: 20px;
 		cursor: pointer;
 	}

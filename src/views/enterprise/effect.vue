@@ -8,7 +8,7 @@
 		<div class="tradesBox">
 			<!-- <div class="tradesStr">企业类型：</div> -->
 			<div class="tradesList" v-for="(item,index) in tradesList">
-				<div :class="label == index?'tradesLabel':''" @click="messUnti(item,index)">
+				<div :class="label == index?'tradesLabel':''" @click="messUnti(item,index,2)">
 					{{item.title}}
 				</div>
 			</div>
@@ -186,15 +186,15 @@
 		mounted() {
 			let that = this
 			 window.addEventListener("keydown", this.KeyDown, true); 
-			 this.messUnti(this.tradesList[0],0)
+			 this.messUnti(this.tradesList[0],0,1)
 			 this.getEnterprisesList()
 			 this.timer = setInterval(function(){
 				 console.log(that.timerIndex)
 				 if(that.timerIndex == 6){
-					 that.messUnti(that.tradesList[that.timerIndex],that.timerIndex)
+					 that.messUnti(that.tradesList[that.timerIndex],that.timerIndex,1)
 					 that.timerIndex = 0
 				 }else{
-					 that.messUnti(that.tradesList[that.timerIndex],that.timerIndex)
+					 that.messUnti(that.tradesList[that.timerIndex],that.timerIndex,1)
 					 that.timerIndex++
 				 }
 			 },15000)
@@ -264,7 +264,10 @@
 				this.table = true
 				location.reload()
 			},
-			messUnti(item,index){
+			messUnti(item,index,e){
+				if(e == 2){
+					this.timerIndex = index
+				}
 				this.label = index
 				this.$apiFun.companydata({classify:item.id}).then((res) => {
 					if(res.code == 200){

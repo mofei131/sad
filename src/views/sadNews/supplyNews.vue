@@ -30,7 +30,7 @@
 		</div>
 		<div class="pageBox">
 			<div class="ulBox">
-				<div v-for="(item,index) in unityList" :key="index" @click="toSupplyList(item)">
+				<div v-for="(item,index) in unityList" :key="index" @click="toSupplyList(item)" @mouseover="destroyTime">
 					<div class="liBox" v-if="item.id">
 						<img :src="item.images[0]">
 						<div class="title">{{item.title}}</div>
@@ -58,11 +58,13 @@
 				tradesList: [],
 				label: null, //行业分类选中标签
 				unityList: [],
-				total: 0, //总共页数
+				total: '', //总共页数
 				totalPage: 0, //页数
 				currentPage: 1, //换页初始页数
 				newPage: '', //输入框选择页数
 				keywords: '', // 搜索内容
+				timer:'',
+				detim:true,//是否再执行计时器
 			}
 		},
 		created() {
@@ -75,13 +77,21 @@
 			this.getSupplyList()
 			
 		},
+		beforeDestroy() {
+			clearInterval(this.timer)
+		},
 		methods: {
+			//销毁计时器
+			destroyTime(){
+				clearInterval(this.timer)
+			},
 			//去发布供应
 			toDemand(){
 				this.$router.push({path:'/supplyListForm'})
 			},
 			//改变页数触发事件
 			handleCurrentChange(e) {
+				clearInterval(this.timer)
 				this.currentPage = e
 				this.getSupplyList()
 			},
@@ -119,6 +129,20 @@
 								if (this.unityList[i].images) {
 									this.unityList[i].images = this.unityList[i].images.split('|')
 								}
+							}
+						}
+						if(this.detim){
+							if(this.totalPage > 1){
+								that.timer = setInterval(function(){
+									that.detim =false
+									if(that.currentPage < that.totalPage){
+										that.currentPage ++
+										that.getSupplyList()
+									}else{
+										that.currentPage = 1
+										that.getSupplyList()
+									}
+								},5000)
 							}
 						}
 					} else {

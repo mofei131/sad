@@ -3,17 +3,17 @@
 		<div class="stay">
 			您现在所在位置:资讯中心><span>通知公告</span>
 		</div>
-		<div class="infTop">
+		<!-- <div class="infTop">
 			<img src="../../assets/images/forIcon1.png" >
 			<div>通知公告</div>
-		</div>
+		</div> -->
 		<div class="infUl">
 			<div class="infLi" v-for="(item,index) in infoList" :key="index" @click="toNoticeList(item)">
 				<div class="infNav">
 					<!-- <div class="infLeft" v-if="item.pic">
 						<img :src="item.pic" >
 					</div> -->
-					<div class="infRight" :style="{'width':item.pic?'1005px':'1170px'}">
+					<div class="infRight">
 						<div class="infrTop">
 							<div class="nameflex">
 									<div :style="{color:item.color}">[{{item.type}}]</div>
@@ -21,7 +21,7 @@
 							</div>
 							<div class="inftime">{{item.create_time}}</div>
 						</div>
-						<div class="infrcon" v-html="item.info"></div>
+						<!-- <div class="infrcon" v-html="item.info"></div> -->
 					</div>
 				</div>
 				<div class="transverse"></div>
@@ -109,9 +109,12 @@
 </script>
 
 <style scoped>
+	.cartitle:hover{
+		text-decoration:underline;
+		color: #3389ff;
+	}
 	.infRight{
-		width: 1005px;
-		height: 155px;
+		width: 1130px;
 	}
 	.infrcon{
 		font-weight: 400;
@@ -166,7 +169,7 @@
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		height: 155px;
+		height: 45px;
 		padding-top: 20px;
 		cursor: pointer;
 	}
