@@ -152,13 +152,19 @@ router.beforeEach((to, from, next) => {
 			next();
 		}
 	} else {
-		if(to.path == "/expertQuestions" || to.path == "/expertCertification2"){
+		if(to.path == "/expertQuestions" || to.path == "/expertCertification2" || to.path == "/inquirySub"  || to.path == "/demandInquirySub " || to.path == "/supplyListForm" || to.path == "/demandForm"){
 			if(!localStorage.getItem('userInfo')){
-				console.log('不能跳转')
 				store.state.login = 1
 			}else{
-				console.log('可以跳转')
-				next()
+				if(to.path == "/supplyListForm" || to.path == "/demandForm"){
+					if(localStorage.getItem('userInfo').is_authentication != 2){
+						alert('请先进行企业认证')
+					}else{
+						next()
+					}
+				}else{
+					next()
+				}
 			}
 		}else{
 			next()

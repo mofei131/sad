@@ -34,7 +34,7 @@
 				<div v-for="(item,index) in unityList" :key="index" @click="toDet(item.id)" @mouseover="destroyTime">
 					<div class="liBox" v-if="item.id">
 						<img class="liImg" src="../../assets/images/banner.png">
-						<div class="title">{{item.name}}</div>
+						<div class="title">{{item.enterprise_name}}</div>
 						<div class="hqBox">
 							<div class="hqleft">
 								<div>所属行业：</div>
@@ -158,20 +158,20 @@
 						this.unityList = res.data
 						this.total = res.data.count
 						this.totalPage = Math.ceil(res.data.count / 8);
-						if(this.detim){
-							if(this.totalPage > 1){
-								that.timer = setInterval(function(){
-									that.detim =false
-									if(that.currentPage < that.totalPage){
-										that.currentPage ++
-										that.getCompanyList()
-									}else{
-										that.currentPage = 1
-										that.getCompanyList()
-									}
-								},5000)
-							}
-						}
+						// if(this.detim){
+						// 	if(this.totalPage > 1){
+						// 		that.timer = setInterval(function(){
+						// 			that.detim =false
+						// 			if(that.currentPage < that.totalPage){
+						// 				that.currentPage ++
+						// 				that.getCompanyList()
+						// 			}else{
+						// 				that.currentPage = 1
+						// 				that.getCompanyList()
+						// 			}
+						// 		},5000)
+						// 	}
+						// }
 					} else {
 						this.$message({
 							showClose: true,

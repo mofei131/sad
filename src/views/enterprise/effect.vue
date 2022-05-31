@@ -29,28 +29,28 @@
 			</div>
 			<div class="center">
 				<div class="cardUl">
-					<div class="cardLi">
-						<div>{{total["2"]}}</div>
+					<div :class="label == 1?'cardLi2':'cardLi'" v-if="label == 1||label == 0">
+						<div :class="label == 1?'cardLiChile2':'cardLiChile'">{{total["0"]}}</div>
 						<div>专精特新</div>
 					</div>
-					<div class="cardLi">
-						<div>{{total["3"]}}</div>
+					<div :class="label == 2?'cardLi2':'cardLi'" v-if="label == 2||label == 0">
+						<div :class="label == 2?'cardLiChile2':'cardLiChile'">{{total["1"]}}</div>
 						<div>小巨人</div>
 					</div>
-					<div class="cardLi">
-						<div>{{total["4"]}}</div>
+					<div :class="label == 3?'cardLi2':'cardLi'" v-if="label == 3||label == 0">
+						<div :class="label == 3?'cardLiChile2':'cardLiChile'">{{total["2"]}}</div>
 						<div>单项冠军</div>
 					</div>
-					<div class="cardLi">
-						<div>{{total["5"]}}</div>
+					<div :class="label == 4?'cardLi2':'cardLi'" v-if="label == 4||label == 0">
+						<div :class="label == 4?'cardLiChile2':'cardLiChile'">{{total["3"]}}</div>
 						<div>隐形冠军</div>
 					</div>
-					<div class="cardLi">
-						<div>{{total["6"]}}</div>
+					<div :class="label == 5?'cardLi2':'cardLi'" v-if="label == 5||label == 0">
+						<div :class="label == 5?'cardLiChile2':'cardLiChile'">{{total["4"]}}</div>
 						<div>瞪羚企业</div>
 					</div>
-					<div class="cardLi">
-						<div>{{total["7"]}}</div>
+					<div :class="label == 6?'cardLi2':'cardLi'" v-if="label == 6||label == 0">
+						<div :class="label == 6?'cardLiChile2':'cardLiChile'">{{total["5"]}}</div>
 						<div>独角兽企业</div>
 					</div>
 				</div>
@@ -89,6 +89,10 @@
 							label="企业名称">
 						</el-table-column>
 						<el-table-column
+							prop="category"
+							label="所属分类">
+						</el-table-column>
+						<el-table-column
 							prop="industry"
 							label="所属行业">
 						</el-table-column>
@@ -100,13 +104,21 @@
 							prop="status"
 							label="经营状态">
 						</el-table-column>
-						<el-table-column
+						<!-- <el-table-column
 							prop="income"
 							label="销售收入(万)">
 						</el-table-column>
 						<el-table-column
 							prop="tax"
 							label="利税(万元)">
+						</el-table-column> -->
+						<el-table-column
+							prop="city"
+							label="所在市区">
+						</el-table-column>
+						<el-table-column
+							prop="capital"
+							label="资本(万元)">
 						</el-table-column>
 					</el-table>
 					
@@ -180,14 +192,14 @@
 				 keywords:'',
 				 count:'',
 				 timer:'',//定时器
-				 timerIndex:0
+				 timerIndex:0,
+				 category:''
 			}
 		},
 		mounted() {
 			let that = this
 			 window.addEventListener("keydown", this.KeyDown, true); 
 			 this.messUnti(this.tradesList[0],0,1)
-			 this.getEnterprisesList()
 			 this.timer = setInterval(function(){
 				 console.log(that.timerIndex)
 				 if(that.timerIndex == 6){
@@ -198,22 +210,6 @@
 					 that.timerIndex++
 				 }
 			 },15000)
-			 // that.timer = setInterval(function(){
-				//  let index = 0
-				//  if(index > 8){
-				// 	 index = 0
-				// 	 that.messUnti(that.tradesList[index],index)
-				//  }else{
-				// 	 that.messUnti(that.tradesList[index],index)
-				// 	 index++
-				// 	 that.label = index
-				//  }
-				// // if(that.table){
-					 
-				// // }else{
-				// // 	clearTimeout(that.timer)
-				// // }
-			 // },3000)
 		},
 		methods:{
 			//
@@ -232,7 +228,8 @@
 				this.$apiFun.enterprisesList({
 					page:this.page,
 					limit:this.limit,
-					keywords:this.keywords
+					keywords:this.keywords,
+					category:this.category
 				}).then((res) => {
 					if(res.code == 200){
 						let list = res.data
@@ -241,7 +238,6 @@
 						}
 						this.tableData.pop()
 						this.count = res.data.count
-						console.log(this.count)
 					}else{
 						this.$message({
 								showClose: true,
@@ -268,8 +264,14 @@
 				if(e == 2){
 					this.timerIndex = index
 				}
+				if(item.title != '全部'){
+					this.category = item.title
+				}
 				this.label = index
-				this.$apiFun.companydata({classify:item.id}).then((res) => {
+				this.$apiFun.companydata({
+					category:item.title == '全部'?'':item.title
+					// classify:item.id
+				}).then((res) => {
 					if(res.code == 200){
 						let title = ''
 						if(item.id == 1){
@@ -288,12 +290,17 @@
 							});
 					}
 				})
-				this.$apiFun.piedata({classify:item.id}).then((res) => {
+				this.$apiFun.piedata({
+					category:item.title == '全部'?'':item.title
+					// classify:item.id
+					}).then((res) => {
 					if(res.code == 200){
 						// console.log(res)
 						this.$refs.getpieChart1.getpieData(res.data.pie1)
 						this.$refs.getpieChart2.getpieData(res.data.pie2)
 						this.$refs.getpieChart3.getpieData(res.data.pie3)
+						this.tableData = []
+						this.getEnterprisesList()
 					}else{
 						this.$message({
 								showClose: true,
@@ -420,7 +427,7 @@
 		width: 115px;
 		height: 41px;
 		z-index: 9;
-		top: 25%;
+		top: 28%;
 		right: 5%;
 		display: flex;
 		align-items: center;
@@ -503,8 +510,31 @@
 		/* width: 80%; */
 		padding-top: 20px;
 	}
-	.cardLi div:nth-child(1){
+	.cardLiChile{
 		font-size: 24px;
+		letter-spacing: 2px;
+	}
+	.cardLiChile2{
+		font-size: 28px;
+		letter-spacing: 6px;
+	}
+	.cardLi2{
+		width: 300px;
+		height: 100px;
+		margin: auto;
+		font-size: 28px;
+		background: rgba(16,28,107, 1);
+		box-shadow: 0px 0px 9px 0px rgba(47, 43, 66, 1);
+		border-radius: 4px;
+		border: 4px solid #270DB3;
+		font-weight: 500;
+		color: #FFFFFF;
+		line-height: 22px;
+		display: flex;
+		flex-flow: column;
+		align-items: center;
+		justify-content: space-around;
+		font-family: std;
 	}
 	.cardLi{
 		width: 200px;
@@ -513,7 +543,7 @@
 		box-shadow: 0px 0px 9px 0px rgba(47, 43, 66, 1);
 		border-radius: 4px;
 		border: 4px solid #270DB3;
-		font-size: 16px;
+		font-size: 18px;
 		font-weight: 500;
 		color: #FFFFFF;
 		line-height: 22px;
@@ -526,6 +556,7 @@
 	}
 	.cardUl{
 		width: 800px;
+		height: 200px;
 		display: flex;
 		align-items: center;
 		justify-content: space-between;

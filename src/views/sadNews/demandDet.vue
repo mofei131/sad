@@ -15,7 +15,7 @@
 				<div class="detBoxRight">
 					<div class="abrOne">{{needInfo.title}}</div>
 					<div class="abrTwo">发布时间：{{needInfo.create_time}}</div>
-					<div class="abrTwo">需求类别：{{needInfo.industry_name}}</div>
+					<div class="abrTwo">所属行业：{{needInfo.industry_name}}</div>
 					<div class="abrTwo">发布企业：{{needInfo.company_name}}</div>
 					<div class="abrTwo">总浏览量：{{needInfo.look}}</div>
 					<div class="dbrBtn" @click="toInquiry(needInfo.id)">报价</div>

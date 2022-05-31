@@ -1,6 +1,7 @@
 <template>
 	<div class="box">
 		<div class="loginBox">
+			<img class="closeImg" @click="this.$store.state.login = 0" src="../assets/images/close.png" />
 			<img class="login" src="../assets/images/logo.png" >
 			<div class="mode">
 				<div class="modeOne" @click="mode = 1">忘记密码</div>
@@ -163,6 +164,14 @@
 </script>
 
 <style scoped>
+	.closeImg{
+		cursor: pointer;
+		width: 30px;
+		height: 30px;
+		position: absolute;
+		top: 20px;
+		right: 30px;
+	}
 	.countdown{
 		width: 122px;
 		height: 44px;
@@ -361,6 +370,7 @@
 		padding-top: 56px;
 		box-sizing: border-box;
 		padding-bottom: 52px;
+		position: relative;
 	}
 	.box{
 		width: 100%;

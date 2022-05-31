@@ -7,6 +7,16 @@
 			<div class="title">{{infoDet.name}}</div>
 			<div class="time">{{infoDet.create_time}}</div>
 			<div class="con" v-html="infoDet.info"></div>
+			<div class="layui-form-item" v-if="infoDet.enclosure">
+					<label class="layui-form-label">附件：</label>
+					<div class="layui-input-block">
+							<a :href="infoDet.enclosure">
+									<img src="../../assets/images/fujian.png" style="width: 15px;height: 15px;display: flex;padding: 8px;">
+									<span style="font-size: 12px;color: #cdcdcd">点击图标可下载</span>
+							</a>
+							
+					</div>
+			</div>
 		</div>
 	</div>
 </template>
@@ -47,6 +57,11 @@
 </script>
 
 <style scoped>
+	.layui-input-block a{
+		display: flex;
+		align-items: center;
+		cursor: pointer;
+	}
 	.time{
 		font-weight: 400;
 		color: #777777;

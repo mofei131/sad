@@ -17,7 +17,7 @@
 				<div class="detli">{{info.company_phone}}</div>
 			</div>
 			<div class="detStart">公司简介：</div>
-			<div class="detCon">{{info.company_introduce}}</div>
+			<div class="detCon" v-html="info.company_introduce"></div>
 			<div class="detImg">
 				<img :src="info.avater">
 			</div>
@@ -43,6 +43,7 @@
 					user_id: this.$route.query.id
 				}).then(res => {
 					this.info = res.data
+					this.info.company_introduce = this.$globalMethod.showHtml(this.info.company_introduce)
 				})
 			}
 		}

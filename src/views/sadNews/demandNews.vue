@@ -129,20 +129,20 @@
 								}
 							}
 						}
-						if(this.detim){
-							if(this.totalPage > 1){
-								that.timer = setInterval(function(){
-									that.detim =false
-									if(that.currentPage < that.totalPage){
-										that.currentPage ++
-										that.getNeedList()
-									}else{
-										that.currentPage = 1
-										that.getNeedList()
-									}
-								},5000)
-							}
-						}
+						// if(this.detim){
+						// 	if(this.totalPage > 1){
+						// 		that.timer = setInterval(function(){
+						// 			that.detim =false
+						// 			if(that.currentPage < that.totalPage){
+						// 				that.currentPage ++
+						// 				that.getNeedList()
+						// 			}else{
+						// 				that.currentPage = 1
+						// 				that.getNeedList()
+						// 			}
+						// 		},5000)
+						// 	}
+						// }
 					} else {
 						this.$message({
 							showClose: true,

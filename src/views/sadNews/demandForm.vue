@@ -11,7 +11,7 @@
 			<div class="addImgBox">
 				<div class="surn"><span>*</span>需求产品</div>
 				<div class="upLoadBox">
-					<el-upload class="uploadImgBox" action="http://corp.boyaokj.cn/api/file/upload"
+					<el-upload class="uploadImgBox" action="http://114.116.243.208:666/api/file/upload"
 						list-type="picture-card" :on-preview="handlePictureCardPreview" :on-remove="handleRemove"
 						:file-list="addImgList" multiple accept="image/*">
 						<el-icon>
@@ -33,7 +33,7 @@
 					</el-select>
 				</div>
 			</div>
-			<div class="admBox">
+			<!-- <div class="admBox">
 				<div class="namOne">
 					<div class="surn"><span>*</span>您的姓名</div>
 					<input type="text" placeholder="请输入您的姓名" v-model="name" />
@@ -42,7 +42,7 @@
 					<div class="surn"><span>*</span>联系电话</div>
 					<input type="number" placeholder="请输入您的联系电话" v-model="mobile" />
 				</div>
-			</div>
+			</div> -->
 			<div class="transverse"></div>
 			<div class="textareaBox">
 				<div class="surn"><span>*</span>需求详情</div>
@@ -118,22 +118,22 @@
 					});
 					return
 				}
-				if (!this.name) {
-					this.$message({
-						showClose: true,
-						message: '请填写姓名',
-						type: 'warning'
-					});
-					return
-				}
-				if (!this.mobile) {
-					this.$message({
-						showClose: true,
-						message: '请填写联系电话',
-						type: 'warning'
-					});
-					return
-				}
+				// if (!this.name) {
+				// 	this.$message({
+				// 		showClose: true,
+				// 		message: '请填写姓名',
+				// 		type: 'warning'
+				// 	});
+				// 	return
+				// }
+				// if (!this.mobile) {
+				// 	this.$message({
+				// 		showClose: true,
+				// 		message: '请填写联系电话',
+				// 		type: 'warning'
+				// 	});
+				// 	return
+				// }
 				if (!this.mark) {
 					this.$message({
 						showClose: true,
@@ -151,8 +151,8 @@
 					title: this.title,
 					images: list.join("|"),
 					industry_id: this.value,
-					name: this.name,
-					mobile: this.mobile,
+					// name: this.name,
+					// mobile: this.mobile,
 					detail: this.mark
 				}).then((res) => {
 					if (res.code == 200) {

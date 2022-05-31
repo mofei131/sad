@@ -1,6 +1,7 @@
 <template>
 	<div class="box">
 		<div id="bar_chart" style="width: 420px;height: 800px;"></div>
+		<div class="context">企业数量</div>
 	</div>
 </template>
 
@@ -26,7 +27,7 @@
 				// const name = '潍坊'
 				let option = {
 					title: {
-						text: '行业所属分布',
+						text: '企业所属地区分布',
 						// subtext: 'Fake Data',
 						left: 'center',
 						 textStyle: {
@@ -102,6 +103,14 @@
 </script>
 
 <style scoped>
+	.context{
+		position: relative;
+		font-size: 18px;
+		color: #fff;
+		bottom: 40px;
+		letter-spacing: 25px;
+		text-align: center;
+	}
 	#bar_chart{
 		background-image: url(../../assets/images/idNumBg.png);
 		background-size: 100% 800px;

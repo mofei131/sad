@@ -2,11 +2,14 @@
 	<div class="box">
 		<div class="stay">您现在所在位置:活动动态><span>活动详情</span></div>
 		<div class="detBox">
-			<div class="detTitle">{{info.company}}</div>
+			<div class="detTitle">{{info.title}}</div>
 			<div class="detTime">{{info.create_time}}</div>
+			<div class="detImg">
+				<img :src="info.pic">
+			</div>
 			<div class="detflex">
 				<div class="detflexstr">活动类别：</div>
-				<div class="detli">{{info.industry_name}}</div>
+				<div class="detli">{{info.activitytype_name}}</div>
 			</div>
 			<div class="detflex">
 				<div class="detflexstr">授课专家：</div>
@@ -22,9 +25,6 @@
 			</div>
 			<div class="detStart">活动情况：</div>
 			<div class="detCon" v-html="info.detail"></div>
-			<div class="detImg">
-				<img :src="info.pic">
-			</div>
 		</div>
 	</div>
 </template>
@@ -75,6 +75,7 @@
 		color: #444444;
 		line-height: 26px;
 		margin-bottom: 26px;
+		padding-bottom: 150px;
 	}
 
 	.detStart {

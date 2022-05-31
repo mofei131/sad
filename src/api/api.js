@@ -16,7 +16,7 @@ import https from './request.js';
 	}
 	//上传文件
 	apiFun.upload = function(params) {
-		return https.post('http://corp.boyaokj.cn/api/file/upload', params)
+		return https.post('http://114.116.243.208:666/api/file/upload', params)
 	}
 	//获取专业特长列表
 	apiFun.majorList = function(params) {
@@ -221,6 +221,10 @@ import https from './request.js';
 	//外链列表
 	apiFun.linkList = function(params) {
 		return https.get('index/linkList', params)
+	}
+	//活动类型
+	apiFun.activitytype = function(params) {
+		return https.get('index/activitytype', params)
 	}
 	
 	//暴露出这个对象

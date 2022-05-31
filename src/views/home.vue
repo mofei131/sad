@@ -130,8 +130,26 @@
 			</div>
 			<div class="notBot">
 				<div class="ggleft">
-					<div class="" v-for="(item, index) in supplyList" :key="index">
-						 <!-- @click="toSupplyList(item)" -->
+					<div class="swiper-container hyleftswiper" @mouseenter="ting" @mouseleave="star">
+						<div class="swiper-wrapper hyleftwrapper">
+							<div class="swiper-slide" v-for="(item, index) in supplyList" :key="index" v-if="ishow">
+								<div class="sadli" v-if="item.id">
+									<div class="ccw">
+										<div class="ccwdiv">「{{item.industry_name}}」</div>
+										<router-link target="_blank" :to="{path:'/supplyDet',query:{id:item.id}}">
+										<div class="ccwfont">{{item.title}}</div>
+										</router-link>								
+									</div>
+									<div class="ccl" v-html="item.detail"></div>
+									<div class="timcom">
+										<div>{{item.create_time}}</div>
+										<div>{{item.company_name}}</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- <div class="" v-for="(item, index) in supplyList" :key="index">
 						<div class="sadli" v-if="item.id">
 							<div class="ccw">
 								<div class="ccwdiv">「{{item.industry_name}}」</div>
@@ -145,11 +163,29 @@
 								<div>{{item.company_name}}</div>
 							</div>
 						</div>
-					</div>
+					</div> -->
 				</div>
 				<div class="hyright">
-					<div v-for="(item, index) in needList" :key="index">
-						<!-- @click="toNeedList(item)" -->
+					<div class="swiper-container hyrightswiper" @mouseenter="ting2" @mouseleave="star2">
+						<div class="swiper-wrapper hyrightwrapper">
+							<div class="swiper-slide" v-for="(item, index) in needList" :key="index">
+								<div class="sadli" v-if="item.id">
+									<div class="ccw">
+										<div class="ccwdiv">「{{item.industry_name}}」</div>
+										<router-link target="_blank" :to="{path:'/demandDet',query:{id:item.id}}">
+										<div class="ccwfont">{{item.title}}</div>
+										</router-link>	
+									</div>
+									<div class="ccl" v-html="item.detail"></div>
+									<div class="timcom">
+										<div>{{item.create_time}}</div>
+										<div>{{item.company_name}}</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- <div v-for="(item, index) in needList" :key="index">
 						<div class="sadli" v-if="item.id">
 							<div class="ccw">
 								<div class="ccwdiv">「{{item.industry_name}}」</div>
@@ -163,7 +199,7 @@
 								<div>{{item.company_name}}</div>
 							</div>
 						</div>
-					</div>
+					</div> -->
 				</div>
 			</div>
 		</div>
@@ -171,8 +207,39 @@
 			<div class="catalogueTitle">企业名录</div>
 			<div class="catalogueul">
 				<div class="catalogueul2">
-					<div v-for="(item,index) in companyList" :key="index">
-						<!-- @click="toCompanyList(item)" -->
+					<div class="swiper-container qtswiper" @mouseenter="ting3" @mouseleave="star3">
+					   <div class="swiper-wrapper">
+					     <div class="swiper-slide" v-for="(item,index) in companyList" :key="index">
+					       <div class="catalogueli" v-if="item.id">
+					       	<div class="clTitle">{{item.enterprise_name}}</div>
+					       	<div class="hqBox">
+					       		<div class="hqleft">
+					       			<div>所属行业：</div>
+					       			<div class="hqOne">{{item.industry_name}}</div>
+					       		</div>
+					       		<div class="hqright">
+					       			<div>所属区域：</div>
+					       			<div class="hqOne">{{item.service_city}}</div>
+					       		</div>
+					       	</div>
+					       	<div class="clLabel">
+					       		<div v-for="(itm, idx) in item.company_tags" :key="idx"
+					       			:style="'background:' + itm.color">
+					       			<p>{{itm.name}}</p>
+					       		</div>
+					       	</div>
+					       	<div class="claddress">
+					       		<img src="../assets/images/address.png">
+					       		<div>{{item.address}}</div>
+					       	</div>
+					       	<div class="clBtn">
+					       		<router-link target="_blank" :to="{path:'/enterpriseDet',query:{id:item.id}}">查看详情</router-link>
+					       	</div>
+					       </div>
+					     </div>
+					   </div>
+					 </div>
+				<!-- 	<div v-for="(item,index) in companyList" :key="index">
 						<div class="catalogueli" v-if="item.id">
 							<div class="clTitle">{{item.name}}</div>
 							<div class="hqBox">
@@ -199,7 +266,7 @@
 								<router-link target="_blank" :to="{path:'/enterpriseDet',query:{id:item.id}}">查看详情</router-link>
 							</div>
 						</div>
-					</div>
+					</div> -->
 				</div>
 			</div>
 		</div>
@@ -221,23 +288,21 @@
 				supplyList: [], //供应信息列表
 				needList: [], //需求信息列表
 				companyList: [], //企业名录列表
+				ishow:true,
+				swiper1:'',
+				mySwiper2:'',
+				mySwiper3:'',
+				lastNeedSwiperSpeed:''
 			}
 		},
 		mounted() {
+			let that = this
 			setTimeout(function(){
 				new Swiper('.bannerSwiper', {
 					loop: true,
 					autoplay:3000,
-					// slidesPerGroup: 1, //定义1张图片为一组
-					// freeMode: true, // 设置为true则变为free模式
-					// speed:6000, // 匀速时间
 					observer: true,
 					observeParents: true,
-					// autoplay: {
-					// 		delay: 0,
-					// 		disableOnInteraction: false,
-					// 		pauseOnMouseEnter: true,
-					// },
 				})
 				new Swiper('.centerbanner', {
 						loop: true,
@@ -245,7 +310,55 @@
 						observer: true,
 						observeParents: true,
 					})
-			},300)
+				that.swiper1 = new Swiper('.hyleftswiper', {
+						loop: true,
+						initialSlide: 0,
+						slidesPerView: 'auto',
+						loopedSlides :5,
+						speed: 3000,//匀速时间
+						// slidesPerView:6,
+						autoplay: {
+							delay: 0,
+							stopOnLastSlide: false,
+							disableOnInteraction: false,
+							pauseOnMouseEnter: true,
+						},
+						direction: 'vertical',
+						autoHeight:true,
+						observer: true,
+						observeParents: true,
+						centeredSlides : true,
+					})
+				that.mySwiper2 = new Swiper('.hyrightswiper', {
+						loop: true,
+						initialSlide: 0,
+						slidesPerView: 'auto',
+						loopedSlides :5,
+						speed: 3000,//匀速时间
+						// slidesPerView:6,
+						autoplay: {
+							delay: 0,
+							stopOnLastSlide: false,
+							disableOnInteraction: false,
+							pauseOnMouseEnter: true,
+						},
+						direction: 'vertical',
+						autoHeight:true,
+						observer: true,
+						observeParents: true,
+						centeredSlides : true,
+					})
+					that.mySwiper3 = new Swiper ('.qtswiper', {
+					  slidesPerView: 4,
+					  autoplay: 4000,
+						stopOnLastSlide: false,
+					  slidesPerColumn: 2,
+					  slidesPerColumnFill:'row',
+						observer: true,
+						observeParents: true,
+						autoHeight:true,
+					})
+			},500)
 			this.getBannerList()
 			this.getBannerList2()
 			this.getNoticeList()
@@ -255,6 +368,148 @@
 			this.getCompanyList()
 		},
 		methods: {
+			ting(){
+				let nextTransForm = "";
+				// 轮播图从暂停位置移动到原本应到的位置所用的时间
+				let nextTime = 0;
+				// nextTransForm = document
+				//           .getElementsByClassName("hyleftswiper")[0]
+				//           .getElementsByClassName("hyleftwrapper")[0].style.transform;
+				        // 轮播图原本应移动到的位置
+				        // let nextTransPosition =
+				        //   -1 *
+				        //   parseInt(
+				        //     document
+				        //       .getElementsByClassName("hyleftswiper")[0]
+				        //       .getElementsByClassName("hyleftwrapper")[0]
+				        //       .style.transform.split("translate3d(")[1]
+				        //       .split("px")[0]
+				        //   );
+				
+				        // 鼠标悬浮时时轮播图位置
+				        // let nowTransPosition =
+				        //   -1 *
+				        //   parseInt(
+				        //     window
+				        //       .getComputedStyle(
+				        //         document
+				        //           .getElementsByClassName("hyleftswiper")[0]
+				        //           .getElementsByClassName("hyleftwrapper")[0],
+				        //         false
+				        //       )
+				        //       ["transform"].split("1, ")[2]
+				        //       .split(",")[0]
+				        //   );
+				        // 存放鼠标悬浮时轮播图的真实transform属性（非行内属性）
+				        let nowTransForm = window.getComputedStyle(
+				          document
+				            .getElementsByClassName("hyleftswiper")[0]
+				            .getElementsByClassName("hyleftwrapper")[0],
+				          false
+				        )["transform"];
+				        // 计算轮播图从暂停位置移动到原本应到的位置所用的时间（370是我自定义的每个slide的宽度）
+				        // nextTime = 5500 * ((nextTransPosition - nowTransPosition) / 370);
+				        // 改变行内transform属性
+				        document
+				          .getElementsByClassName("hyleftswiper")[0]
+				          .getElementsByClassName(
+				            "hyleftwrapper"
+				          )[0].style.transform = nowTransForm;
+				        // 不写也没关系
+				        // document
+				        //   .getElementsByClassName("hyleftswiper")[0]
+				        //   .getElementsByClassName(
+				        //     "hyleftwrapper"
+				        //   )[0].style.transitionDuration = "0ms";
+				        this.swiper1.stopAutoplay();
+			},
+			star(){
+				let that = this
+				that.swiper1 = new Swiper('.hyleftswiper', {
+						loop: true,
+						initialSlide: 0,
+						slidesPerView: 'auto',
+						loopedSlides :5,
+						speed: 3000,//匀速时间
+						// slidesPerView:6,
+						autoplay: {
+							delay: 0,
+							stopOnLastSlide: false,
+							disableOnInteraction: false,
+							pauseOnMouseEnter: true,
+						},
+						direction: 'vertical',
+						autoHeight:true,
+						observer: true,
+						observeParents: true,
+						centeredSlides : true,
+					})
+			},
+			ting2(){
+				let nowTransForm = window.getComputedStyle(
+				  document
+				    .getElementsByClassName("hyleftswiper")[0]
+				    .getElementsByClassName("hyleftwrapper")[0],
+				  false
+				)["transform"];
+				// 计算轮播图从暂停位置移动到原本应到的位置所用的时间（370是我自定义的每个slide的宽度）
+				// nextTime = 5500 * ((nextTransPosition - nowTransPosition) / 370);
+				// 改变行内transform属性
+				document
+				  .getElementsByClassName("hyleftswiper")[0]
+				  .getElementsByClassName(
+				    "hyleftwrapper"
+				  )[0].style.transform = nowTransForm;
+				        this.mySwiper2.stopAutoplay();
+			},
+			star2(){
+				let that = this
+				that.mySwiper2 = new Swiper('.hyrightswiper', {
+						loop: true,
+						initialSlide: 0,
+						slidesPerView: 'auto',
+						loopedSlides :5,
+						speed: 3000,//匀速时间
+						// slidesPerView:6,
+						autoplay: {
+							delay: 0,
+							stopOnLastSlide: false,
+							disableOnInteraction: false,
+							pauseOnMouseEnter: true,
+						},
+						direction: 'vertical',
+						autoHeight:true,
+						observer: true,
+						observeParents: true,
+						centeredSlides : true,
+					})
+			},
+			ting3(){
+				        this.mySwiper3.stopAutoplay();
+			},
+			star3(){
+				let that = this
+				// that.mySwiper3 = new Swiper('.hyrightswiper', {
+				// 		loop: true,
+				// 		initialSlide: 0,
+				// 		slidesPerView: 'auto',
+				// 		loopedSlides :5,
+				// 		speed: 3000,//匀速时间
+				// 		// slidesPerView:6,
+				// 		autoplay: {
+				// 			delay: 0,
+				// 			stopOnLastSlide: false,
+				// 			disableOnInteraction: false,
+				// 			pauseOnMouseEnter: true,
+				// 		},
+				// 		direction: 'vertical',
+				// 		autoHeight:true,
+				// 		observer: true,
+				// 		observeParents: true,
+				// 		centeredSlides : true,
+				// 	})
+				this.mySwiper3.startAutoplay();
+			},
 			//获取轮播图
 			getBannerList() {
 				this.$apiFun.bannerList({
@@ -284,7 +539,7 @@
 			getMessageList() {
 				this.$apiFun.messageList({
 					page: this.page,
-					limit: this.limit,
+					limit: 4,
 					is_hot: 1
 				}).then((res) => {
 					if (res.code == 200) {
@@ -343,12 +598,15 @@
 			getSupplyList() {
 				this.$apiFun.supplyList({
 					page: 1,
-					limit: 4,
+					limit: 20,
 					industry_id: '',
 					keywords: ''
 				}).then(res => {
 					if (res.code == 200) {
-						this.supplyList = res.data
+						let list = res.data
+						delete list.count
+						this.supplyList = list
+						console.log(this.supplyList)
 						if (this.supplyList.length != 0) {
 							for (let i in this.supplyList) {
 								if (this.supplyList[i].detail) {
@@ -379,12 +637,14 @@
 			getNeedList() {
 				this.$apiFun.needList({
 					page: 1,
-					limit: 4,
+					limit: 20,
 					industry_id: '',
 					keywords: ''
 				}).then(res => {
 					if (res.code == 200) {
-						this.needList = res.data
+						let list = res.data
+						delete list.count
+						this.needList = list
 						if (this.needList.length != 0) {
 							for (let i in this.needList) {
 								if (this.needList[i].detail) {
@@ -405,12 +665,15 @@
 			getCompanyList() {
 				this.$apiFun.companyList({
 					page: 1,
-					limit: 8,
+					limit: 24,
 					industry_id: '',
 					service_city: ''
 				}).then((res) => {
 					if (res.code == 200) {
-						this.companyList = res.data
+						let list = res.data
+						delete list.count
+						this.companyList  = list
+						// this.companyList = res.data
 					} else {
 						this.$message({
 							showClose: true,
@@ -440,6 +703,9 @@
 </script>
 
 <style scoped>
+	.hyrightswiper,.hyleftswiper{
+		height: 600px;
+	}
 	.hqOne{
 		width: 70px;
 		overflow: hidden;
@@ -615,7 +881,6 @@
 		color: #777777;
 		font-size: 14px;
 	}
-
 	.ccl {
 		width: 560px;
 		text-overflow: ellipsis;
@@ -666,7 +931,6 @@
 		padding: 13px 0;
 		/* cursor: pointer; */
 	}
-
 	.hylbot {
 		width: 420px;
 		text-overflow: ellipsis;
@@ -707,7 +971,7 @@
 	}
 	.hyli {
 		width: 554px;
-		height: 95px;
+		height: 95px!important;
 		border-bottom: 1px solid #EDEDED;
 		display: flex;
 		align-items: center;
@@ -842,7 +1106,7 @@
 		margin: auto;
 	}
 
-	.swiper-slide img {
+	.bannerSwiper>.swiper-slide img {
 		width: 1200px;
 		height: 428px;
 	}

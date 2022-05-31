@@ -1,6 +1,7 @@
 <template>
 	<div class="box" @click="hide()">
 		<div class="loginBox" @click.stop="hide2()">
+			<img class="closeImg" @click="this.$store.state.login = 0" src="../assets/images/close.png" />
 			<img class="login" src="../assets/images/logo.png" >
 			<div class="mode">
 				<div :class="mode == 1?'modeOne':'modeTwo'" @click="mode = 1">专家注册</div>
@@ -181,6 +182,14 @@
 </script>
 
 <style scoped>
+	.closeImg{
+		cursor: pointer;
+		width: 30px;
+		height: 30px;
+		position: absolute;
+		top: 20px;
+		right: 30px;
+	}
 	.countdown{
 		width: 122px;
 		height: 44px;
@@ -379,6 +388,7 @@
 		padding-top: 56px;
 		box-sizing: border-box;
 		padding-bottom: 52px;
+		position: relative;
 	}
 	.box{
 		width: 100%;

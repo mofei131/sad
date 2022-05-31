@@ -2,29 +2,30 @@
 	<div class="box">
 		<div class="stay">您现在所在位置:服务机构><span>机构详情</span></div>
 		<div class="detBox">
-			<div class="detTitle">潍坊管理技术研修中心有限公司</div>
-			<div class="detTime">2021-05-66</div>
+			<div class="detTitle">{{info.enterprise_name}}</div>
+			<div class="detTime">{{info.create_time}}</div>
 			<div class="detflex">
-				<div class="detflexstr">服务类别：</div>
-				<div class="detli">管理咨询</div>
+				<div class="detflexstr">服务领域：</div>
+				<div class="detli detareali">
+					<div v-for="item in info.service_area_name">{{item}}</div>
+				</div>
 			</div>
 			<div class="detflex">
 				<div class="detflexstr">单位地址：</div>
-				<div class="detli">安徽省芜湖市弋江区华佗胡同212号</div>
+				<div class="detli">{{info.service_province}}{{info.service_city}}{{info.service_area}}{{info.address}}</div>
 			</div>
 			<div class="detflex">
 				<div class="detflexstr">联系人：</div>
-				<div class="detli">张三</div>
+				<div class="detli">{{info.company_contacts}}</div>
 			</div>
 			<div class="detflex">
 				<div class="detflexstr">服务电话：</div>
-				<div class="detli">15648567485</div>
+				<div class="detli">{{info.company_phone}}</div>
 			</div>
 			<div class="detStart">核心产品：</div>
-			<div class="detCon">123</div>
+			<div class="detCon" v-html="info.company_introduce"></div>
 			<div class="detImg">
-				<img src="../../assets/images/banner.png" >
-				<img src="../../assets/images/banner.png" >
+				<img :src="info.avater">
 			</div>
 		</div>
 	</div>
@@ -34,13 +35,34 @@
 	export default{
 		data(){
 			return{
-				
+				info:''
+			}
+		},
+		created() {
+			this.getUserInfo()
+		},
+		methods:{
+			getUserInfo() {
+				this.$apiFun.userInfo({
+					user_id: this.$route.query.id
+				}).then(res => {
+					this.info = res.data
+					this.info.company_introduce = this.$globalMethod.showHtml(this.info.company_introduce)
+				})
 			}
 		}
 	}
 </script>
 
 <style scoped>
+	.detareali div{
+		margin-right: 10px;
+	}
+	.detareali{
+		display: flex;
+		align-items: center;
+		
+	}
 	.detImg img{
 		width: 265px;
 		height: 190px;

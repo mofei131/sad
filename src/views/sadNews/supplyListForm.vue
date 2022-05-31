@@ -1,19 +1,19 @@
 <template>
 	<div class="box">
-		<div class="stay">您现在所在位置:供应信息><span>发布供求</span></div>
+		<div class="stay">您现在所在位置:供应信息><span>发布供应</span></div>
 		<div class="formBox">
-			<div class="formTitle">发布供求</div>
+			<div class="formTitle">发布供应</div>
 			<div class="demandTitleBox">
-				<div class="surn"><span>*</span>供求标题</div>
-				<input type="text" placeholder="请输入需求标题" v-model="title" />
+				<div class="surn"><span>*</span>供应标题</div>
+				<input type="text" placeholder="请输入供应标题" v-model="title" />
 			</div>
 			<div class="transverse"></div>
 			<div class="addImgBox">
-				<div class="surn"><span>*</span>供求产品</div>
+				<div class="surn"><span>*</span>供应产品</div>
 				<div class="upLoadBox">
 				<el-upload
 						class="uploadImgBox"
-				    action="http://corp.boyaokj.cn/api/file/upload"
+				    action="http://114.116.243.208:666/api/file/upload"
 				    list-type="picture-card"
 				    :on-preview="handlePictureCardPreview"
 				    :on-remove="handleRemove"
@@ -43,7 +43,7 @@
 					  </el-select>
 				</div>
 			</div>
-			<div class="admBox">
+			<!-- <div class="admBox">
 				<div class="namOne">
 					<div class="surn"><span>*</span>您的姓名</div>
 					<input type="text" placeholder="请输入您的姓名" v-model="name" />
@@ -52,13 +52,13 @@
 					<div class="surn"><span>*</span>联系电话</div>
 					<input type="number" placeholder="请输入您的联系电话" v-model="mobile" />
 				</div>
-			</div>
+			</div> -->
 			<div class="transverse"></div>
 			<div class="textareaBox">
-				<div class="surn"><span>*</span>供求详情</div>
-				<textarea placeholder="请输入供求详情" v-model="mark"></textarea>
+				<div class="surn"><span>*</span>供应详情</div>
+				<textarea placeholder="请输入供应详情" v-model="mark"></textarea>
 			</div>
-			<div class="fbBtn" @click="putReleaseNeed()">发布供求</div>
+			<div class="fbBtn" @click="putReleaseNeed()">发布供应</div>
 		</div>
 	</div>
 </template>
@@ -126,22 +126,22 @@
 						});
 						return
 				}
-				if(!this.name){
-					this.$message({
-							showClose: true,
-							message: '请填写姓名',
-							type: 'warning'
-						});
-						return
-				}
-				if(!this.mobile){
-					this.$message({
-							showClose: true,
-							message: '请填写联系电话',
-							type: 'warning'
-						});
-						return
-				}
+				// if(!this.name){
+				// 	this.$message({
+				// 			showClose: true,
+				// 			message: '请填写姓名',
+				// 			type: 'warning'
+				// 		});
+				// 		return
+				// }
+				// if(!this.mobile){
+				// 	this.$message({
+				// 			showClose: true,
+				// 			message: '请填写联系电话',
+				// 			type: 'warning'
+				// 		});
+				// 		return
+				// }
 				if(!this.mark){
 					this.$message({
 							showClose: true,
@@ -159,8 +159,8 @@
 					title:this.title,
 					images:list.join("|"),
 					industry_id:this.value,
-					name:this.name,
-					mobile:this.mobile,
+					// name:this.name,
+					// mobile:this.mobile,
 					detail:this.mark
 				}).then((res) => {
 					if(res.code == 200){

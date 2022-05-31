@@ -7,6 +7,8 @@ function showHtml(str){
 			.replace(/&quot;/g,"\"")
 			.replace(/&#39;/g, "\'")
 			.replace(/&amp;nbsp;/g,'\u3000')
+			.replace(/&amp;rdquo;/g,"\“")
+			.replace(/&amp;ldquo;/g,"\”")
 	}
 export default {
 	showHtml

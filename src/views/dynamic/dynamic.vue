@@ -2,7 +2,7 @@
 	<div class="box">
 		<div class="stay">您现在所在位置:<span>活动动态</span></div>
 		<div class="tradesBox">
-			<div class="tradesStr">所属行业：</div>
+			<div class="tradesStr">活动类型：</div>
 			<div class="tradesLists">
 				<div class="tradesList" :class="label == null?'tradesLabel':''" @click="labelClass(null)">
 					全部
@@ -78,7 +78,7 @@
 
 			// 获取行业分类
 			getIndustryCate() {
-				this.$apiFun.industryCate({}).then(res => {
+				this.$apiFun.activitytype({}).then(res => {
 					this.tradesList = res.data
 				})
 			},
@@ -87,7 +87,7 @@
 				this.$apiFun.activityList({
 					page: this.currentPage,
 					limit: 8,
-					industry_id: this.label == null ? '' : this.tradesList[this.label].id,
+					activitytype_id: this.label == null ? '' : this.tradesList[this.label].id,
 					keywords:this.keywords
 				}).then(res => {
 					if (res.code == 200) {
